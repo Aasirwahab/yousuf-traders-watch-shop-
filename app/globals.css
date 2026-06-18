@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
+:root {
+  --color-bg: #ffffff;
+  --color-page: #ededed;
+  --color-text: #000000;
+  --color-text-muted: #9ca3af;
+  --color-border: #f3f4f6;
+  --color-surface: #f4f4f4;
+  --color-accent: #000000;
+
+  --radius-card: 32px;
+  --radius-button: 30px;
+  --radius-pill: 9999px;
+
+  --shadow-card: 0 8px 30px rgb(0 0 0 / 0.04);
+  --shadow-elevated: 0 20px 60px -15px rgb(0 0 0 / 0.5);
+
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+}
+
+/*
+ * IMPORTANT — keep all element-level base styling inside `@layer base`.
+ *
+ * Tailwind v4 emits its utilities into `@layer utilities`. Any CSS written
+ * OUTSIDE a layer ("unlayered") always wins over layered CSS, regardless of
+ * specificity. A previous unlayered `* { margin: 0; padding: 0 }` reset here
+ * silently overrode every `p-*`, `px-*`, `py-*`, `m-*`, `mb-*`, `pt-*` … utility
+ * across the whole site (and forced every heading to font-weight 500), which is
+ * why spacing looked broken everywhere. Keeping base styles layered lets the
+ * utility classes do their job. Tailwind's own Preflight already applies
+ * box-sizing + margin/padding resets, so we don't repeat them here.
+ */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* Headings: only tighten rhythm here. Font weight is controlled per-element
+     with utilities (font-medium / font-bold) so it can vary by heading. */
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  ::selection {
+    background-color: #000;
+    color: #fff;
+  }
+}
