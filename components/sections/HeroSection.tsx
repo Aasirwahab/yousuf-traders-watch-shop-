@@ -1,14 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, ShoppingBag } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { DesktopNav, Logo, MobileNav } from "@/components/layout/Navbar";
 
 const HERO_IMAGE = "/hero-image.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative isolate overflow-hidden bg-white">
+    <section className="relative isolate min-h-[680px] overflow-hidden bg-white md:h-[min(100vh,850px)] md:min-h-[550px]">
       <div className="absolute left-6 top-8 z-30 text-black md:hidden">
         <Logo />
       </div>
@@ -46,23 +46,19 @@ function MobileHero() {
 
 function DesktopHero() {
   return (
-    <div className="relative hidden aspect-[890/551] w-full overflow-hidden bg-white [container-type:inline-size] md:block">
-      <div
-        className="absolute left-0 top-0 h-[551px] w-[890px] origin-top-left"
-        style={{ transform: "scale(calc(100cqw / 890px))" }}
-      >
-      <div className="absolute left-[35px] top-[14px] z-30 text-black">
+    <div className="absolute inset-[6px] hidden overflow-hidden rounded-[12px] bg-white md:block">
+      <div className="absolute left-[3.93%] top-[16px] z-30 text-black">
         <Logo />
       </div>
 
-      <div className="absolute inset-y-0 left-[264px] right-0 overflow-hidden rounded-bl-[28px]">
+      <div className="absolute inset-y-0 left-[29.65%] right-0 overflow-hidden rounded-l-[28px]">
         <Image
           src={HERO_IMAGE}
           alt="Black mechanical Ovalen watch with red hands"
           fill
           priority
           sizes="70vw"
-          className="scale-150 object-cover object-[72%_center]"
+          className="scale-150 object-cover object-[77%_center]"
         />
       </div>
 
@@ -79,66 +75,43 @@ function DesktopHero() {
       </svg>
       <DesktopNav />
 
-      <span className="absolute left-[655px] top-[252px] z-20 text-[17px] font-semibold tracking-[-0.04em] text-white">
+      <span className="absolute left-[74.15%] top-[46.64%] z-20 text-[20px] font-bold tracking-[-0.055em] text-white">
         menghsun
       </span>
 
-      <div className="absolute left-[35px] top-[114px] z-20 flex items-center gap-4">
+      <div className="absolute left-[3.93%] top-[20.69%] z-20 [&>div]:gap-[clamp(14px,min(1.57vw,2.54vh),22px)] [&_p]:text-[clamp(12px,min(1.35vw,2.18vh),18px)] [&_span]:w-[clamp(88px,min(9.89vw,15.97vh),136px)]">
         <Tagline />
       </div>
 
-      <h1 className="absolute left-[35px] top-[139px] z-20 text-[53px] font-normal leading-[1.06] tracking-[-0.048em] text-black">
+      <h1 className="absolute left-[3.93%] top-[25.23%] z-20 text-[clamp(53px,min(5.96vw,9.62vh),82px)] font-normal leading-[1.06] tracking-[-0.048em] text-black">
         <span className="block whitespace-nowrap">Ovalen will make</span>
         <span className="block whitespace-nowrap">your life easier</span>
       </h1>
 
-      <div className="absolute left-[35px] top-[294px] z-20 w-[175px]">
-        <Description />
-        <ExploreButton className="mt-6" />
+      <div className="absolute left-[3.93%] top-[53.36%] z-20 w-[clamp(155px,min(17.42vw,28.13vh),239px)]">
+        <Description className="!text-[clamp(11px,min(1.24vw,2vh),17px)]" />
+        <ExploreButton className="!mt-[clamp(28px,min(3.15vw,5.08vh),43px)] !px-[clamp(22px,min(2.47vw,3.99vh),34px)] !py-[clamp(6px,min(0.67vw,1.09vh),9px)] !text-[clamp(10px,min(1.12vw,1.81vh),15px)]" />
       </div>
 
       <NavigationArrows />
       <ProductCard />
       <CarouselIndicators />
-      </div>
     </div>
   );
 }
 
 function ProductCard() {
   return (
-    <article className="absolute bottom-[10px] left-[calc(29.7%+24px)] z-20 flex h-[110px] w-[270px] items-center gap-3 rounded-[17px] bg-white p-[6px] pr-3 text-black shadow-[0_12px_35px_rgba(0,0,0,0.16)]">
-      <div className="relative h-full w-[98px] flex-none overflow-hidden rounded-[13px] bg-[#171717]">
-        <Image
-          src="/prototype -design.webp"
-          width={1015}
-          height={4136}
-          alt="Oris Divers Sixty-Five watch"
-          className="absolute left-[-344px] top-[-504px] max-w-none"
-        />
-      </div>
-      <div className="min-w-0 flex-1">
-        <p className="text-[10px] text-[#969696]">Oris</p>
-        <h2 className="truncate text-[15px] font-medium leading-tight tracking-[-0.02em]">
-          Divers Sixty-Five
-        </h2>
-        <p className="mt-1 truncate text-[7px] text-[#9b9b9b]">
-          REF 01 733 7720 4054-07 8 21 18
-        </p>
-        <div className="mt-4 flex items-center justify-between gap-2">
-          <div className="flex items-baseline gap-2 whitespace-nowrap">
-            <span className="text-[17px] font-medium">$2.470</span>
-            <span className="text-[11px] text-[#a5a5a5] line-through">$2.990</span>
-          </div>
-          <button
-            type="button"
-            aria-label="Add Oris Divers Sixty-Five to bag"
-            className="grid h-7 w-7 place-items-center rounded-full border border-[#bcbcbc] transition-colors hover:bg-black hover:text-white"
-          >
-            <ShoppingBag className="h-[42%] w-[42%]" strokeWidth={1.5} />
-          </button>
-        </div>
-      </div>
+    <article
+      aria-label="Oris Divers Sixty-Five watch"
+      className="absolute bottom-[10px] left-[31.5%] z-20 h-[110px] w-[110px] overflow-hidden rounded-[17px] border-[5px] border-white bg-[#171717] bg-no-repeat shadow-[0_12px_35px_rgba(0,0,0,0.16)]"
+      style={{
+        backgroundImage: "url('/prototype%20-design.webp')",
+        backgroundPosition: "-390px -561px",
+        backgroundSize: "1150px 4686px",
+      }}
+    >
+      <span className="sr-only">Oris Divers Sixty-Five watch</span>
     </article>
   );
 }
@@ -175,7 +148,7 @@ function ExploreButton({ className = "" }: { className?: string }) {
 
 function NavigationArrows() {
   return (
-    <div className="absolute bottom-[10px] left-[35px] z-20 flex gap-[15px]">
+    <div className="absolute bottom-[12px] left-[37px] z-20 flex gap-[15px]">
       <ArrowButton label="Previous product">
         <ArrowLeft className="h-full w-full" />
       </ArrowButton>
@@ -191,7 +164,7 @@ function ArrowButton({ children, label, strong = false }: { children: React.Reac
     <button
       type="button"
       aria-label={label}
-      className={`grid h-[34px] w-[34px] place-items-center rounded-full border transition-colors ${strong ? "border-black hover:bg-black hover:text-white" : "border-[#bdbdbd] text-[#888] hover:border-black hover:text-black"}`}
+      className={`grid h-8 w-8 place-items-center rounded-full border transition-colors ${strong ? "border-black hover:bg-black hover:text-white" : "border-[#bdbdbd] text-[#888] hover:border-black hover:text-black"}`}
     >
       <span className="block h-[38%] w-[38%]">{children}</span>
     </button>

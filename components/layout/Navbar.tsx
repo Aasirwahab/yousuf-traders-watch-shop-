@@ -15,17 +15,17 @@ export function DesktopNav() {
         ))}
       </div>
       <div className="flex items-center gap-5">
-        <NavIcon label="Search"><Search /></NavIcon>
-        <NavIcon label="Shopping bag"><ShoppingBag /></NavIcon>
-        <NavIcon label="Account"><User /></NavIcon>
+        <NavIcon label="Search" sizeClass="h-[15px] w-[15px]"><Search /></NavIcon>
+        <NavIcon label="Shopping bag" sizeClass="h-[15px] w-[15px]"><ShoppingBag /></NavIcon>
+        <NavIcon label="Account" sizeClass="h-[15px] w-[15px]"><User /></NavIcon>
       </div>
     </nav>
   );
 }
 
-function NavIcon({ children, label }: { children: React.ReactNode; label: string }) {
+function NavIcon({ children, label, sizeClass = "h-[17px] w-[17px]" }: { children: React.ReactNode; label: string; sizeClass?: string }) {
   return (
-    <button type="button" aria-label={label} className="h-[17px] w-[17px] transition-opacity hover:opacity-70">
+    <button type="button" aria-label={label} className={`${sizeClass} transition-opacity hover:opacity-70`}>
       {children}
     </button>
   );
