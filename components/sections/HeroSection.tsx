@@ -9,24 +9,41 @@ const HERO_IMAGE = "/hero-image.png";
 const PRODUCT_CARD_IMAGE =
   "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=200&q=80";
 
-// The hero is now layered: full-bleed watch image → WHITE SVG shape on top →
-// text/nav/card above that. This `d` draws the white panel directly (positive
-// shape) in a fixed 760×850 coordinate space (1 unit = 1px, no distortion).
-// Right-edge outline, top → bottom:
-//   • big rounded curve where the image tucks behind the nav,
-//   • a stepped shoulder out to the headline block,
-//   • a square BOX notch (straight → rounded corner → straight) where the watch
-//     pokes into the panel,
-//   • a big bottom-right curve melting back into the image.
-// Tune the numbers here to match the reference; H = panel width, V = step heights.
-const HERO_WHITE_PATH =
-  "M 0 0 H 448 V 116 Q 448 152 486 156 H 560 C 662 162 702 172 712 214 V 266 C 712 324 648 334 634 390 C 626 426 634 462 634 496 V 550 Q 634 608 582 628 Q 516 652 516 708 V 850 H 0 Z";
+// The hero is layered: full-bleed watch image → WHITE SVG FRAME on top →
+// text/nav/card above. Matching the prototype, the watch is NOT a full-bleed
+// background with an organic blob cut out of it — it's a crisp **rounded-
+// rectangle photo block**, inset from the top/right/bottom (the white "gap"),
+// with one clean **rounded-rectangle notch** carved into its left edge to seat
+// the headline.
+//
+// We draw the WHITE area as a single path = an outer rectangle (the full hero)
+// with the photo silhouette punched out as a hole (fill-rule="evenodd"). The
+// hole reveals the full-bleed image behind it; everything else stays white.
+// The path lives in a fixed 1440×850 design box rendered 1:1 (not scaled), so
+// the notch/gap stay aligned to the fixed-px headline & nav; on wider screens
+// the watch bleeds past the frame to fill the screen.
+//
+// Photo block is FULL-BLEED on the right & bottom (the watch fills the screen);
+// only the TOP keeps a white "gap" (T=82) and the LEFT keeps the white text
+// panel (X1=458). The single feature on the left edge is the headline NOTCH:
+// a tab that bulges right to seat "Ovalen will make / your life easier"
+// (text occupies x≈80→539, y≈178→326). Its right edge is bowed convex out to
+// x≈600 at the vertical middle — that's the "middle curve".
+const HERO_FRAME_OUTER = "M0 0 H1440 V850 H0 Z";
+const HERO_PHOTO_HOLE =
+  "M482 12 L1470 12 L1470 870 L458 870 " + // small top gap + full-bleed right & bottom
+  "L458 372 Q458 352 478 352 " + //            up to notch, concave fillet in
+  "L557 352 Q585 352 588 324 " + //            tab bottom edge + bottom-right corner
+  "Q600 290 600 258 Q600 226 588 192 " + //    bowed convex right edge (middle curve)
+  "Q585 164 557 164 L478 164 " + //            top-right corner + tab top edge
+  "Q458 164 458 144 L458 36 Q458 12 482 12 Z"; // concave fillet + top-left corner
+const HERO_WHITE_PATH = `${HERO_FRAME_OUTER} ${HERO_PHOTO_HOLE}`;
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-screen lg:min-h-0 lg:h-[850px] bg-white flex flex-col lg:block pt-32 lg:pt-0">
+    <section className="relative w-full min-h-screen lg:min-h-0 lg:h-[850px] bg-white flex flex-col lg:block pt-32 lg:pt-0 lg:overflow-hidden">
       {/* Logo (sits on the white panel, both modes) */}
-      <div className="absolute top-10 left-8 md:left-16 xl:left-20 z-30 text-black">
+      <div className="absolute top-10 lg:top-[28px] left-8 md:left-16 xl:left-20 z-30 text-black">
         <Logo />
       </div>
 
@@ -83,15 +100,25 @@ function DesktopHero() {
         <div className="absolute inset-0 bg-gradient-to-l from-black/30 via-transparent to-transparent" />
       </div>
 
-      {/* 2. White curve panel (drawn directly as an SVG shape, 1:1 — no distortion) */}
+      {/* 2a. Full-width white "gap" strip across the very top, so on screens
+             wider than the 1440 design the gap still spans edge-to-edge. */}
+      <div className="absolute top-0 inset-x-0 h-[12px] bg-white z-10" />
+
+      {/* 2b. White frame (outer rect + photo-shaped hole, evenodd), pinned at a
+             FIXED 1440×850 / 1:1 anchored top-left. It is NOT scaled, so the
+             notch + top gap always line up with the fixed-px headline and nav;
+             on wider screens the watch simply bleeds past the frame's right
+             edge to fill the screen. */}
       <svg
-        className="absolute left-0 top-0 h-full w-full z-10"
-        viewBox="0 0 760 850"
+        className="absolute left-0 top-0 z-10"
+        width={1440}
+        height={850}
+        viewBox="0 0 1440 850"
         preserveAspectRatio="xMinYMin meet"
         fill="none"
         aria-hidden="true"
       >
-        <path d={HERO_WHITE_PATH} fill="white" />
+        <path d={HERO_WHITE_PATH} fill="white" fillRule="evenodd" />
       </svg>
 
       {/* 3. Text content (over the white panel) */}

@@ -12,7 +12,7 @@ import { NAV_LINKS } from "@/data/constants";
 
 export function DesktopNav() {
   return (
-    <div className="absolute top-10 left-[480px] xl:left-[520px] right-16 flex justify-between items-center z-20 text-white">
+    <div className="absolute top-[28px] left-[480px] xl:left-[520px] right-16 flex justify-between items-center z-20 text-white">
       <div className="flex gap-8 text-[15px] font-medium tracking-wide">
         {NAV_LINKS.map((link) => (
           <span
