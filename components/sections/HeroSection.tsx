@@ -8,8 +8,8 @@ const HERO_IMAGE = "/hero-image.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative isolate min-h-[680px] overflow-hidden bg-white md:h-[min(100vh,850px)] md:min-h-[550px]">
-      <div className="absolute left-6 top-8 z-30 text-black md:left-[35px] md:top-[14px]">
+    <section className="relative isolate overflow-hidden bg-white">
+      <div className="absolute left-6 top-8 z-30 text-black md:hidden">
         <Logo />
       </div>
 
@@ -46,8 +46,16 @@ function MobileHero() {
 
 function DesktopHero() {
   return (
-    <div className="absolute inset-0 hidden md:block">
-      <div className="absolute inset-y-0 left-[29.65%] right-0 overflow-hidden rounded-bl-[28px]">
+    <div className="relative hidden aspect-[890/551] w-full overflow-hidden bg-white [container-type:inline-size] md:block">
+      <div
+        className="absolute left-0 top-0 h-[551px] w-[890px] origin-top-left"
+        style={{ transform: "scale(calc(100cqw / 890px))" }}
+      >
+      <div className="absolute left-[35px] top-[14px] z-30 text-black">
+        <Logo />
+      </div>
+
+      <div className="absolute inset-y-0 left-[264px] right-0 overflow-hidden rounded-bl-[28px]">
         <Image
           src={HERO_IMAGE}
           alt="Black mechanical Ovalen watch with red hands"
@@ -71,6 +79,10 @@ function DesktopHero() {
       </svg>
       <DesktopNav />
 
+      <span className="absolute left-[655px] top-[252px] z-20 text-[17px] font-semibold tracking-[-0.04em] text-white">
+        menghsun
+      </span>
+
       <div className="absolute left-[35px] top-[114px] z-20 flex items-center gap-4">
         <Tagline />
       </div>
@@ -88,6 +100,7 @@ function DesktopHero() {
       <NavigationArrows />
       <ProductCard />
       <CarouselIndicators />
+      </div>
     </div>
   );
 }
@@ -97,11 +110,11 @@ function ProductCard() {
     <article className="absolute bottom-[10px] left-[calc(29.7%+24px)] z-20 flex h-[110px] w-[270px] items-center gap-3 rounded-[17px] bg-white p-[6px] pr-3 text-black shadow-[0_12px_35px_rgba(0,0,0,0.16)]">
       <div className="relative h-full w-[98px] flex-none overflow-hidden rounded-[13px] bg-[#171717]">
         <Image
-          src={HERO_IMAGE}
-          fill
+          src="/prototype -design.webp"
+          width={1015}
+          height={4136}
           alt="Oris Divers Sixty-Five watch"
-          sizes="160px"
-          className="object-cover object-center"
+          className="absolute left-[-344px] top-[-504px] max-w-none"
         />
       </div>
       <div className="min-w-0 flex-1">
