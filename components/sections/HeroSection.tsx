@@ -69,8 +69,14 @@ function DesktopHero() {
         preserveAspectRatio="none"
       >
         <path
+          className="2xl:hidden"
           fill="white"
           d="M0 0H264V80Q264 98 282 98H364Q382 98 382 116Q382 133 400 133H424Q442 133 442 151V184Q442 202 424 202H405Q387 202 387 220V246Q387 264 369 264H282Q264 264 264 282V551H0Z"
+        />
+        <path
+          className="hidden 2xl:block"
+          fill="white"
+          d="M0 0H264V80Q264 98 282 98H320Q338 98 338 116Q338 133 356 133H370Q388 133 388 151V184Q388 202 370 202H362Q344 202 344 220V246Q344 264 326 264H282Q264 264 264 282V551H0Z"
         />
       </svg>
       <DesktopNav />
