@@ -5,52 +5,46 @@ import Image from "next/image";
 import { ArrowLeft, ArrowRight, ShoppingBag } from "lucide-react";
 import { DesktopNav, MobileNav, Logo } from "@/components/layout/Navbar";
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1622434641406-a158123450f9?auto=format&fit=crop&w=1600&q=80";
+const HERO_IMAGE = "/hero-image.png";
 const PRODUCT_CARD_IMAGE =
   "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=200&q=80";
 
-// The white "tab" carved out of the left edge of the hero image, replicating the
-// reference mockup's full outline (top → bottom on the right edge):
-//   1. a narrow upper shelf at the tagline, then a STEP out to the wider headline
-//      block (rounded inner + outer corners),
-//   2. a deep CONCAVE scoop (two `A` arcs, concave sweep) where the round watch
-//      face pokes INTO the pocket,
-//   3. a rounded bottom-right corner, with soft fillets where the tab meets the
-//      straight image edge.
-// Authored in the image's local coordinate space (x:0 = image's left edge). ONE line.
-const HERO_CLIP_PATH =
-  "path('M 110 0 L 4000 0 L 4000 850 L 40 850 C 18 850 0 832 0 810 L 0 474 C 0 430 30 404 98 398 L 286 398 C 312 398 332 384 332 372 A 16 16 0 0 1 316 356 L 300 356 A 16 16 0 0 0 284 340 L 284 276 A 16 16 0 0 0 300 260 L 316 260 A 16 16 0 0 1 332 244 L 332 196 C 332 168 312 150 280 150 L 98 150 C 42 150 0 118 0 62 L 0 40 C 0 18 18 0 40 0 Z')";
+// The hero is now layered: full-bleed watch image → WHITE SVG shape on top →
+// text/nav/card above that. This `d` draws the white panel directly (positive
+// shape) in a fixed 760×850 coordinate space (1 unit = 1px, no distortion).
+// Right-edge outline, top → bottom:
+//   • big rounded curve where the image tucks behind the nav,
+//   • a stepped shoulder out to the headline block,
+//   • a square BOX notch (straight → rounded corner → straight) where the watch
+//     pokes into the panel,
+//   • a big bottom-right curve melting back into the image.
+// Tune the numbers here to match the reference; H = panel width, V = step heights.
+const HERO_WHITE_PATH =
+  "M 0 0 H 448 V 116 Q 448 152 486 156 H 560 C 662 162 702 172 712 214 V 266 C 712 324 648 334 634 390 C 626 426 634 462 634 496 V 550 Q 634 608 582 628 Q 516 652 516 708 V 850 H 0 Z";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-screen lg:min-h-0 lg:h-[850px] bg-white flex flex-col lg:flex-row lg:items-start pt-32 lg:pt-0">
-      {/* Logo */}
-      <div className="absolute top-10 left-8 md:left-16 xl:left-32 z-20 text-black">
+    <section className="relative w-full min-h-screen lg:min-h-0 lg:h-[850px] bg-white flex flex-col lg:block pt-32 lg:pt-0">
+      {/* Logo (sits on the white panel, both modes) */}
+      <div className="absolute top-10 left-8 md:left-16 xl:left-20 z-30 text-black">
         <Logo />
       </div>
 
-      {/* ── Mobile / Tablet Content ── */}
+      {/* ── Mobile / Tablet ── */}
       <MobileContent />
-
-      {/* ── Desktop Content Overlay ── */}
-      <DesktopContent />
-
-      {/* ── Right Image with Clip Path (Desktop) ── */}
-      <HeroImage />
-
-      {/* Mobile Nav */}
       <MobileNav />
-
-      {/* Mobile Image (No clip path) */}
       <div className="w-full lg:hidden h-[400px] sm:h-[500px] relative mt-0 mb-8">
         <Image
-          src={HERO_IMAGE.replace("w=1600", "w=1000")}
+          src={HERO_IMAGE}
           alt="Hero Watch Mobile"
           fill
-          className="object-cover"
+          sizes="100vw"
+          className="object-cover object-center"
         />
       </div>
+
+      {/* ── Desktop (layered: image → white SVG → content → nav → card) ── */}
+      <DesktopHero />
     </section>
   );
 }
@@ -73,68 +67,66 @@ function MobileContent() {
   );
 }
 
-function DesktopContent() {
+function DesktopHero() {
   return (
-    <div className="hidden lg:block absolute top-0 left-0 w-full h-full pointer-events-none z-10">
-      <div className="w-full h-full relative pl-16 xl:pl-32">
+    <div className="hidden lg:block absolute inset-0">
+      {/* 1. Watch image (full-bleed background) */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={HERO_IMAGE}
+          alt="Hero Watch"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[54%_46%]"
+        />
+        <div className="absolute inset-0 bg-gradient-to-l from-black/30 via-transparent to-transparent" />
+      </div>
+
+      {/* 2. White curve panel (drawn directly as an SVG shape, 1:1 — no distortion) */}
+      <svg
+        className="absolute left-0 top-0 h-full w-full z-10"
+        viewBox="0 0 760 850"
+        preserveAspectRatio="xMinYMin meet"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d={HERO_WHITE_PATH} fill="white" />
+      </svg>
+
+      {/* 3. Text content (over the white panel) */}
+      <div className="absolute inset-0 z-20 pointer-events-none pl-16 xl:pl-20">
         <div className="absolute top-[140px] flex items-center gap-4 h-[40px] pointer-events-auto">
           <Tagline />
         </div>
 
-        <h1 className="absolute top-[176px] text-[56px] xl:text-[72px] tracking-tight font-medium text-black pointer-events-auto whitespace-nowrap">
-          <span className="block h-[78px] leading-[78px]">
-            Ovalen will make
-          </span>
-          <span className="block h-[72px] leading-[72px] mt-[28px]">
+        <h1 className="absolute top-[178px] text-[52px] xl:text-[60px] tracking-tight font-medium text-black pointer-events-auto whitespace-nowrap">
+          <span className="block h-[64px] leading-[64px]">Ovalen will make</span>
+          <span className="block h-[64px] leading-[64px] mt-[20px]">
             your life easier
           </span>
         </h1>
 
-        <div className="absolute top-[470px] pointer-events-auto flex flex-col gap-8 max-w-[160px] xl:max-w-[220px]">
+        <div className="absolute top-[432px] pointer-events-auto flex flex-col gap-8 max-w-[200px] xl:max-w-[240px]">
           <Description />
           <ExploreButton />
           <NavigationArrows className="mt-4" />
         </div>
       </div>
-    </div>
-  );
-}
 
-function HeroImage() {
-  return (
-    <div className="hidden lg:block absolute right-0 top-0 lg:w-[calc(100%-240px)] xl:w-[calc(100%-360px)] h-[850px] z-0">
-      <div
-        className="w-full h-full relative"
-        style={{
-          clipPath: HERO_CLIP_PATH,
-          WebkitClipPath: HERO_CLIP_PATH,
-        }}
-      >
-        <Image
-          src={HERO_IMAGE}
-          alt="Hero Watch"
-          fill
-          className="object-cover object-center scale-[1.02] brightness-90 saturate-[0.8]"
-          priority
-        />
-        <div className="absolute inset-0 bg-gradient-to-l from-black/50 to-transparent opacity-80" />
+      {/* 4. Nav (over the image, right side) */}
+      <DesktopNav />
 
-        {/* Nav Overlay */}
-        <DesktopNav />
-
-        {/* Product Card */}
-        <ProductCard />
-
-        {/* Carousel indicators */}
-        <CarouselIndicators />
-      </div>
+      {/* 5. Product card + carousel (over the image) */}
+      <ProductCard />
+      <CarouselIndicators />
     </div>
   );
 }
 
 function ProductCard() {
   return (
-    <div className="absolute bottom-28 left-8 bg-white text-black p-4 rounded-3xl flex gap-5 w-[340px] items-center shadow-2xl z-20">
+    <div className="absolute bottom-12 left-[420px] xl:left-[470px] bg-white text-black p-4 rounded-3xl flex gap-5 w-[340px] items-center shadow-2xl z-20">
       <div className="w-[90px] h-[90px] relative rounded-2xl overflow-hidden flex-shrink-0 bg-[#f8f9fa] flex items-center justify-center">
         <Image
           src={PRODUCT_CARD_IMAGE}
