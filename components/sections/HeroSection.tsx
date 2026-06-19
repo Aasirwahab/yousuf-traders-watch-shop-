@@ -1,150 +1,91 @@
 "use client";
 
-import React from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, ShoppingBag } from "lucide-react";
-import { DesktopNav, MobileNav, Logo } from "@/components/layout/Navbar";
+import { DesktopNav, Logo, MobileNav } from "@/components/layout/Navbar";
 
 const HERO_IMAGE = "/hero-image.png";
-const PRODUCT_CARD_IMAGE =
-  "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=200&q=80";
-
-// The hero is layered: full-bleed watch image → WHITE SVG FRAME on top →
-// text/nav/card above. Matching the prototype, the watch is NOT a full-bleed
-// background with an organic blob cut out of it — it's a crisp **rounded-
-// rectangle photo block**, inset from the top/right/bottom (the white "gap"),
-// with one clean **rounded-rectangle notch** carved into its left edge to seat
-// the headline.
-//
-// We draw the WHITE area as a single path = an outer rectangle (the full hero)
-// with the photo silhouette punched out as a hole (fill-rule="evenodd"). The
-// hole reveals the full-bleed image behind it; everything else stays white.
-// The path lives in a fixed 1440×850 design box rendered 1:1 (not scaled), so
-// the notch/gap stay aligned to the fixed-px headline & nav; on wider screens
-// the watch bleeds past the frame to fill the screen.
-//
-// Photo block is FULL-BLEED on the right & bottom (the watch fills the screen);
-// only the TOP keeps a white "gap" (T=82) and the LEFT keeps the white text
-// panel (X1=458). The single feature on the left edge is the headline NOTCH:
-// a tab that bulges right to seat "Ovalen will make / your life easier"
-// (text occupies x≈80→539, y≈178→326). Its right edge is bowed convex out to
-// x≈600 at the vertical middle — that's the "middle curve".
-const HERO_FRAME_OUTER = "M0 0 H1440 V850 H0 Z";
-const HERO_PHOTO_HOLE =
-  "M482 12 L1470 12 L1470 870 L458 870 " + // small top gap + full-bleed right & bottom
-  "L458 372 Q458 352 478 352 " + //            up to notch, concave fillet in
-  "L557 352 Q585 352 588 324 " + //            tab bottom edge + bottom-right corner
-  "Q600 290 600 258 Q600 226 588 192 " + //    bowed convex right edge (middle curve)
-  "Q585 164 557 164 L478 164 " + //            top-right corner + tab top edge
-  "Q458 164 458 144 L458 36 Q458 12 482 12 Z"; // concave fillet + top-left corner
-const HERO_WHITE_PATH = `${HERO_FRAME_OUTER} ${HERO_PHOTO_HOLE}`;
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full min-h-screen lg:min-h-0 lg:h-[850px] bg-white flex flex-col lg:block pt-32 lg:pt-0 lg:overflow-hidden">
-      {/* Logo (sits on the white panel, both modes) */}
-      <div className="absolute top-10 lg:top-[28px] left-8 md:left-16 xl:left-20 z-30 text-black">
+    <section className="relative isolate min-h-[680px] overflow-hidden bg-white md:h-[min(100vh,850px)] md:min-h-[550px]">
+      <div className="absolute left-6 top-8 z-30 text-black md:left-[35px] md:top-[14px]">
         <Logo />
       </div>
 
-      {/* ── Mobile / Tablet ── */}
-      <MobileContent />
       <MobileNav />
-      <div className="w-full lg:hidden h-[400px] sm:h-[500px] relative mt-0 mb-8">
-        <Image
-          src={HERO_IMAGE}
-          alt="Hero Watch Mobile"
-          fill
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-      </div>
-
-      {/* ── Desktop (layered: image → white SVG → content → nav → card) ── */}
+      <MobileHero />
       <DesktopHero />
     </section>
   );
 }
 
-/* ── Sub-components ─────────────────────────────────────────── */
-
-function MobileContent() {
+function MobileHero() {
   return (
-    <div className="w-full lg:hidden p-8 md:p-16 z-10 flex flex-col justify-center">
+    <div className="flex min-h-[680px] flex-col px-6 pb-6 pt-32 md:hidden">
       <Tagline />
-      <h1 className="text-5xl md:text-7xl leading-[1.05] tracking-tight font-medium text-black mb-8">
-        Ovalen will make
-        <br />
-        your life easier
+      <h1 className="mt-4 text-[clamp(2.25rem,10vw,3rem)] font-normal leading-[1.02] tracking-[-0.055em] text-black">
+        <span className="block whitespace-nowrap">Ovalen will make</span>
+        <span className="block whitespace-nowrap">your life easier</span>
       </h1>
-      <Description />
-      <ExploreButton className="mb-16" />
-      <NavigationArrows />
+      <Description className="mt-7" />
+      <ExploreButton className="mt-5" />
+      <div className="relative mt-9 min-h-[260px] flex-1 overflow-hidden rounded-[28px]">
+        <Image
+          src={HERO_IMAGE}
+          alt="Black mechanical Ovalen watch with red hands"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+      </div>
     </div>
   );
 }
 
 function DesktopHero() {
   return (
-    <div className="hidden lg:block absolute inset-0">
-      {/* 1. Watch image (full-bleed background) */}
-      <div className="absolute inset-0 z-0">
+    <div className="absolute inset-0 hidden md:block">
+      <div className="absolute inset-y-0 left-[29.65%] right-0 overflow-hidden rounded-bl-[28px]">
         <Image
           src={HERO_IMAGE}
-          alt="Hero Watch"
+          alt="Black mechanical Ovalen watch with red hands"
           fill
           priority
-          sizes="100vw"
-          className="object-cover object-[54%_46%]"
+          sizes="70vw"
+          className="scale-150 object-cover object-[72%_center]"
         />
-        <div className="absolute inset-0 bg-gradient-to-l from-black/30 via-transparent to-transparent" />
       </div>
 
-      {/* 2a. Full-width white "gap" strip across the very top, so on screens
-             wider than the 1440 design the gap still spans edge-to-edge. */}
-      <div className="absolute top-0 inset-x-0 h-[12px] bg-white z-10" />
-
-      {/* 2b. White frame (outer rect + photo-shaped hole, evenodd), pinned at a
-             FIXED 1440×850 / 1:1 anchored top-left. It is NOT scaled, so the
-             notch + top gap always line up with the fixed-px headline and nav;
-             on wider screens the watch simply bleeds past the frame's right
-             edge to fill the screen. */}
       <svg
-        className="absolute left-0 top-0 z-10"
-        width={1440}
-        height={850}
-        viewBox="0 0 1440 850"
-        preserveAspectRatio="xMinYMin meet"
-        fill="none"
         aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-10 h-full w-full"
+        viewBox="0 0 890 551"
+        preserveAspectRatio="none"
       >
-        <path d={HERO_WHITE_PATH} fill="white" fillRule="evenodd" />
+        <path
+          fill="white"
+          d="M0 0H264V80Q264 98 282 98H364Q382 98 382 116Q382 133 400 133H424Q442 133 442 151V184Q442 202 424 202H405Q387 202 387 220V246Q387 264 369 264H282Q264 264 264 282V551H0Z"
+        />
       </svg>
-
-      {/* 3. Text content (over the white panel) */}
-      <div className="absolute inset-0 z-20 pointer-events-none pl-16 xl:pl-20">
-        <div className="absolute top-[140px] flex items-center gap-4 h-[40px] pointer-events-auto">
-          <Tagline />
-        </div>
-
-        <h1 className="absolute top-[178px] text-[52px] xl:text-[60px] tracking-tight font-medium text-black pointer-events-auto whitespace-nowrap">
-          <span className="block h-[64px] leading-[64px]">Ovalen will make</span>
-          <span className="block h-[64px] leading-[64px] mt-[20px]">
-            your life easier
-          </span>
-        </h1>
-
-        <div className="absolute top-[432px] pointer-events-auto flex flex-col gap-8 max-w-[200px] xl:max-w-[240px]">
-          <Description />
-          <ExploreButton />
-          <NavigationArrows className="mt-4" />
-        </div>
-      </div>
-
-      {/* 4. Nav (over the image, right side) */}
       <DesktopNav />
 
-      {/* 5. Product card + carousel (over the image) */}
+      <div className="absolute left-[35px] top-[114px] z-20 flex items-center gap-4">
+        <Tagline />
+      </div>
+
+      <h1 className="absolute left-[35px] top-[139px] z-20 text-[53px] font-normal leading-[1.06] tracking-[-0.048em] text-black">
+        <span className="block whitespace-nowrap">Ovalen will make</span>
+        <span className="block whitespace-nowrap">your life easier</span>
+      </h1>
+
+      <div className="absolute left-[35px] top-[294px] z-20 w-[175px]">
+        <Description />
+        <ExploreButton className="mt-6" />
+      </div>
+
+      <NavigationArrows />
       <ProductCard />
       <CarouselIndicators />
     </div>
@@ -153,72 +94,57 @@ function DesktopHero() {
 
 function ProductCard() {
   return (
-    <div className="absolute bottom-12 left-[420px] xl:left-[470px] bg-white text-black p-4 rounded-3xl flex gap-5 w-[340px] items-center shadow-2xl z-20">
-      <div className="w-[90px] h-[90px] relative rounded-2xl overflow-hidden flex-shrink-0 bg-[#f8f9fa] flex items-center justify-center">
+    <article className="absolute bottom-[10px] left-[calc(29.7%+24px)] z-20 flex h-[110px] w-[270px] items-center gap-3 rounded-[17px] bg-white p-[6px] pr-3 text-black shadow-[0_12px_35px_rgba(0,0,0,0.16)]">
+      <div className="relative h-full w-[98px] flex-none overflow-hidden rounded-[13px] bg-[#171717]">
         <Image
-          src={PRODUCT_CARD_IMAGE}
+          src={HERO_IMAGE}
           fill
-          alt="Watch"
-          className="object-cover scale-110"
+          alt="Oris Divers Sixty-Five watch"
+          sizes="160px"
+          className="object-cover object-center"
         />
       </div>
-      <div className="flex flex-col flex-1 pl-1">
-        <span className="text-[10px] text-gray-400 font-bold uppercase tracking-[0.15em] mb-1">
-          Oris
-        </span>
-        <span className="font-bold text-[17px] mb-1 leading-snug tracking-tight">
+      <div className="min-w-0 flex-1">
+        <p className="text-[10px] text-[#969696]">Oris</p>
+        <h2 className="truncate text-[15px] font-medium leading-tight tracking-[-0.02em]">
           Divers Sixty-Five
-        </span>
-        <span className="text-[10px] text-gray-400 font-mono tracking-tighter mb-3 block">
-          REF 01 733 7720
-        </span>
-        <div className="flex justify-between items-end">
-          <div className="flex items-baseline gap-2">
-            <span className="font-extrabold text-[19px] leading-none">
-              $2.470
-            </span>
-            <span className="text-gray-400 text-[11px] font-medium line-through leading-none">
-              $2.990
-            </span>
+        </h2>
+        <p className="mt-1 truncate text-[7px] text-[#9b9b9b]">
+          REF 01 733 7720 4054-07 8 21 18
+        </p>
+        <div className="mt-4 flex items-center justify-between gap-2">
+          <div className="flex items-baseline gap-2 whitespace-nowrap">
+            <span className="text-[17px] font-medium">$2.470</span>
+            <span className="text-[11px] text-[#a5a5a5] line-through">$2.990</span>
           </div>
-          <button className="w-[34px] h-[34px] rounded-full border border-gray-200 flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all cursor-pointer">
-            <ShoppingBag className="w-[14px] h-[14px]" />
+          <button
+            type="button"
+            aria-label="Add Oris Divers Sixty-Five to bag"
+            className="grid h-7 w-7 place-items-center rounded-full border border-[#bcbcbc] transition-colors hover:bg-black hover:text-white"
+          >
+            <ShoppingBag className="h-[42%] w-[42%]" strokeWidth={1.5} />
           </button>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
-
-function CarouselIndicators() {
-  return (
-    <div className="absolute bottom-16 right-16 flex gap-2 z-20">
-      <div className="w-10 h-[3px] bg-white rounded-full cursor-pointer" />
-      <div className="w-2.5 h-[3px] bg-white/40 rounded-full hover:bg-white/60 transition-colors cursor-pointer" />
-      <div className="w-2.5 h-[3px] bg-white/40 rounded-full hover:bg-white/60 transition-colors cursor-pointer" />
-      <div className="w-2.5 h-[3px] bg-white/40 rounded-full hover:bg-white/60 transition-colors cursor-pointer" />
-    </div>
-  );
-}
-
-/* ── Shared Atoms ───────────────────────────────────────────── */
 
 function Tagline() {
   return (
-    <>
-      <div className="w-12 h-px bg-gray-400" />
-      <span className="text-gray-500 font-medium text-sm md:text-base lg:text-base">
+    <div className="flex items-center gap-4 whitespace-nowrap">
+      <span className="block h-px w-[54px] bg-[#aaa] md:w-[88px]" />
+      <p className="text-[11px] font-normal text-[#8d8d8d] md:text-[12px]">
         Effective gadgets for the modern world
-      </span>
-    </>
+      </p>
+    </div>
   );
 }
 
-function Description() {
+function Description({ className = "" }: { className?: string }) {
   return (
-    <p className="text-gray-500 max-w-sm leading-relaxed text-base md:text-lg lg:text-lg">
-      Explore our best products to find what you want, there you will definitely
-      find it.
+    <p className={`text-[12px] leading-[1.25] text-[#878787] ${className}`}>
+      Explore our best products to find what you want, there you will definitely find it.
     </p>
   );
 }
@@ -226,22 +152,46 @@ function Description() {
 function ExploreButton({ className = "" }: { className?: string }) {
   return (
     <button
-      className={`bg-black text-white px-8 py-4 rounded-[30px] font-medium hover:bg-gray-800 transition-colors shadow-lg w-fit whitespace-nowrap tracking-wide cursor-pointer self-start ${className}`}
+      type="button"
+      className={`self-start rounded-full bg-black px-[22px] py-[9px] text-[11px] font-medium text-white transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 ${className}`}
     >
       Explore Product
     </button>
   );
 }
 
-function NavigationArrows({ className = "" }: { className?: string }) {
+function NavigationArrows() {
   return (
-    <div className={`flex gap-4 ${className}`}>
-      <button className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-50 transition-colors cursor-pointer">
-        <ArrowLeft className="w-4 h-4 text-gray-500" />
-      </button>
-      <button className="w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-black hover:text-white transition-all group cursor-pointer">
-        <ArrowRight className="w-4 h-4 text-black group-hover:text-white transition-colors" />
-      </button>
+    <div className="absolute bottom-[10px] left-[35px] z-20 flex gap-[15px]">
+      <ArrowButton label="Previous product">
+        <ArrowLeft className="h-full w-full" />
+      </ArrowButton>
+      <ArrowButton label="Next product" strong>
+        <ArrowRight className="h-full w-full" />
+      </ArrowButton>
+    </div>
+  );
+}
+
+function ArrowButton({ children, label, strong = false }: { children: React.ReactNode; label: string; strong?: boolean }) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      className={`grid h-[34px] w-[34px] place-items-center rounded-full border transition-colors ${strong ? "border-black hover:bg-black hover:text-white" : "border-[#bdbdbd] text-[#888] hover:border-black hover:text-black"}`}
+    >
+      <span className="block h-[38%] w-[38%]">{children}</span>
+    </button>
+  );
+}
+
+function CarouselIndicators() {
+  return (
+    <div className="absolute bottom-[11px] right-[20px] z-20 flex items-center gap-1" aria-label="Product carousel position">
+      <span className="h-[3px] w-[22px] rounded-full bg-white" />
+      {[1, 2, 3, 4].map((item) => (
+        <span key={item} className="h-[3px] w-[6px] rounded-full bg-white/45" />
+      ))}
     </div>
   );
 }

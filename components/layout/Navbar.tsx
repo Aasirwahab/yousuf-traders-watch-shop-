@@ -1,56 +1,52 @@
 "use client";
 
-import React from "react";
 import { ChevronDown, Search, ShoppingBag, User } from "lucide-react";
 import { NAV_LINKS } from "@/data/constants";
 
-/**
- * Navbar — renders in two modes:
- *  • Desktop: white text overlaid on the hero image (inside the clip-path area)
- *  • Mobile:  black icons positioned top-right of the page
- */
-
 export function DesktopNav() {
   return (
-    <div className="absolute top-[28px] left-[480px] xl:left-[520px] right-16 flex justify-between items-center z-20 text-white">
-      <div className="flex gap-8 text-[15px] font-medium tracking-wide">
+    <nav aria-label="Primary navigation" className="absolute left-[calc(29.7%+28px)] right-[20px] top-[15px] z-20 flex items-center justify-between text-white">
+      <div className="flex items-center gap-7 text-[12px]">
         {NAV_LINKS.map((link) => (
-          <span
-            key={link.label}
-            className="flex items-center gap-1.5 cursor-pointer hover:text-gray-300 transition-colors"
-          >
+          <button key={link.label} type="button" className="flex items-center gap-1 whitespace-nowrap transition-opacity hover:opacity-70">
             {link.label}
-            {link.hasDropdown && (
-              <ChevronDown className="w-3 h-3 text-gray-400" />
-            )}
-          </span>
+            {link.hasDropdown ? <ChevronDown className="h-[0.8em] w-[0.8em]" strokeWidth={1.6} /> : null}
+          </button>
         ))}
       </div>
-      <div className="flex gap-8">
-        <Search className="w-[18px] h-[18px] cursor-pointer hover:text-gray-300 transition-colors" />
-        <ShoppingBag className="w-[18px] h-[18px] cursor-pointer hover:text-gray-300 transition-colors" />
-        <User className="w-[18px] h-[18px] cursor-pointer hover:text-gray-300 transition-colors" />
+      <div className="flex items-center gap-5">
+        <NavIcon label="Search"><Search /></NavIcon>
+        <NavIcon label="Shopping bag"><ShoppingBag /></NavIcon>
+        <NavIcon label="Account"><User /></NavIcon>
       </div>
-    </div>
+    </nav>
+  );
+}
+
+function NavIcon({ children, label }: { children: React.ReactNode; label: string }) {
+  return (
+    <button type="button" aria-label={label} className="h-[17px] w-[17px] transition-opacity hover:opacity-70">
+      {children}
+    </button>
   );
 }
 
 export function MobileNav() {
   return (
-    <div className="lg:hidden absolute top-10 right-8 flex gap-4 z-20 text-black">
-      <Search className="w-5 h-5 cursor-pointer" />
-      <ShoppingBag className="w-5 h-5 cursor-pointer" />
-    </div>
+    <nav aria-label="Mobile navigation" className="absolute right-6 top-8 z-30 flex gap-5 text-black md:hidden">
+      <NavIcon label="Search"><Search /></NavIcon>
+      <NavIcon label="Shopping bag"><ShoppingBag /></NavIcon>
+    </nav>
   );
 }
 
 export function Logo({ className = "" }: { className?: string }) {
   return (
-    <div className={`flex items-center gap-3 ${className}`}>
-      <div className="w-8 h-8 rounded-full border-[3px] border-current flex items-center justify-center">
-        <div className="w-2 h-2 bg-current rounded-full" />
-      </div>
-      <span className="font-bold text-xl tracking-[0.15em]">OVALEN</span>
+    <div className={`flex items-center gap-[7px] ${className}`} aria-label="Ovalen">
+      <svg aria-hidden="true" viewBox="0 0 28 28" className="h-5 w-5">
+        <circle cx="14" cy="14" r="10" fill="none" stroke="currentColor" strokeWidth="5" strokeDasharray="50 13" transform="rotate(-46 14 14)" />
+      </svg>
+      <span className="text-[16px] font-medium tracking-[-0.025em]">OVALEN</span>
     </div>
   );
 }
