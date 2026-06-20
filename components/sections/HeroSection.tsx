@@ -156,7 +156,7 @@ function ExploreButton({ className = "" }: { className?: string }) {
 
 function NavigationArrows() {
   return (
-    <div className="absolute bottom-[12px] left-[37px] z-20 flex gap-[15px]">
+    <div className="absolute bottom-[12px] left-[3.93%] z-20 flex gap-[15px]">
       <ArrowButton label="Previous product">
         <ArrowLeft className="h-full w-full" />
       </ArrowButton>
