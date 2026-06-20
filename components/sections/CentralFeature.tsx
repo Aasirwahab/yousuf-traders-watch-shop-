@@ -6,7 +6,7 @@ const WATCH_IMAGE = "/prototype-assets/feature-watch.png";
 
 export default function CentralFeature() {
   return (
-    <section className="relative mx-auto mt-8 min-h-[680px] max-w-7xl overflow-hidden px-6 py-12 md:mt-12 md:min-h-[650px] md:px-12">
+    <section className="relative mx-auto mt-10 min-h-[680px] max-w-7xl overflow-hidden px-6 py-12 md:mt-14 md:min-h-[650px] md:px-12">
       <div className="pointer-events-none absolute left-1/2 top-[-4%] -translate-x-1/2 select-none font-serif text-[clamp(150px,23vw,270px)] leading-none tracking-[-0.065em] text-[#e9e9ec]">
         ovalen
       </div>
