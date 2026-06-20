@@ -60,6 +60,12 @@ function DesktopHero() {
           sizes="70vw"
           className="scale-150 object-cover object-[77%_center]"
         />
+        <span
+          className="absolute left-[73.2%] top-[48%] z-20 -translate-x-1/2 -translate-y-1/2 text-[clamp(30px,2.92vw,32px)] font-semibold leading-none tracking-[0.01em] text-white"
+          style={{ fontFamily: "var(--font-teko)" }}
+        >
+          menghsun
+        </span>
       </div>
 
       <svg
@@ -80,10 +86,6 @@ function DesktopHero() {
         />
       </svg>
       <DesktopNav />
-
-      <span className="absolute left-[74.15%] top-[46.64%] z-20 text-[20px] font-bold tracking-[-0.055em] text-white">
-        menghsun
-      </span>
 
       <div className="absolute left-[3.93%] top-[20.69%] z-20 [&>div]:gap-[clamp(14px,min(1.57vw,2.54vh),22px)] [&_p]:text-[clamp(12px,min(1.35vw,2.18vh),18px)] [&_span]:w-[clamp(88px,min(9.89vw,15.97vh),136px)]">
         <Tagline />
