@@ -5,7 +5,7 @@ import { NAV_LINKS } from "@/data/constants";
 
 export function DesktopNav() {
   return (
-    <nav aria-label="Primary navigation" className="absolute left-[calc(29.7%+28px)] right-[20px] top-[15px] z-20 flex items-center justify-between text-white">
+    <nav aria-label="Primary navigation" className="absolute left-[calc(29.7%+28px)] right-[27px] top-[17px] z-20 flex items-center justify-between text-white">
       <div className="flex items-center gap-7 text-[12px]">
         {NAV_LINKS.map((link) => (
           <button key={link.label} type="button" className="flex items-center gap-1 whitespace-nowrap transition-opacity hover:opacity-70">
@@ -15,9 +15,15 @@ export function DesktopNav() {
         ))}
       </div>
       <div className="flex items-center gap-5">
-        <NavIcon label="Search" sizeClass="h-[15px] w-[15px]"><Search /></NavIcon>
-        <NavIcon label="Shopping bag" sizeClass="h-[15px] w-[15px]"><ShoppingBag /></NavIcon>
-        <NavIcon label="Account" sizeClass="h-[15px] w-[15px]"><User /></NavIcon>
+        <NavIcon label="Search" sizeClass="h-[15px] w-[15px]">
+          <Search strokeWidth={1.3} />
+        </NavIcon>
+        <NavIcon label="Shopping bag" sizeClass="h-[14px] w-[14px]">
+          <ShoppingBag strokeWidth={1.3} />
+        </NavIcon>
+        <NavIcon label="Account" sizeClass="h-[14px] w-[14px]">
+          <User strokeWidth={1.3} />
+        </NavIcon>
       </div>
     </nav>
   );
