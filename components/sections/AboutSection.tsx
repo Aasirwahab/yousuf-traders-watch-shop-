@@ -17,15 +17,15 @@ export default function AboutSection() {
           About Ovalen
         </h2>
 
-        <div className="flex justify-center">
-          <p className="max-w-[500px] text-center text-[16px] font-normal leading-[1.48] text-[#999ba3] md:text-[17px] md:tracking-[-0.025em]">
+        <div className="flex justify-start">
+          <p className="w-full max-w-[500px] text-left text-[16px] font-normal leading-[1.48] text-[#999ba3] md:tracking-[-0.02em]">
             <span className="md:hidden">
               Ovalen is the horological point of contact for other news, business
               and lifestyle media. Ovalen has been prominently featured in various
               international media, including The New York Times, The Wall Street
               Journal, The Financial Times, Esquire, Gear Patrol, GQ, HighSnobiety.
             </span>
-            <span className="hidden md:block">Ovalen is the horological point of contact for other</span>
+            <span className="hidden pl-[32px] md:block">Ovalen is the horological point of contact for other</span>
             <span className="hidden md:block">news, business and lifestyle media. Ovalen has been</span>
             <span className="hidden md:block">prominently featured in various international media,</span>
             <span className="hidden md:block">including The New York Times, The Wall Street Journal, The</span>
