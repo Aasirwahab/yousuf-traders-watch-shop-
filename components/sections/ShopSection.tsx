@@ -1,54 +1,57 @@
-import React from "react";
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
 import { ShoppingBag } from "lucide-react";
-import { PRODUCTS, unsplashUrl } from "@/data/constants";
+import PrototypeCrop from "@/components/ui/PrototypeCrop";
+import { PRODUCTS } from "@/data/constants";
+
+const PRODUCT_CROPS = [
+  "/prototype-assets/product-louis.webp",
+  "/prototype-assets/product-roger.webp",
+  "/prototype-assets/product-jean.webp",
+  "/prototype-assets/product-seiko.webp",
+];
 
 export default function ShopSection() {
+  const [activeFilter, setActiveFilter] = useState("New Watches");
+
   return (
-    <section className="max-w-7xl mx-auto px-6 md:px-8 py-20 md:py-28 lg:py-32">
-      {/* Header */}
-      <div className="flex flex-col items-center mb-20">
-        <h2 className="text-3xl md:text-[40px] font-medium tracking-tight mb-8">
-          Explore the Ovalen Shop
-        </h2>
-        <div className="flex flex-wrap justify-center gap-3">
-          <button className="px-7 py-3 bg-black text-white rounded-full text-sm font-medium">
-            New Watches
-          </button>
-          <button className="px-7 py-3 border border-black rounded-full text-sm font-medium hover:bg-gray-50 transition-colors hidden sm:block">
-            Pre-Owned
-          </button>
-          <button className="px-7 py-3 border border-black rounded-full text-sm font-medium hover:bg-gray-50 transition-colors">
-            Straps
-          </button>
+    <section className="mx-auto max-w-7xl px-6 py-16 md:px-12">
+      <div className="mb-12 flex flex-col items-center md:mb-14">
+        <h2 className="mb-7 text-3xl font-normal tracking-[-0.035em] md:text-[40px]">Explore the Ovalen Shop</h2>
+        <div className="flex gap-2.5">
+          {['New Watches', 'Pre-Owned', 'Straps'].map((label) => (
+            <button
+              key={label}
+              type="button"
+              aria-pressed={activeFilter === label}
+              onClick={() => setActiveFilter(label)}
+              className={`rounded-full border border-black px-6 py-2 text-[13px] font-normal transition-colors ${activeFilter === label ? 'bg-black text-white' : 'bg-white text-black hover:bg-black hover:text-white'}`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10">
-        {PRODUCTS.map((item, i) => (
-          <div key={i} className="flex flex-col group cursor-pointer">
-            <div className="w-full aspect-[4/5] relative mb-5 rounded-[28px] overflow-hidden bg-[#f4f4f4]">
-              <Image
-                src={unsplashUrl(item.imageId, 400)}
-                fill
-                alt={item.name}
-                className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out p-1 sm:p-0"
-              />
-              <button className="absolute right-4 bottom-4 w-[38px] h-[38px] bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-md">
-                <ShoppingBag className="w-4 h-4 text-black" />
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-[14px]">
+        {PRODUCTS.map((item, index) => (
+          <article key={item.name} className="group relative min-w-0">
+            <PrototypeCrop
+              src={PRODUCT_CROPS[index]}
+              alt={item.name}
+              className={`w-full rounded-[14px] bg-[#fafafa] ${index === 0 ? 'aspect-[0.78]' : 'aspect-square'}`}
+            />
+            <div className="relative px-1 pt-3">
+              <h3 className="text-[13px] font-normal">{item.name}</h3>
+              <p className="mt-1 text-[11px] font-medium">
+                {item.price} <del className="ml-1 font-normal text-[#aaa]">{item.oldPrice}</del>
+              </p>
+              <button aria-label={`Add ${item.name} to bag`} className="absolute bottom-0 right-1 grid h-8 w-8 place-items-center rounded-full border border-black bg-white transition-colors hover:bg-black hover:text-white">
+                <ShoppingBag className="h-3.5 w-3.5" strokeWidth={1.4} />
               </button>
             </div>
-            <div className="px-1">
-              <h4 className="font-semibold text-[15px] mb-1">{item.name}</h4>
-              <div className="flex items-baseline gap-2">
-                <span className="font-bold text-[14px]">{item.price}</span>
-                <span className="text-gray-400 text-[12px] line-through font-medium">
-                  {item.oldPrice}
-                </span>
-              </div>
-            </div>
-          </div>
+          </article>
         ))}
       </div>
     </section>

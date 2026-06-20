@@ -8,7 +8,7 @@ const HERO_IMAGE = "/hero-image.png";
 
 export default function HeroSection() {
   return (
-    <section className="relative isolate min-h-[680px] overflow-hidden bg-white md:h-[min(100vh,850px)] md:min-h-[550px]">
+    <section className="relative isolate min-h-[680px] overflow-hidden bg-white md:h-[min(100vh,62vw,850px)] md:min-h-[550px]">
       <div className="absolute left-6 top-8 z-30 text-black md:hidden">
         <Logo />
       </div>
@@ -112,14 +112,25 @@ function ProductCard() {
   return (
     <article
       aria-label="Oris Divers Sixty-Five watch"
-      className="absolute bottom-[10px] left-[31.5%] z-20 h-[110px] w-[110px] overflow-hidden rounded-[17px] border-[5px] border-white bg-[#171717] bg-no-repeat shadow-[0_12px_35px_rgba(0,0,0,0.16)]"
-      style={{
-        backgroundImage: "url('/prototype%20-design.webp')",
-        backgroundPosition: "-390px -561px",
-        backgroundSize: "1150px 4686px",
-      }}
+      className="absolute bottom-[10px] left-[31.5%] z-20 hidden h-[110px] w-[270px] overflow-hidden rounded-[17px] border-[5px] border-white bg-white shadow-[0_12px_35px_rgba(0,0,0,0.16)] lg:flex"
     >
-      <span className="sr-only">Oris Divers Sixty-Five watch</span>
+      <div
+        className="h-full w-[108px] shrink-0 bg-[#171717] bg-no-repeat"
+        style={{
+          backgroundImage: "url('/prototype%20-design.webp')",
+          backgroundPosition: "-390px -561px",
+          backgroundSize: "1150px 4686px",
+        }}
+      />
+      <div className="flex min-w-0 flex-1 flex-col px-3 py-2 text-black">
+        <span className="text-[9px] text-[#999]">Oris</span>
+        <strong className="mt-0.5 text-[14px] font-medium leading-none">Divers Sixty-Five</strong>
+        <span className="mt-2 text-[8px] text-[#aaa]">REF: 01 733 7707 4064-07 8 20 18</span>
+        <div className="mt-auto flex items-end justify-between">
+          <span className="text-[16px] font-medium">$2,470 <del className="ml-1 text-[11px] font-normal text-[#aaa]">$2,990</del></span>
+          <span className="grid h-7 w-7 place-items-center rounded-full border border-black text-[11px]">○</span>
+        </div>
+      </div>
     </article>
   );
 }
