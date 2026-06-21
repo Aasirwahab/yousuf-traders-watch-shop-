@@ -9,7 +9,7 @@ const ARTICLE_CROPS = {
 
 export default function ArticleSection() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-20">
+    <section className="px-6 py-16 md:px-[calc(3.93%_+_6px)] md:py-20">
       <div className="mb-10 flex items-center justify-between">
         <Reveal><h2 className="text-[32px] font-normal tracking-[-0.035em] md:text-[40px]">New Article</h2></Reveal>
         <Reveal delay={0.1}><button className="rounded-full bg-black px-8 py-2.5 text-[13px] text-white transition-colors hover:bg-[#222]">View More</button></Reveal>

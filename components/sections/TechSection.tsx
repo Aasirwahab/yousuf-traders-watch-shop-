@@ -5,7 +5,7 @@ const TECH_IMAGE = "/prototype-assets/tech-watch.webp";
 
 export default function TechSection() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16 md:px-12 md:py-20">
+    <section className="px-6 py-16 md:px-[calc(3.93%_+_6px)] md:py-20">
       <div className="grid items-center gap-12 md:grid-cols-2 md:gap-0">
         <div className="max-w-[480px]">
           <Reveal>

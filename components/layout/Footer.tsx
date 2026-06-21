@@ -4,8 +4,8 @@ import { Reveal } from "@/components/ui/Reveal";
 
 export default function Footer() {
   return (
-    <footer className="mx-[6px] rounded-b-[14px] bg-black px-6 py-16 text-white md:px-12 md:py-20">
-      <div className="mx-auto grid max-w-7xl gap-14 md:grid-cols-[1.1fr_0.9fr] md:gap-0">
+    <footer className="mx-[6px] rounded-b-[14px] bg-black px-6 py-16 text-white md:px-[3.93%] md:py-20">
+      <div className="grid gap-14 md:grid-cols-[1.1fr_0.9fr] md:gap-0">
         <Reveal className="flex min-h-[230px] flex-col">
           <Logo />
           <p className="mt-7 max-w-[320px] text-[12px] leading-[1.5] text-[#aaa]">Explore our best products to find what you want, there you will definitely find it.</p>

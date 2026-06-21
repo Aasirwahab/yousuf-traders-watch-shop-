@@ -11,7 +11,7 @@ const CATEGORY_CROPS = [
 
 export default function AboutSection() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20 md:px-12">
+    <section className="px-6 pb-20 pt-28 md:px-[calc(3.93%_+_6px)] md:pt-44">
       <div className="mb-20 grid items-start gap-10 md:mb-[120px] md:grid-cols-2 md:gap-0">
         <Reveal>
           <h2 className="text-3xl font-normal tracking-[-0.035em] md:text-[40px]">

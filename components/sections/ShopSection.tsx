@@ -17,7 +17,7 @@ export default function ShopSection() {
   const [activeFilter, setActiveFilter] = useState("New Watches");
 
   return (
-    <section className="mx-auto max-w-7xl px-6 py-16 md:px-12">
+    <section className="px-6 py-16 md:px-[calc(3.93%_+_6px)]">
       <div className="mb-12 flex flex-col items-center md:mb-14">
         <Reveal><h2 className="mb-7 text-3xl font-normal tracking-[-0.035em] md:text-[40px]">Explore the Ovalen Shop</h2></Reveal>
         <Reveal className="flex gap-2.5" delay={0.12}>
