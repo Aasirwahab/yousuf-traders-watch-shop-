@@ -1,23 +1,20 @@
 import { CATEGORIES } from "@/data/constants";
 import PrototypeCrop from "@/components/ui/PrototypeCrop";
 import { Reveal } from "@/components/ui/Reveal";
+import Copy from "@/components/ui/Copy";
+import { IMAGES } from "@/data/images";
 
-const CATEGORY_CROPS = [
-  "/prototype-assets/category-modern.webp",
-  "/prototype-assets/category-limited.webp",
-  "/prototype-assets/category-chronograph.webp",
-  "/prototype-assets/category-classic.webp",
-];
+const CATEGORY_CROPS = IMAGES.categories;
 
 export default function AboutSection() {
   return (
     <section className="px-6 pb-20 pt-28 md:px-[calc(3.93%_+_6px)] md:pt-44">
       <div className="mb-20 grid items-start gap-10 md:mb-[120px] md:grid-cols-2 md:gap-0">
-        <Reveal>
+        <Copy>
           <h2 className="text-3xl font-normal tracking-[-0.035em] md:text-[40px]">
             About Ovalen
           </h2>
-        </Reveal>
+        </Copy>
 
         <Reveal className="flex justify-start" delay={0.12}>
           <p className="w-full max-w-[500px] text-left text-[16px] font-normal leading-[1.48] text-[#999ba3] md:tracking-[-0.02em]">

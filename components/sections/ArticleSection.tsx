@@ -1,17 +1,15 @@
 import PrototypeCrop from "@/components/ui/PrototypeCrop";
 import { MaskReveal, Reveal } from "@/components/ui/Reveal";
+import Copy from "@/components/ui/Copy";
+import { IMAGES } from "@/data/images";
 
-const ARTICLE_CROPS = {
-  lead: "/prototype-assets/article-lead.webp",
-  sideTop: "/prototype-assets/article-side.webp",
-  sideBottom: "/prototype-assets/article-face.webp",
-};
+const ARTICLE_CROPS = IMAGES.article;
 
 export default function ArticleSection() {
   return (
     <section className="px-6 py-16 md:px-[calc(3.93%_+_6px)] md:py-20">
       <div className="mb-10 flex items-center justify-between">
-        <Reveal><h2 className="text-[32px] font-normal tracking-[-0.035em] md:text-[40px]">New Article</h2></Reveal>
+        <Copy><h2 className="text-[32px] font-normal tracking-[-0.035em] md:text-[40px]">New Article</h2></Copy>
         <Reveal delay={0.1}><button className="rounded-full bg-black px-8 py-2.5 text-[13px] text-white transition-colors hover:bg-[#222]">View More</button></Reveal>
       </div>
 

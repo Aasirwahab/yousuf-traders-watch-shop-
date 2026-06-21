@@ -5,13 +5,10 @@ import { ShoppingBag } from "lucide-react";
 import PrototypeCrop from "@/components/ui/PrototypeCrop";
 import { PRODUCTS } from "@/data/constants";
 import { Reveal } from "@/components/ui/Reveal";
+import Copy from "@/components/ui/Copy";
+import { IMAGES } from "@/data/images";
 
-const PRODUCT_CROPS = [
-  "/prototype-assets/product-louis.webp",
-  "/prototype-assets/product-roger.webp",
-  "/prototype-assets/product-jean.webp",
-  "/prototype-assets/product-seiko.webp",
-];
+const PRODUCT_CROPS = IMAGES.products;
 
 export default function ShopSection() {
   const [activeFilter, setActiveFilter] = useState("New Watches");
@@ -19,7 +16,7 @@ export default function ShopSection() {
   return (
     <section className="px-6 py-16 md:px-[calc(3.93%_+_6px)]">
       <div className="mb-12 flex flex-col items-center md:mb-14">
-        <Reveal><h2 className="mb-7 text-3xl font-normal tracking-[-0.035em] md:text-[40px]">Explore the Ovalen Shop</h2></Reveal>
+        <Copy><h2 className="mb-7 text-3xl font-normal tracking-[-0.035em] md:text-[40px]">Explore the Ovalen Shop</h2></Copy>
         <Reveal className="flex gap-2.5" delay={0.12}>
           {['New Watches', 'Pre-Owned', 'Straps'].map((label) => (
             <button

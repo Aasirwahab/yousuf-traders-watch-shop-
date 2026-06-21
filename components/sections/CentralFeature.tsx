@@ -4,8 +4,9 @@ import { useRef } from "react";
 import { motion, useInView, useReducedMotion, type Transition } from "motion/react";
 import PrototypeCrop from "@/components/ui/PrototypeCrop";
 import { FEATURES_LEFT, FEATURES_RIGHT } from "@/data/constants";
+import { IMAGES } from "@/data/images";
 
-const WATCH_IMAGE = "/prototype-assets/feature-watch.png";
+const WATCH_IMAGE = IMAGES.featureWatch;
 
 // Sequence pacing (seconds). Plays once when the section scrolls into view.
 const STEP_BASE = 0.8; // first callout starts after the watch has settled

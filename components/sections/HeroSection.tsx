@@ -4,8 +4,9 @@ import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { DesktopNav, Logo, MobileNav } from "@/components/layout/Navbar";
 import { MaskReveal, Reveal } from "@/components/ui/Reveal";
+import { IMAGES } from "@/data/images";
 
-const HERO_IMAGE = "/hero-image.png";
+const HERO_IMAGE = IMAGES.hero;
 
 export default function HeroSection() {
   return (
@@ -116,7 +117,7 @@ function ProductCard() {
       <div
         className="h-full w-[108px] shrink-0 bg-[#171717] bg-no-repeat"
         style={{
-          backgroundImage: "url('/prototype-design.webp')",
+          backgroundImage: `url('${IMAGES.prototypeDesign}')`,
           backgroundPosition: "-390px -561px",
           backgroundSize: "1150px 4686px",
         }}

@@ -1,6 +1,8 @@
 import type {NextConfig} from 'next';
 import path from 'path';
 
+const imageKitEndpoint = process.env.NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT?.replace(/\/$/, '');
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   typescript: {
@@ -8,6 +10,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [
+      ...(imageKitEndpoint ? [new URL(`${imageKitEndpoint}/**`)] : []),
       {
         protocol: 'https',
         hostname: 'picsum.photos',
@@ -36,4 +39,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-

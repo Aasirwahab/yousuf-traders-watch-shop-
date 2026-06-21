@@ -29,6 +29,21 @@ Open [http://localhost:3000](http://localhost:3000).
 | `pnpm build` | Production build |
 | `pnpm start` | Serve the production build |
 | `pnpm lint` | Run ESLint |
+| `pnpm images:sync` | Upload every image in `public/` to ImageKit |
+
+## ImageKit
+
+Set these values in `.env`:
+
+```dotenv
+NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/your_id
+NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY=public_your_key
+IMAGEKIT_PRIVATE_KEY=private_your_key
+```
+
+Add source images under `public/`, run `pnpm images:sync`, and reference their
+stable `/ovalen/...` path through `data/images.ts`. The private key is only used
+by server-side code and the sync script; never prefix it with `NEXT_PUBLIC_`.
 
 ## Project structure
 
@@ -40,6 +55,9 @@ components/
   sections/               Hero, About, CentralFeature, Shop, Tech, Article
   ui/                     PrototypeCrop, Reveal (reusable animation primitives)
 data/constants.ts         Static content (nav, categories, products, features)
+data/images.ts            ImageKit delivery URLs
+lib/imagekit.ts           Server-only ImageKit upload client
+scripts/sync-imagekit.mjs ImageKit asset sync
 types/                    Shared TypeScript types
 public/prototype-assets/  Image assets
 ```
