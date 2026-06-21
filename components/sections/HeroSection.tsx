@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { DesktopNav, Logo, MobileNav } from "@/components/layout/Navbar";
+import { MaskReveal, Reveal } from "@/components/ui/Reveal";
 
 const HERO_IMAGE = "/hero-image.png";
 
@@ -23,14 +24,14 @@ export default function HeroSection() {
 function MobileHero() {
   return (
     <div className="flex min-h-[680px] flex-col px-6 pb-6 pt-32 md:hidden">
-      <Tagline />
+      <Reveal delay={0.15}><Tagline /></Reveal>
       <h1 className="mt-4 text-[clamp(2.25rem,10vw,3rem)] font-normal leading-[1.02] tracking-[-0.055em] text-black">
-        <span className="block whitespace-nowrap">Ovalen will make</span>
-        <span className="block whitespace-nowrap">your life easier</span>
+        <span className="block overflow-hidden whitespace-nowrap"><Reveal inline className="block" delay={0.28}>Ovalen will make</Reveal></span>
+        <span className="block overflow-hidden whitespace-nowrap"><Reveal inline className="block" delay={0.4}>your life easier</Reveal></span>
       </h1>
-      <Description className="mt-7" />
-      <ExploreButton className="mt-5" />
-      <div className="relative mt-9 min-h-[260px] flex-1 overflow-hidden rounded-[28px]">
+      <Reveal delay={0.56}><Description className="mt-7" /></Reveal>
+      <Reveal delay={0.68}><ExploreButton className="mt-5" /></Reveal>
+      <MaskReveal className="relative mt-9 min-h-[260px] flex-1 rounded-[28px]" delay={0.08}>
         <Image
           src={HERO_IMAGE}
           alt="Black mechanical Ovalen watch with red hands"
@@ -39,7 +40,7 @@ function MobileHero() {
           sizes="100vw"
           className="object-cover object-center"
         />
-      </div>
+      </MaskReveal>
     </div>
   );
 }
@@ -51,7 +52,7 @@ function DesktopHero() {
         <Logo />
       </div>
 
-      <div className="absolute inset-y-0 left-[29.65%] right-0 overflow-hidden rounded-l-[28px]">
+      <Reveal className="absolute inset-y-0 left-[29.65%] right-0 overflow-hidden rounded-l-[28px]" direction="none">
         <Image
           src={HERO_IMAGE}
           alt="Black mechanical Ovalen watch with red hands"
@@ -66,7 +67,7 @@ function DesktopHero() {
         >
           menghsun
         </span>
-      </div>
+      </Reveal>
 
       <svg
         aria-hidden="true"
@@ -88,17 +89,17 @@ function DesktopHero() {
       <DesktopNav />
 
       <div className="absolute left-[3.93%] top-[20.69%] z-20 [&>div]:gap-[clamp(14px,min(1.57vw,2.54vh),22px)] [&_p]:text-[clamp(12px,min(1.35vw,2.18vh),18px)] [&_span]:w-[clamp(88px,min(9.89vw,15.97vh),136px)]">
-        <Tagline />
+        <Reveal delay={0.28}><Tagline /></Reveal>
       </div>
 
       <h1 className="absolute left-[3.93%] top-[25.23%] z-20 text-[clamp(53px,min(5.96vw,9.62vh),82px)] font-normal leading-[1.06] tracking-[-0.048em] text-black">
-        <span className="block whitespace-nowrap">Ovalen will make</span>
-        <span className="block whitespace-nowrap">your life easier</span>
+        <span className="block overflow-hidden whitespace-nowrap"><Reveal inline className="block" delay={0.4}>Ovalen will make</Reveal></span>
+        <span className="block overflow-hidden whitespace-nowrap"><Reveal inline className="block" delay={0.52}>your life easier</Reveal></span>
       </h1>
 
       <div className="absolute left-[3.93%] top-[53.36%] z-20 w-[clamp(155px,min(17.42vw,28.13vh),239px)]">
-        <Description className="!text-[clamp(11px,min(1.24vw,2vh),17px)]" />
-        <ExploreButton className="!mt-[clamp(28px,min(3.15vw,5.08vh),43px)] !px-[clamp(22px,min(2.47vw,3.99vh),34px)] !py-[clamp(6px,min(0.67vw,1.09vh),9px)] !text-[clamp(10px,min(1.12vw,1.81vh),15px)]" />
+        <Reveal delay={0.68}><Description className="!text-[clamp(11px,min(1.24vw,2vh),17px)]" /></Reveal>
+        <Reveal delay={0.82}><ExploreButton className="!mt-[clamp(28px,min(3.15vw,5.08vh),43px)] !px-[clamp(22px,min(2.47vw,3.99vh),34px)] !py-[clamp(6px,min(0.67vw,1.09vh),9px)] !text-[clamp(10px,min(1.12vw,1.81vh),15px)]" /></Reveal>
       </div>
 
       <NavigationArrows />
@@ -110,10 +111,8 @@ function DesktopHero() {
 
 function ProductCard() {
   return (
-    <article
-      aria-label="Oris Divers Sixty-Five watch"
-      className="absolute bottom-[10px] left-[31.5%] z-20 hidden h-[110px] w-[270px] overflow-hidden rounded-[17px] border-[5px] border-white bg-white shadow-[0_12px_35px_rgba(0,0,0,0.16)] lg:flex"
-    >
+    <MaskReveal className="absolute bottom-[10px] left-[31.5%] z-20 hidden h-[110px] w-[270px] rounded-[17px] lg:block" delay={1.02}>
+    <article aria-label="Oris Divers Sixty-Five watch" className="flex h-full w-full overflow-hidden rounded-[17px] border-[5px] border-white bg-white shadow-[0_12px_35px_rgba(0,0,0,0.16)]">
       <div
         className="h-full w-[108px] shrink-0 bg-[#171717] bg-no-repeat"
         style={{
@@ -132,6 +131,7 @@ function ProductCard() {
         </div>
       </div>
     </article>
+    </MaskReveal>
   );
 }
 

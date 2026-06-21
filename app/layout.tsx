@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Teko } from "next/font/google";
 import "./globals.css";
+import SmoothScroll from "@/components/providers/SmoothScroll";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${teko.variable}`}>
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
   );

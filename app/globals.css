@@ -44,7 +44,9 @@
     color: var(--color-text);
     background-color: var(--color-bg);
     line-height: 1.5;
-    overflow-x: hidden;
+    /* `clip` (not `hidden`) prevents horizontal scroll without creating a
+       scroll container, which would break `position: sticky` descendants. */
+    overflow-x: clip;
   }
 
   /* Headings: only tighten rhythm here. Font weight is controlled per-element
