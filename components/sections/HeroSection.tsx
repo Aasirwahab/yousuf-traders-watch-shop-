@@ -116,7 +116,7 @@ function ProductCard() {
       <div
         className="h-full w-[108px] shrink-0 bg-[#171717] bg-no-repeat"
         style={{
-          backgroundImage: "url('/prototype%20-design.webp')",
+          backgroundImage: "url('/prototype-design.webp')",
           backgroundPosition: "-390px -561px",
           backgroundSize: "1150px 4686px",
         }}

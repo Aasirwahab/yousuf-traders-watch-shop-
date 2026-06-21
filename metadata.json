@@ -1,6 +1,0 @@
-{
-  "name": "Ovalen",
-  "description": "Ovalen Watch e-commerce landing page with complex curved clip-path hero section.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}

@@ -1,20 +1,50 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Ovalen
 
-# Run and deploy your AI Studio app
+A luxury watch e-commerce landing page — an animated, scroll-driven marketing site featuring a curved clip-path hero, a spotlight feature section with sequential connector-line reveals, and smooth scrolling throughout.
 
-This contains everything you need to run your app locally.
+## Tech stack
 
-View your app in AI Studio: https://ai.studio/apps/3f8d46bc-82c6-4081-b749-77e3b9a68c9b
+- **Next.js 16** (App Router) + **React 19**
+- **Tailwind CSS v4**
+- **Motion** (Framer Motion) for entrance/scroll animations
+- **Lenis** for smooth scrolling
+- **TypeScript**
 
-## Run Locally
+## Getting started
 
-**Prerequisites:**  Node.js
+This project uses **pnpm** (do not use `npm install` — it corrupts the pnpm store).
 
+```bash
+pnpm install
+pnpm dev
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Open [http://localhost:3000](http://localhost:3000).
+
+## Scripts
+
+| Command | Description |
+| --- | --- |
+| `pnpm dev` | Start the dev server (Turbopack) |
+| `pnpm build` | Production build |
+| `pnpm start` | Serve the production build |
+| `pnpm lint` | Run ESLint |
+
+## Project structure
+
+```
+app/                      App Router — layout, page, globals.css, icon
+components/
+  layout/                 Navbar, Footer
+  providers/              SmoothScroll (Lenis)
+  sections/               Hero, About, CentralFeature, Shop, Tech, Article
+  ui/                     PrototypeCrop, Reveal (reusable animation primitives)
+data/constants.ts         Static content (nav, categories, products, features)
+types/                    Shared TypeScript types
+public/prototype-assets/  Image assets
+```
+
+## Accessibility
+
+All animations respect `prefers-reduced-motion`: smooth scroll is disabled and entrance
+animations fall back to opacity-only fades (no spatial movement).
