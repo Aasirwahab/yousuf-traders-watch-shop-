@@ -1,56 +1,36 @@
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { CATEGORIES } from "@/data/constants";
-import PrototypeCrop from "@/components/ui/PrototypeCrop";
-import { Reveal } from "@/components/ui/Reveal";
-import Copy from "@/components/ui/Copy";
 import { IMAGES } from "@/data/images";
-
-const CATEGORY_CROPS = IMAGES.categories;
 
 export default function AboutSection() {
   return (
-    <section className="px-6 pb-20 pt-28 md:px-[calc(3.93%_+_6px)] md:pt-44">
-      <div className="mb-20 grid items-start gap-10 md:mb-[120px] md:grid-cols-2 md:gap-0">
-        <Copy>
-          <h2 className="text-3xl font-normal tracking-[-0.035em] md:text-[40px]">
-            About Ovalen
-          </h2>
-        </Copy>
+    <section id="categories" className="px-6 py-20 md:px-[4.5%] md:py-28">
+      <div className="mx-auto max-w-[1440px]">
+        <div className="max-w-3xl"><p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#6b1824]">Explore by character</p><h2 className="mt-3 text-[clamp(2.3rem,4vw,4rem)] font-normal tracking-[-0.045em]">Find your next watch</h2></div>
 
-        <Reveal className="flex justify-start" delay={0.12}>
-          <p className="w-full max-w-[500px] text-left text-[16px] font-normal leading-[1.48] text-[#999ba3] md:tracking-[-0.02em]">
-            <span className="md:hidden">
-              Ovalen is the horological point of contact for other news, business
-              and lifestyle media. Ovalen has been prominently featured in various
-              international media, including The New York Times, The Wall Street
-              Journal, The Financial Times, Esquire, Gear Patrol, GQ, HighSnobiety.
-            </span>
-            <span className="hidden pl-[32px] md:block">Ovalen is the horological point of contact for other</span>
-            <span className="hidden md:block">news, business and lifestyle media. Ovalen has been</span>
-            <span className="hidden md:block">prominently featured in various international media,</span>
-            <span className="hidden md:block">including The New York Times, The Wall Street Journal, The</span>
-            <span className="hidden md:block">Financial Times, Esquire, Gear Patrol, GQ, HighSnobiety.</span>
-          </p>
-        </Reveal>
-      </div>
-
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-[14px]">
-        {CATEGORIES.map((item, i) => (
-          <Reveal key={i} delay={i * 0.1}>
-            <div className="group flex aspect-[0.82] cursor-pointer flex-col items-center rounded-[16px] border-[3px] border-[#f7f7f7] bg-white px-5 pb-5 pt-6 transition-shadow duration-300 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] md:px-7 md:pb-6 md:pt-7">
-              <div className="mb-4 flex min-h-0 w-full flex-1 items-center justify-center">
-                <PrototypeCrop
-                  src={CATEGORY_CROPS[i]}
-                  alt={item.name}
-                  className="aspect-[7/8] h-[82%] transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <span className="whitespace-nowrap text-[clamp(14px,1.7vw,18px)] font-normal tracking-[-0.015em] text-black">
-                ( {item.name} )
-              </span>
-            </div>
-          </Reveal>
-        ))}
+        <div className="mt-12 grid gap-4 md:grid-cols-12 md:grid-rows-2">
+          <CategoryCard index={0} className="min-h-[190px] md:col-span-4 md:row-span-2 md:min-h-[680px]" />
+          <CategoryCard index={1} className="min-h-[190px] md:col-span-5 md:row-span-2 md:min-h-[680px]" />
+          <CategoryCard index={2} className="min-h-[190px] md:col-span-3" />
+          <CategoryCard index={3} className="min-h-[190px] md:col-span-3" />
+        </div>
       </div>
     </section>
+  );
+}
+
+function CategoryCard({ className, index }: { className: string; index: number }) {
+  const category = CATEGORIES[index];
+  return (
+    <Link href="#shop" className={`group relative isolate overflow-hidden rounded-[16px] bg-[#efefed] focus-visible:outline-2 focus-visible:outline-offset-4 ${className}`}>
+      <Image src={IMAGES.categories[index]} alt={`${category.name} watches`} fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-5 p-6 text-white md:p-7">
+        <div><h3 className="text-2xl tracking-[-0.03em]">{category.name}</h3><p className="mt-2 max-w-[220px] text-[12px] leading-5 text-white/70">{category.description}</p></div>
+        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/60 transition-colors group-hover:bg-white group-hover:text-black"><ArrowUpRight className="h-4 w-4" /></span>
+      </div>
+    </Link>
   );
 }

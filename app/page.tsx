@@ -1,25 +1,32 @@
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import HeroSection from "@/components/sections/HeroSection";
+import TrustStrip from "@/components/sections/TrustStrip";
 import AboutSection from "@/components/sections/AboutSection";
 import CentralFeature from "@/components/sections/CentralFeature";
 import ShopSection from "@/components/sections/ShopSection";
 import TechSection from "@/components/sections/TechSection";
 import ArticleSection from "@/components/sections/ArticleSection";
-import Footer from "@/components/layout/Footer";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import NewsletterSection from "@/components/sections/NewsletterSection";
+import { CommerceProvider } from "@/components/providers/CommerceProvider";
 
 export default function Home() {
   return (
-    // Full-bleed white page — content runs edge-to-edge (no centered card,
-    // margins or rounded corners), so the hero fills the screen.
-    <main className="min-h-screen bg-white text-black font-sans overflow-x-clip">
-      <div className="w-full bg-white overflow-x-clip">
+    <CommerceProvider>
+      <main className="min-h-screen overflow-x-clip bg-white font-sans text-black md:rounded-t-[14px] md:border-x-[3px] md:border-t-[3px] md:border-black">
+        <Navbar />
         <HeroSection />
+        <TrustStrip />
+        <ShopSection />
         <AboutSection />
         <CentralFeature />
-        <ShopSection />
         <TechSection />
+        <TestimonialsSection />
         <ArticleSection />
+        <NewsletterSection />
         <Footer />
-      </div>
-    </main>
+      </main>
+    </CommerceProvider>
   );
 }

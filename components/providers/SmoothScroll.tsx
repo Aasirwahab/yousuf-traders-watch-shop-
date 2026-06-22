@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { ReactLenis } from "lenis/react";
-import { useReducedMotion } from "motion/react";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 import "lenis/dist/lenis.css";
 
 /**
@@ -16,7 +16,7 @@ import "lenis/dist/lenis.css";
  * with the browser's native scroll instead.
  */
 export default function SmoothScroll({ children }: { children: ReactNode }) {
-  const prefersReducedMotion = useReducedMotion();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   if (prefersReducedMotion) {
     return <>{children}</>;

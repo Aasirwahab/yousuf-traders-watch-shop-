@@ -1,53 +1,96 @@
-import type { NavLink, Category, Product, Feature, FooterLink } from "@/types";
+import type { Category, Feature, FooterLink, NavLink, Product } from "@/types";
 
-// ─── Navigation ──────────────────────────────────────────────
 export const NAV_LINKS: NavLink[] = [
-  { label: "What's New", hasDropdown: true },
-  { label: "Stories", hasDropdown: true },
-  { label: "Brands", hasDropdown: true },
-  { label: "Insurance", hasDropdown: false },
+  { label: "New arrivals", href: "#shop" },
+  { label: "Watches", href: "#categories" },
+  { label: "Brands", href: "#story" },
+  { label: "Journal", href: "#journal" },
 ];
 
-// ─── About Section — Categories ──────────────────────────────
 export const CATEGORIES: Category[] = [
-  { name: "Modern Watches" },
-  { name: "Limited Edition" },
-  { name: "Chronographs" },
-  { name: "Classic Watches" },
+  { name: "Modern", description: "Contemporary forms and advanced materials." },
+  { name: "Limited editions", description: "Rare releases selected for collectors." },
+  { name: "Chronographs", description: "Precision timing built for performance." },
+  { name: "Classics", description: "Enduring silhouettes that outlive trends." },
 ];
 
-// ─── Shop Section — Products ─────────────────────────────────
 export const PRODUCTS: Product[] = [
-  { name: "Louis Errard", price: "$5,450", oldPrice: "$6,990" },
-  { name: "Roger Dubuis", price: "$17,850", oldPrice: "$18,290" },
-  { name: "Jean Dunand", price: "$47,340", oldPrice: "$47,990" },
-  { name: "Seiko Prospex", price: "$34,760", oldPrice: "$34,990" },
+  {
+    slug: "louis-erard-excellence",
+    brand: "Louis Erard",
+    name: "Excellence Petite Seconde",
+    reference: "LE-34237AA01",
+    price: "$5,450",
+    condition: "New",
+    groups: ["New arrivals", "Best sellers"],
+  },
+  {
+    slug: "roger-dubuis-excalibur",
+    brand: "Roger Dubuis",
+    name: "Excalibur Automatic",
+    reference: "RDDBEX0984",
+    price: "$17,850",
+    condition: "Pre-owned",
+    groups: ["New arrivals", "Best sellers", "Pre-owned"],
+  },
+  {
+    slug: "jean-dunand-orbital",
+    brand: "Jean Dunand",
+    name: "Shabaka Grande Complication",
+    reference: "JD-SHA-02",
+    price: "$47,340",
+    condition: "Pre-owned",
+    groups: ["New arrivals", "Pre-owned"],
+  },
+  {
+    slug: "seiko-prospex-speedtimer",
+    brand: "Seiko",
+    name: "Prospex Speedtimer",
+    reference: "SRQ047J1",
+    price: "$3,760",
+    condition: "New",
+    groups: ["New arrivals", "Best sellers"],
+  },
 ];
 
-// ─── Central Feature — Annotations ──────────────────────────
 export const FEATURES_LEFT: Feature[] = [
-  { title: "Quality Materials", description: "Made from high-quality materials" },
-  { title: "Modern Design", description: "Known for its minimalist and elegant design" },
-  { title: "Accuracy", description: "Using famous Swiss-made machines" },
+  { title: "Sapphire crystal", description: "Scratch-resistant with anti-reflective coating" },
+  { title: "Swiss automatic movement", description: "Mechanical precision, inspected by specialists" },
+  { title: "42-hour power reserve", description: "Reliable performance between wears" },
 ];
 
 export const FEATURES_RIGHT: Feature[] = [
-  { title: "Convenient to Use", description: "Very light and does not feel heavy on the wrist" },
-  { title: "Safe to Use", description: "Very safe for the skin and non-irritating" },
-  { title: "CR 2025", description: "Famously high-quality and long-lasting battery" },
+  { title: "316L steel case", description: "Corrosion-resistant, hand-finished construction" },
+  { title: "100 m water resistance", description: "Engineered for everyday confidence" },
+  { title: "24-month warranty", description: "Every authenticated watch is protected" },
 ];
 
-// ─── Footer ──────────────────────────────────────────────────
-export const FOOTER_NAV_LINKS: FooterLink[] = [
-  { label: "About Us", href: "#" },
-  { label: "FAQ", href: "#" },
-  { label: "Blog", href: "#" },
-  { label: "Contact", href: "#" },
-];
-
-export const FOOTER_PRODUCTS: FooterLink[] = [
-  { label: "Modern Watches", href: "#" },
-  { label: "Limited Edition", href: "#" },
-  { label: "Chronographs", href: "#" },
-  { label: "Classic Watches", href: "#" },
+export const FOOTER_GROUPS: Array<{ title: string; links: FooterLink[] }> = [
+  {
+    title: "Shop",
+    links: [
+      { label: "All watches", href: "#shop" },
+      { label: "New arrivals", href: "#shop" },
+      { label: "Pre-owned", href: "#shop" },
+      { label: "The journal", href: "#journal" },
+    ],
+  },
+  {
+    title: "Customer care",
+    links: [
+      { label: "Contact us", href: "mailto:concierge@ovalen.com" },
+      { label: "Shipping & delivery", href: "#trust" },
+      { label: "Returns", href: "#trust" },
+      { label: "FAQs", href: "#footer" },
+    ],
+  },
+  {
+    title: "About Ovalen",
+    links: [
+      { label: "Our story", href: "#story" },
+      { label: "Authentication", href: "#authentication" },
+      { label: "Warranty", href: "#authentication" },
+      { label: "Journal", href: "#journal" },
+    ],
+  },
 ];

@@ -17,9 +17,9 @@ const teko = Teko({
 });
 
 export const metadata: Metadata = {
-  title: "Ovalen — Luxury Watch Collection",
+  title: "Authenticated Luxury Watches | Ovalen",
   description:
-    "Discover Ovalen's curated collection of luxury watches. Explore modern timepieces, limited editions, chronographs, and classic watches from the world's finest brands.",
+    "Shop independent and iconic watches authenticated by specialists, protected by a 24-month warranty, and delivered worldwide.",
   keywords: [
     "luxury watches",
     "Ovalen",
@@ -27,6 +27,11 @@ export const metadata: Metadata = {
     "chronographs",
     "limited edition watches",
   ],
+  openGraph: {
+    title: "Time, exceptionally chosen. | Ovalen",
+    description: "Independent and iconic watches, authenticated for a lifetime of collecting.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -36,7 +41,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${teko.variable}`}>
-      <body className={`${inter.className} antialiased`} suppressHydrationWarning>
+      <body className={`${inter.className} antialiased`}>
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>

@@ -58,7 +58,15 @@
   }
 
   ::selection {
-    background-color: #000;
+    background-color: #6b1824;
     color: #fff;
+  }
+
+  :focus-visible {
+    outline-color: #6b1824;
+  }
+
+  section[id] {
+    scroll-margin-top: 110px;
   }
 }

@@ -1,37 +1,38 @@
-import PrototypeCrop from "@/components/ui/PrototypeCrop";
-import { MaskReveal, Reveal } from "@/components/ui/Reveal";
-import Copy from "@/components/ui/Copy";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { IMAGES } from "@/data/images";
 
-const ARTICLE_CROPS = IMAGES.article;
+const STORIES = [
+  { image: IMAGES.article.lead, category: "Guides", time: "6 min read", title: "How to buy your first mechanical watch" },
+  { image: IMAGES.article.sideTop, category: "Materials", time: "5 min read", title: "A collector’s guide to case materials" },
+  { image: IMAGES.article.sideBottom, category: "Care", time: "4 min read", title: "Keeping perfect time: care and servicing" },
+];
 
 export default function ArticleSection() {
   return (
-    <section className="px-6 py-16 md:px-[calc(3.93%_+_6px)] md:py-20">
-      <div className="mb-10 flex items-center justify-between">
-        <Copy><h2 className="text-[32px] font-normal tracking-[-0.035em] md:text-[40px]">New Article</h2></Copy>
-        <Reveal delay={0.1}><button className="rounded-full bg-black px-8 py-2.5 text-[13px] text-white transition-colors hover:bg-[#222]">View More</button></Reveal>
-      </div>
-
-      <div className="grid gap-[14px] md:grid-cols-2">
-        <MaskReveal className="rounded-[16px]" from="left">
-          <article className="group relative h-[430px] overflow-hidden rounded-[16px] md:h-[440px]">
-            <PrototypeCrop src={ARTICLE_CROPS.lead} alt="Luxury watch movement" className="absolute inset-0 h-full w-full transition-transform duration-700 group-hover:scale-[1.02]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 h-[92px] bg-gradient-to-t from-black via-black/95 to-transparent" />
-            <button className="absolute left-[47%] top-1/2 grid h-24 w-24 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-[#777]/95 text-[13px] text-white">Learn more</button>
-            <div className="absolute bottom-7 left-7 right-7 text-white">
-              <h3 className="text-[20px] font-normal tracking-[-0.02em] md:text-[22px]">5 Gibran&apos;s Luxury Watch Collection</h3>
-              <p className="mt-2 max-w-[430px] text-[12px] leading-[1.35]">Here&apos;s Gibran Rakabuming&apos;s collection of luxury watches, the number two vice president in the 2024 Election.</p>
-            </div>
-          </article>
-        </MaskReveal>
-
-        <Reveal className="grid min-h-[430px] gap-[14px] md:min-h-[440px] md:grid-rows-2" delay={0.14} distance={40}>
-          <PrototypeCrop src={ARTICLE_CROPS.sideTop} alt="Ovalen watch side profile" className="h-full w-full rounded-[16px] bg-[#fafafa]" />
-          <PrototypeCrop src={ARTICLE_CROPS.sideBottom} alt="Ovalen black watch face" className="h-full w-full rounded-[16px] bg-[#fafafa]" />
-        </Reveal>
+    <section id="journal" className="border-b border-black/10 px-6 py-20 md:px-[4.5%] md:py-28">
+      <div className="mx-auto max-w-[1440px]">
+        <div className="flex items-end justify-between gap-6"><div><p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#6b1824]">Stories and expertise</p><h2 className="mt-3 text-[clamp(2.3rem,4vw,4rem)] tracking-[-0.045em]">From the journal</h2></div><Link href="#newsletter" className="hidden items-center gap-3 border-b border-black pb-1 text-sm md:flex">Receive journal notes <ArrowRight className="h-4 w-4" /></Link></div>
+        <div className="mt-12 grid gap-10 lg:grid-cols-[1.35fr_0.65fr]">
+          <Story story={STORIES[0]} lead />
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-1">
+            {STORIES.slice(1).map((story) => <Story key={story.title} story={story} />)}
+          </div>
+        </div>
       </div>
     </section>
+  );
+}
+
+function Story({ lead = false, story }: { lead?: boolean; story: (typeof STORIES)[number] }) {
+  return (
+    <article className={lead ? "group" : "group grid gap-5 sm:grid-cols-[48%_52%] lg:grid-cols-[48%_52%]"}>
+      <div className={`relative overflow-hidden rounded-[16px] bg-[#f1f1ef] ${lead ? "aspect-[1.5]" : "aspect-[1.4] sm:aspect-auto sm:min-h-[210px]"}`}><Image src={story.image} alt="" fill sizes={lead ? "(min-width: 1024px) 58vw, 100vw" : "(min-width: 1024px) 20vw, 50vw"} className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" /></div>
+      <div className={lead ? "mt-6 flex items-end justify-between gap-5" : "flex flex-col justify-center"}>
+        <div><p className="text-[10px] font-medium uppercase tracking-[0.16em] text-[#6e6e6b]">{story.category} · {story.time}</p><h3 className={`mt-3 tracking-[-0.03em] ${lead ? "text-[clamp(1.5rem,2.6vw,2.6rem)]" : "text-xl"}`}>{story.title}</h3></div>
+        <ArrowRight aria-hidden="true" className="mb-1 hidden h-5 w-5 shrink-0 text-[#6b1824] sm:block" />
+      </div>
+    </article>
   );
 }

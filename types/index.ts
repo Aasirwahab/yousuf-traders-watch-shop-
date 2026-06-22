@@ -1,16 +1,21 @@
 export interface NavLink {
   label: string;
-  hasDropdown?: boolean;
+  href: string;
 }
 
 export interface Category {
   name: string;
+  description: string;
 }
 
 export interface Product {
+  slug: string;
+  brand: string;
   name: string;
+  reference: string;
   price: string;
-  oldPrice: string;
+  condition: "New" | "Pre-owned";
+  groups: Array<"New arrivals" | "Best sellers" | "Pre-owned">;
 }
 
 export interface Feature {
