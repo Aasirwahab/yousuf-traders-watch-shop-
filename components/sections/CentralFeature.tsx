@@ -15,7 +15,6 @@ const stepDelay = (step: number) => STEP_BASE + step * STEP_GAP;
 
 const LEFT_SPECS = FEATURES_LEFT.map((spec, index) => ({ ...spec, step: index * 2 }));
 const RIGHT_SPECS = FEATURES_RIGHT.map((spec, index) => ({ ...spec, step: index * 2 + 1 }));
-const MOBILE_SPECS = [...LEFT_SPECS, ...RIGHT_SPECS].sort((a, b) => a.step - b.step);
 const CONNECTORS = [
   { points: "145,170 330,170 405,235", start: [145, 170], end: [405, 235] },
   { points: "815,170 630,170 555,235", start: [815, 170], end: [555, 235] },
@@ -23,6 +22,14 @@ const CONNECTORS = [
   { points: "815,300 555,300", start: [815, 300], end: [555, 300] },
   { points: "145,430 330,430 405,365", start: [145, 430], end: [405, 365] },
   { points: "815,430 630,430 555,365", start: [815, 430], end: [555, 365] },
+];
+const MOBILE_CONNECTORS = [
+  { points: "94,104 118,104 143,164", start: [94, 104], end: [143, 164] },
+  { points: "266,104 242,104 217,164", start: [266, 104], end: [217, 164] },
+  { points: "94,260 143,260", start: [94, 260], end: [143, 260] },
+  { points: "266,260 217,260", start: [266, 260], end: [217, 260] },
+  { points: "94,416 118,416 143,356", start: [94, 416], end: [143, 356] },
+  { points: "266,416 242,416 217,356", start: [266, 416], end: [217, 356] },
 ];
 
 export default function CentralFeature() {
@@ -39,7 +46,7 @@ export default function CentralFeature() {
       : { duration, delay, ease: [0.22, 1, 0.36, 1] };
 
   return (
-    <section ref={ref} className="border-y border-black/10 px-6 py-20 md:px-[4.5%] md:py-28">
+    <section ref={ref} className="overflow-hidden border-y border-black/10 px-6 py-20 md:px-[4.5%] md:py-28">
       <div className="mx-auto max-w-[1440px]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -71,13 +78,115 @@ export default function CentralFeature() {
         </div>
 
         <div className="mt-12 md:hidden">
-          <motion.div initial={{ opacity: 0, scale: 0.94 }} animate={inView ? { opacity: 1, scale: 1 } : undefined} transition={transition(0.2, 0.7)} className="relative mx-auto h-[400px] w-[220px]"><Image src={IMAGES.featureWatch} alt="Black mesh watch" fill sizes="220px" loading="eager" className="object-contain" /></motion.div>
-          <ol className="mt-7 border-t border-black/10">
-            {MOBILE_SPECS.map((spec, index) => <motion.li key={spec.title} initial={{ opacity: 0, y: 14 }} animate={inView ? { opacity: 1, y: 0 } : undefined} transition={transition(stepDelay(spec.step), 0.45)} className="grid grid-cols-[30px_1fr] gap-3 border-b border-black/10 py-4"><span className="text-[11px] font-medium text-[#6b1824]">{String(index + 1).padStart(2, "0")}</span><div><h3 className="text-sm font-medium">{spec.title}</h3><p className="mt-1 text-[12px] leading-5 text-[#6e6e6b]">{spec.description}</p></div></motion.li>)}
-          </ol>
+          <div className="relative -ml-2 h-[520px] w-[calc(100%+1rem)] max-w-[390px]">
+            <svg aria-hidden="true" viewBox="0 0 360 520" preserveAspectRatio="none" className="absolute inset-0 h-full w-full">
+              {MOBILE_CONNECTORS.map((connector, index) => (
+                <g key={connector.points}>
+                  <motion.polyline
+                    points={connector.points}
+                    fill="none"
+                    stroke="#7b7b77"
+                    strokeWidth="1"
+                    vectorEffect="non-scaling-stroke"
+                    initial={{ pathLength: 0, opacity: 0 }}
+                    animate={inView ? { pathLength: 1, opacity: 1 } : undefined}
+                    transition={transition(stepDelay(index), 0.55)}
+                  />
+                  <motion.circle
+                    cx={connector.start[0]}
+                    cy={connector.start[1]}
+                    r="3.5"
+                    fill="#fff"
+                    stroke="#6b1824"
+                    strokeWidth="1"
+                    vectorEffect="non-scaling-stroke"
+                    initial={{ opacity: 0 }}
+                    animate={inView ? { opacity: 1 } : undefined}
+                    transition={transition(stepDelay(index), 0.2)}
+                  />
+                  <motion.circle
+                    cx={connector.end[0]}
+                    cy={connector.end[1]}
+                    r="2.5"
+                    fill="#6b1824"
+                    initial={{ opacity: 0 }}
+                    animate={inView ? { opacity: 1 } : undefined}
+                    transition={transition(stepDelay(index) + 0.3, 0.2)}
+                  />
+                </g>
+              ))}
+            </svg>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 28, rotate: -2 }}
+            animate={inView ? { opacity: 1, scale: 1, y: 0, rotate: 0 } : undefined}
+            transition={transition(0.2, 0.85)}
+              className="absolute inset-y-0 left-1/2 w-[146px] -translate-x-1/2 origin-center"
+          >
+              <Image src={IMAGES.featureWatch} alt="Black mesh watch" fill sizes="146px" loading="eager" className="object-contain" />
+          </motion.div>
+
+            {LEFT_SPECS.map((spec, index) => (
+              <MobileCallout
+                key={spec.title}
+                index={index}
+                inView={inView}
+                side="left"
+                spec={spec}
+                transition={transition}
+              />
+            ))}
+            {RIGHT_SPECS.map((spec, index) => (
+              <MobileCallout
+                key={spec.title}
+                index={index}
+                inView={inView}
+                side="right"
+                spec={spec}
+                transition={transition}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function MobileCallout({
+  inView,
+  index,
+  side,
+  spec,
+  transition,
+}: {
+  inView: boolean;
+  index: number;
+  side: "left" | "right";
+  spec: { title: string; description: string; step: number };
+  transition: (delay: number, duration?: number) => Transition;
+}) {
+  const delay = stepDelay(spec.step);
+  const top = `${20 + index * 30}%`;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: side === "left" ? -18 : 18 }}
+      animate={inView ? { opacity: 1, x: 0 } : undefined}
+      transition={transition(delay, 0.5)}
+      style={{ top }}
+      className={`absolute w-[27%] -translate-y-1/2 [overflow-wrap:anywhere] ${side === "left" ? "left-0 pl-1 text-right" : "right-0 pr-1"}`}
+    >
+      <h3 className="text-[10px] font-medium leading-[1.25] min-[390px]:text-[11px]">{spec.title}</h3>
+      <motion.p
+        initial={{ opacity: 0, y: 5 }}
+        animate={inView ? { opacity: 1, y: 0 } : undefined}
+        transition={transition(delay + 0.16, 0.4)}
+        className="mt-1 text-[8px] leading-[1.45] text-[#6e6e6b] min-[390px]:text-[9px]"
+      >
+        {spec.description}
+      </motion.p>
+    </motion.div>
   );
 }
 
