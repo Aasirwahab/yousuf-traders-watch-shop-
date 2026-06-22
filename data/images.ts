@@ -13,6 +13,11 @@ export const IMAGES = {
     imageKitUrl("/ovalen/prototype-assets/hero-cinematic-watch-2-bg-remove.png"),
     imageKitUrl("/ovalen/prototype-assets/hero-cinematic-watch-3-bg-remove.png"),
   ],
+  mobileHeroSlides: [
+    imageKitUrl("/ovalen/prototype-assets/mobile-hero-section.png"),
+    imageKitUrl("/ovalen/prototype-assets/mobile-hero-section-2.png"),
+    imageKitUrl("/ovalen/prototype-assets/mobile-hero-section-3.png"),
+  ],
   heroSlides: [
     imageKitUrl("/ovalen/hero-image.png"),
     imageKitUrl("/ovalen/prototype-assets/hero-2.png"),
