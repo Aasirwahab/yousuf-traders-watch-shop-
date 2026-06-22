@@ -106,7 +106,7 @@ function MobileHero({
   setControlsPaused,
 }: HeroSharedProps) {
   return (
-    <div className="md:hidden">
+    <div className="flex min-h-[100svh] flex-col md:hidden">
       <div className="relative h-[clamp(360px,47svh,430px)] overflow-hidden border-b border-white/15">
         <div className="absolute inset-0">
           {HERO_SLIDES.map((slide, index) => {
@@ -153,7 +153,7 @@ function MobileHero({
         </div>
       </div>
 
-      <div className="px-6 pb-[max(18px,env(safe-area-inset-bottom))] pt-6 min-[400px]:px-8 min-[400px]:pt-7">
+      <div className="flex flex-1 flex-col px-6 pb-[max(18px,env(safe-area-inset-bottom))] pt-6 min-[400px]:px-8 min-[400px]:pt-7">
         <motion.h1
           initial={entrance}
           animate={{ opacity: 1, y: 0 }}
@@ -193,7 +193,7 @@ function MobileHero({
           onTouchEnd={() => setControlsPaused(false)}
           onFocusCapture={() => setControlsPaused(true)}
           onBlurCapture={resumeControls}
-          className="mt-5 grid grid-cols-3 gap-1"
+          className="mt-auto grid grid-cols-3 gap-1 pt-5"
         >
           {HERO_SLIDES.map((slide, index) => (
             <button
