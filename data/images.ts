@@ -2,6 +2,22 @@ import { imageKitUrl } from "@/lib/imagekit-url";
 
 export const IMAGES = {
   hero: imageKitUrl("/ovalen/hero-image.png"),
+  cinematicHero: imageKitUrl("/ovalen/prototype-assets/hero-cinematic-watch.png"),
+  cinematicHeroSlides: [
+    imageKitUrl("/ovalen/prototype-assets/hero-cinematic-watch.png"),
+    imageKitUrl("/ovalen/prototype-assets/hero-cinematic-watch-2.png"),
+    imageKitUrl("/ovalen/prototype-assets/hero-cinematic-watch-3.png"),
+  ],
+  cinematicHeroCutouts: [
+    imageKitUrl("/ovalen/prototype-assets/hero-cinematic-watch-remove-bg.png"),
+    imageKitUrl("/ovalen/prototype-assets/hero-cinematic-watch-2-bg-remove.png"),
+    imageKitUrl("/ovalen/prototype-assets/hero-cinematic-watch-3-bg-remove.png"),
+  ],
+  heroSlides: [
+    imageKitUrl("/ovalen/hero-image.png"),
+    imageKitUrl("/ovalen/prototype-assets/hero-2.png"),
+    imageKitUrl("/ovalen/prototype-assets/hero-3.png"),
+  ],
   prototypeDesign: imageKitUrl("/ovalen/prototype-design.webp"),
   article: {
     lead: imageKitUrl("/ovalen/prototype-assets/article-lead.webp"),

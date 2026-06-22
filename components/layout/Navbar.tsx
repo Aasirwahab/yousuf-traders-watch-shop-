@@ -5,18 +5,18 @@ import { Menu, Search, ShoppingBag, User, X } from "lucide-react";
 import { NAV_LINKS } from "@/data/constants";
 import { useCommerce } from "@/components/providers/CommerceProvider";
 
-export default function Navbar() {
+export default function Navbar({ overlay = false }: { overlay?: boolean }) {
   const commerce = useCommerce();
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-black/10 bg-white/95 backdrop-blur-xl md:rounded-t-[10px]">
+      <header className={overlay ? "absolute inset-x-0 top-0 z-50 text-white" : "sticky top-0 z-50 border-b border-black/10 bg-white/95 backdrop-blur-xl"}>
         <div className="relative mx-auto flex h-[72px] items-center justify-between px-5 md:h-[84px] md:px-[3.5%]">
-          <Logo />
+          <Logo light={overlay} />
 
           <nav aria-label="Primary navigation" className="absolute left-[19.5%] hidden items-center gap-[clamp(28px,3.8vw,56px)] text-[13px] md:flex">
             {NAV_LINKS.map((link) => (
-              <Link key={link.label} href={link.href} className="relative py-2 transition-colors hover:text-[#6b1824] focus-visible:outline-2 focus-visible:outline-offset-4">
+              <Link key={link.label} href={link.href} className={`relative py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${overlay ? "hover:text-white/60" : "hover:text-[#6b1824]"}`}>
                 {link.label}
               </Link>
             ))}

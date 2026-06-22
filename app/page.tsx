@@ -14,8 +14,8 @@ import { CommerceProvider } from "@/components/providers/CommerceProvider";
 export default function Home() {
   return (
     <CommerceProvider>
-      <main className="min-h-screen overflow-x-clip bg-white font-sans text-black md:rounded-t-[14px] md:border-x-[3px] md:border-t-[3px] md:border-black">
-        <Navbar />
+      <main className="min-h-screen overflow-x-clip bg-white font-sans text-black">
+        <Navbar overlay />
         <HeroSection />
         <TrustStrip />
         <ShopSection />
