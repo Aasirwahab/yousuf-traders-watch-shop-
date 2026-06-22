@@ -1,36 +1,128 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CATEGORIES } from "@/data/constants";
 import { IMAGES } from "@/data/images";
 
+const categoryImages = [
+  IMAGES.featureWatch,
+  IMAGES.findWatch.dial,
+  IMAGES.findWatch.crown,
+  IMAGES.findWatch.chronograph,
+] as const;
+
 export default function AboutSection() {
   return (
-    <section id="categories" className="px-6 py-20 md:px-[4.5%] md:py-28">
+    <section id="categories" className="px-6 py-16 md:px-[4.5%] md:py-20">
       <div className="mx-auto max-w-[1440px]">
-        <div className="max-w-3xl"><p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#6b1824]">Explore by character</p><h2 className="mt-3 text-[clamp(2.3rem,4vw,4rem)] font-normal tracking-[-0.045em]">Find your next watch</h2></div>
+        <h2 className="text-[clamp(2.25rem,3vw,2.8rem)] font-semibold tracking-[-0.05em]">
+          Find your next watch
+        </h2>
 
-        <div className="mt-12 grid gap-4 md:grid-cols-12 md:grid-rows-2">
-          <CategoryCard index={0} className="min-h-[190px] md:col-span-4 md:row-span-2 md:min-h-[680px]" />
-          <CategoryCard index={1} className="min-h-[190px] md:col-span-5 md:row-span-2 md:min-h-[680px]" />
-          <CategoryCard index={2} className="min-h-[190px] md:col-span-3" />
-          <CategoryCard index={3} className="min-h-[190px] md:col-span-3" />
+        <div className="mt-8 hidden h-[330px] grid-cols-[1.45fr_0.9fr_3fr_1fr_1.4fr] gap-x-8 lg:grid">
+          <CategoryImage
+            index={0}
+            className="row-span-2"
+            imageClassName="object-cover object-[50%_48%]"
+            sizes="230px"
+          />
+
+          <div className="row-span-2 flex flex-col justify-between py-6">
+            <CategoryDetails index={0} />
+            <CategoryDetails index={3} />
+          </div>
+
+          <CategoryImage
+            index={1}
+            className="row-span-2"
+            imageClassName="object-cover object-[48%_50%]"
+            sizes="500px"
+          />
+
+          <div className="row-span-2 flex flex-col justify-between py-5">
+            <CategoryDetails index={1} />
+            <CategoryDetails index={2} />
+          </div>
+
+          <div className="row-span-2 grid grid-rows-2 gap-3">
+            <CategoryImage
+              index={2}
+              imageClassName="object-cover object-center"
+              sizes="220px"
+            />
+            <CategoryImage
+              index={3}
+              imageClassName="object-cover object-center"
+              sizes="220px"
+            />
+          </div>
+        </div>
+
+        <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:hidden">
+          {CATEGORIES.map((_, index) => (
+            <article key={CATEGORIES[index].name}>
+              <CategoryImage
+                index={index}
+                className="aspect-[4/3]"
+                imageClassName={index === 1 ? "object-cover object-[48%_50%]" : "object-cover object-center"}
+                sizes="(min-width: 640px) 50vw, 100vw"
+              />
+              <div className="mt-4">
+                <CategoryDetails index={index} />
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>
   );
 }
 
-function CategoryCard({ className, index }: { className: string; index: number }) {
+function CategoryDetails({ index }: { index: number }) {
   const category = CATEGORIES[index];
+
   return (
-    <Link href="#shop" className={`group relative isolate overflow-hidden rounded-[16px] bg-[#efefed] focus-visible:outline-2 focus-visible:outline-offset-4 ${className}`}>
-      <Image src={IMAGES.categories[index]} alt={`${category.name} watches`} fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.04]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-5 p-6 text-white md:p-7">
-        <div><h3 className="text-2xl tracking-[-0.03em]">{category.name}</h3><p className="mt-2 max-w-[220px] text-[12px] leading-5 text-white/70">{category.description}</p></div>
-        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/60 transition-colors group-hover:bg-white group-hover:text-black"><ArrowUpRight className="h-4 w-4" /></span>
-      </div>
+    <div>
+      <Link
+        href="#shop"
+        className="group flex items-center justify-between gap-4 border-b border-black/35 pb-2 text-[15px] font-semibold tracking-[-0.02em] focus-visible:outline-2 focus-visible:outline-offset-4"
+      >
+        {category.name}
+        <ArrowRight className="h-4 w-4 shrink-0 text-[#a7192d] transition-transform duration-300 group-hover:translate-x-1" />
+      </Link>
+      <p className="mt-4 max-w-[180px] text-[11px] leading-[1.55] text-[#777773]">
+        {category.description}
+      </p>
+    </div>
+  );
+}
+
+function CategoryImage({
+  className = "",
+  imageClassName,
+  index,
+  sizes,
+}: {
+  className?: string;
+  imageClassName: string;
+  index: number;
+  sizes: string;
+}) {
+  const category = CATEGORIES[index];
+
+  return (
+    <Link
+      href="#shop"
+      aria-label={`Explore ${category.name} watches`}
+      className={`group relative block overflow-hidden rounded-[12px] bg-[#efefed] focus-visible:outline-2 focus-visible:outline-offset-4 ${className}`}
+    >
+      <Image
+        src={categoryImages[index]}
+        alt={`${category.name} watch detail`}
+        fill
+        sizes={sizes}
+        className={`${imageClassName} transition-transform duration-700 ease-out group-hover:scale-[1.025]`}
+      />
     </Link>
   );
 }

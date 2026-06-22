@@ -14,6 +14,11 @@ export const IMAGES = {
     imageKitUrl("/ovalen/prototype-assets/category-chronograph.webp"),
     imageKitUrl("/ovalen/prototype-assets/category-classic.webp"),
   ],
+  findWatch: {
+    dial: imageKitUrl("/ovalen/prototype-assets/find-watch-dial.png"),
+    crown: imageKitUrl("/ovalen/prototype-assets/find-watch-crown.png"),
+    chronograph: imageKitUrl("/ovalen/prototype-assets/find-watch-chronograph.png"),
+  },
   featureWatch: imageKitUrl("/ovalen/prototype-assets/feature-watch.png"),
   products: [
     imageKitUrl("/ovalen/prototype-assets/product-louis.webp"),
