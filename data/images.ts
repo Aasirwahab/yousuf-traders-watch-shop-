@@ -47,5 +47,15 @@ export const IMAGES = {
     imageKitUrl("/ovalen/prototype-assets/product-jean.webp"),
     imageKitUrl("/ovalen/prototype-assets/product-seiko.webp"),
   ],
+  productDetail: {
+    steelBlue: {
+      main: imageKitUrl("/ovalen/prototype-assets/product-detail/steel-blue-main.png"),
+      side: imageKitUrl("/ovalen/prototype-assets/product-detail/steel-blue-side.png"),
+      bracelet: imageKitUrl("/ovalen/prototype-assets/product-detail/steel-blue-bracelet.png"),
+      caseback: imageKitUrl("/ovalen/prototype-assets/product-detail/steel-blue-caseback.png"),
+      wrist: imageKitUrl("/ovalen/prototype-assets/product-detail/steel-blue-wrist.png"),
+      macro: imageKitUrl("/ovalen/prototype-assets/product-detail/steel-blue-macro.png"),
+    },
+  },
   techWatch: imageKitUrl("/ovalen/prototype-assets/tech-watch.webp"),
 } as const;

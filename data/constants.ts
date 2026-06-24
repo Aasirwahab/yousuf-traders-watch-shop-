@@ -1,10 +1,10 @@
 import type { Category, Feature, FooterLink, NavLink, Product } from "@/types";
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "New arrivals", href: "#shop" },
-  { label: "Watches", href: "#categories" },
-  { label: "Brands", href: "#story" },
-  { label: "Journal", href: "#journal" },
+  { label: "New arrivals", href: "/#shop" },
+  { label: "Watches", href: "/watches" },
+  { label: "Brands", href: "/#story" },
+  { label: "Journal", href: "/#journal" },
 ];
 
 export const CATEGORIES: Category[] = [
