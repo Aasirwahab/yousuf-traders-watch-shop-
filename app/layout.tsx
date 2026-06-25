@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
 import { Inter, Teko } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
+import { CommerceProvider } from "@/components/providers/CommerceProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,10 +42,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${teko.variable}`}>
-      <body className={`${inter.className} antialiased`}>
-        <SmoothScroll>{children}</SmoothScroll>
-      </body>
-    </html>
+    <ClerkProvider afterSignOutUrl="/">
+      <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${teko.variable}`}>
+        <body className={`${inter.className} antialiased`}>
+          <SmoothScroll>
+            <CommerceProvider>{children}</CommerceProvider>
+          </SmoothScroll>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

@@ -1,0 +1,509 @@
+- generic [active] [ref=e1]:
+  - main [ref=e2]:
+    - generic [ref=e4]:
+      - link "Ovalen home" [ref=e5] [cursor=pointer]:
+        - /url: "#top"
+        - generic [ref=e6]: OVALEN
+      - navigation "Primary navigation" [ref=e7]:
+        - link "New arrivals" [ref=e8] [cursor=pointer]:
+          - /url: /#shop
+        - link "Watches" [ref=e9] [cursor=pointer]:
+          - /url: /watches
+        - link "Brands" [ref=e10] [cursor=pointer]:
+          - /url: /#story
+        - link "Journal" [ref=e11] [cursor=pointer]:
+          - /url: /#journal
+      - generic [ref=e12]:
+        - button "Search" [ref=e13]:
+          - img [ref=e14]
+        - button "Shopping bag with 0 items" [ref=e17]:
+          - img [ref=e18]
+    - generic [ref=e22]:
+      - generic [ref=e23]:
+        - link "Home" [ref=e24] [cursor=pointer]:
+          - /url: /
+        - text: /Watches
+      - generic [ref=e25]:
+        - generic [ref=e26]:
+          - heading "Selected watches" [level=1] [ref=e27]:
+            - text: Selected
+            - text: watches
+          - paragraph [ref=e28]: Independent and iconic timepieces, curated with a collector's eye.
+        - generic [ref=e29]: 12 timepieces
+      - generic [ref=e31]:
+        - button "All watches" [pressed] [ref=e32]
+        - button "Men" [ref=e33]
+        - button "Ladies" [ref=e34]
+        - button "New arrivals" [ref=e35]
+        - button "Pre-owned" [ref=e36]
+        - button "Limited edition" [ref=e37]
+    - generic [ref=e39]:
+      - generic [ref=e41]:
+        - generic [ref=e42]:
+          - img [ref=e43]
+          - text: Refine your selection
+        - generic [ref=e44]:
+          - generic [ref=e45]:
+            - generic [ref=e46]: Sort watches
+            - combobox "Sort watches" [ref=e47]:
+              - option "Newest" [selected]
+              - option "Price high"
+              - option "Price low"
+            - img
+          - generic [ref=e48]:
+            - button "Grid view" [pressed] [ref=e49]:
+              - img [ref=e50]
+            - button "List view" [ref=e52]:
+              - img [ref=e53]
+      - generic [ref=e54]:
+        - complementary [ref=e55]:
+          - generic [ref=e57]:
+            - generic [ref=e58]:
+              - heading "Filters" [level=2] [ref=e59]
+              - button "Reset" [ref=e60]
+            - generic [ref=e61]:
+              - group [ref=e62]:
+                - generic "Collection +" [ref=e63] [cursor=pointer]:
+                  - text: Collection
+                  - generic [ref=e64]: +
+                - generic [ref=e65]:
+                  - generic [ref=e66] [cursor=pointer]:
+                    - generic [ref=e67]: Classic
+                    - checkbox "Classic" [ref=e68]
+                  - generic [ref=e70] [cursor=pointer]:
+                    - generic [ref=e71]: Chronograph
+                    - checkbox "Chronograph" [ref=e72]
+                  - generic [ref=e74] [cursor=pointer]:
+                    - generic [ref=e75]: Dress
+                    - checkbox "Dress" [ref=e76]
+                  - generic [ref=e78] [cursor=pointer]:
+                    - generic [ref=e79]: Limited
+                    - checkbox "Limited" [ref=e80]
+                  - generic [ref=e82] [cursor=pointer]:
+                    - generic [ref=e83]: Sport
+                    - checkbox "Sport" [ref=e84]
+              - group [ref=e86]:
+                - generic "Brand +" [ref=e87] [cursor=pointer]:
+                  - text: Brand
+                  - generic [ref=e88]: +
+              - group [ref=e89]:
+                - generic "Case material +" [ref=e90] [cursor=pointer]:
+                  - text: Case material
+                  - generic [ref=e91]: +
+              - group [ref=e92]:
+                - generic "Dial color +" [ref=e93] [cursor=pointer]:
+                  - text: Dial color
+                  - generic [ref=e94]: +
+              - group [ref=e95]:
+                - generic "Diameter +" [ref=e96] [cursor=pointer]:
+                  - text: Diameter
+                  - generic [ref=e97]: +
+              - group [ref=e98]:
+                - generic "Condition +" [ref=e99] [cursor=pointer]:
+                  - text: Condition
+                  - generic [ref=e100]: +
+              - group [ref=e101]:
+                - generic "Gender +" [ref=e102] [cursor=pointer]:
+                  - text: Gender
+                  - generic [ref=e103]: +
+                - generic [ref=e104]:
+                  - generic [ref=e105] [cursor=pointer]:
+                    - generic [ref=e106]: Men
+                    - checkbox "Men" [ref=e107]
+                  - generic [ref=e109] [cursor=pointer]:
+                    - generic [ref=e110]: Ladies
+                    - checkbox "Ladies" [ref=e111]
+                  - generic [ref=e113] [cursor=pointer]:
+                    - generic [ref=e114]: Unisex
+                    - checkbox "Unisex" [ref=e115]
+        - generic [ref=e117]:
+          - generic [ref=e118]:
+            - generic [ref=e119]: 12 timepieces
+            - generic [ref=e120]: Curated independently
+          - generic [ref=e121]:
+            - article [ref=e122]:
+              - generic [ref=e123]:
+                - link "View Louis Erard Excellence Petite Seconde" [ref=e124] [cursor=pointer]:
+                  - /url: /watches/louis-erard-excellence
+                  - img "Louis Erard Excellence Petite Seconde" [ref=e125]
+                - button "Add Excellence Petite Seconde to wishlist" [ref=e126]:
+                  - img [ref=e127]
+              - generic [ref=e129]:
+                - generic [ref=e131]:
+                  - paragraph [ref=e132]: Louis Erard
+                  - heading "Excellence Petite Seconde" [level=3] [ref=e133]:
+                    - link "Excellence Petite Seconde" [ref=e134] [cursor=pointer]:
+                      - /url: /watches/louis-erard-excellence
+                  - paragraph [ref=e135]: Ref. LE-34237AA01
+                - generic [ref=e136]:
+                  - generic [ref=e137]: Men
+                  - generic [ref=e138]: Steel
+                  - generic [ref=e139]: 39mm
+                  - generic [ref=e140]: New
+                - generic [ref=e141]:
+                  - paragraph [ref=e142]: $5,450
+                  - button "Reserve" [ref=e143]:
+                    - text: Reserve
+                    - img [ref=e144]
+            - article [ref=e146]:
+              - generic [ref=e147]:
+                - link "View Roger Dubuis Excalibur Automatic" [ref=e148] [cursor=pointer]:
+                  - /url: /watches/roger-dubuis-excalibur
+                  - img "Roger Dubuis Excalibur Automatic" [ref=e149]
+                - button "Add Excalibur Automatic to wishlist" [ref=e150]:
+                  - img [ref=e151]
+              - generic [ref=e153]:
+                - generic [ref=e155]:
+                  - paragraph [ref=e156]: Roger Dubuis
+                  - heading "Excalibur Automatic" [level=3] [ref=e157]:
+                    - link "Excalibur Automatic" [ref=e158] [cursor=pointer]:
+                      - /url: /watches/roger-dubuis-excalibur
+                  - paragraph [ref=e159]: Ref. RDDBEX0984
+                - generic [ref=e160]:
+                  - generic [ref=e161]: Men
+                  - generic [ref=e162]: Steel
+                  - generic [ref=e163]: 42mm
+                  - generic [ref=e164]: Pre-owned
+                - generic [ref=e165]:
+                  - paragraph [ref=e166]: $17,850
+                  - button "Reserve" [ref=e167]:
+                    - text: Reserve
+                    - img [ref=e168]
+            - article [ref=e170]:
+              - generic [ref=e171]:
+                - link "View Jean Dunand Shabaka Grande Complication" [ref=e172] [cursor=pointer]:
+                  - /url: /watches/jean-dunand-orbital
+                  - img "Jean Dunand Shabaka Grande Complication" [ref=e173]
+                - button "Add Shabaka Grande Complication to wishlist" [ref=e174]:
+                  - img [ref=e175]
+              - generic [ref=e177]:
+                - generic [ref=e179]:
+                  - paragraph [ref=e180]: Jean Dunand
+                  - heading "Shabaka Grande Complication" [level=3] [ref=e181]:
+                    - link "Shabaka Grande Complication" [ref=e182] [cursor=pointer]:
+                      - /url: /watches/jean-dunand-orbital
+                  - paragraph [ref=e183]: Ref. JD-SHA-02
+                - generic [ref=e184]:
+                  - generic [ref=e185]: Unisex
+                  - generic [ref=e186]: Rose gold
+                  - generic [ref=e187]: 44mm
+                  - generic [ref=e188]: Pre-owned
+                - generic [ref=e189]:
+                  - paragraph [ref=e190]: $47,340
+                  - button "Reserve" [ref=e191]:
+                    - text: Reserve
+                    - img [ref=e192]
+            - article [ref=e194]:
+              - generic [ref=e195]:
+                - link "View Seiko Prospex Speedtimer" [ref=e196] [cursor=pointer]:
+                  - /url: /watches/seiko-prospex-speedtimer
+                  - img "Seiko Prospex Speedtimer" [ref=e197]
+                - button "Add Prospex Speedtimer to wishlist" [ref=e198]:
+                  - img [ref=e199]
+              - generic [ref=e201]:
+                - generic [ref=e203]:
+                  - paragraph [ref=e204]: Seiko
+                  - heading "Prospex Speedtimer" [level=3] [ref=e205]:
+                    - link "Prospex Speedtimer" [ref=e206] [cursor=pointer]:
+                      - /url: /watches/seiko-prospex-speedtimer
+                  - paragraph [ref=e207]: Ref. SRQ047J1
+                - generic [ref=e208]:
+                  - generic [ref=e209]: Men
+                  - generic [ref=e210]: Steel
+                  - generic [ref=e211]: 42mm
+                  - generic [ref=e212]: New
+                - generic [ref=e213]:
+                  - paragraph [ref=e214]: $3,760
+                  - button "Reserve" [ref=e215]:
+                    - text: Reserve
+                    - img [ref=e216]
+            - article [ref=e218]:
+              - generic [ref=e219]:
+                - link "View Cartier Santos-Dumont" [ref=e220] [cursor=pointer]:
+                  - /url: /watches/cartier-santos-dumont
+                  - img "Cartier Santos-Dumont" [ref=e221]
+                - button "Add Santos-Dumont to wishlist" [ref=e222]:
+                  - img [ref=e223]
+              - generic [ref=e225]:
+                - generic [ref=e227]:
+                  - paragraph [ref=e228]: Cartier
+                  - heading "Santos-Dumont" [level=3] [ref=e229]:
+                    - link "Santos-Dumont" [ref=e230] [cursor=pointer]:
+                      - /url: /watches/cartier-santos-dumont
+                  - paragraph [ref=e231]: Ref. WSSA0022
+                - generic [ref=e232]:
+                  - generic [ref=e233]: Ladies
+                  - generic [ref=e234]: Steel
+                  - generic [ref=e235]: 31mm
+                  - generic [ref=e236]: New
+                - generic [ref=e237]:
+                  - paragraph [ref=e238]: $5,200
+                  - button "Reserve" [ref=e239]:
+                    - text: Reserve
+                    - img [ref=e240]
+            - article [ref=e242]:
+              - generic [ref=e243]:
+                - link "View IWC Portugieser Automatic" [ref=e244] [cursor=pointer]:
+                  - /url: /watches/iwc-portugieser-automatic
+                  - img "IWC Portugieser Automatic" [ref=e245]
+                - button "Add Portugieser Automatic to wishlist" [ref=e246]:
+                  - img [ref=e247]
+              - generic [ref=e249]:
+                - generic [ref=e251]:
+                  - paragraph [ref=e252]: IWC
+                  - heading "Portugieser Automatic" [level=3] [ref=e253]:
+                    - link "Portugieser Automatic" [ref=e254] [cursor=pointer]:
+                      - /url: /watches/iwc-portugieser-automatic
+                  - paragraph [ref=e255]: Ref. IW500705
+                - generic [ref=e256]:
+                  - generic [ref=e257]: Men
+                  - generic [ref=e258]: Steel
+                  - generic [ref=e259]: 42mm
+                  - generic [ref=e260]: Pre-owned
+                - generic [ref=e261]:
+                  - paragraph [ref=e262]: $7,800
+                  - button "Reserve" [ref=e263]:
+                    - text: Reserve
+                    - img [ref=e264]
+            - article [ref=e266]:
+              - generic [ref=e267]:
+                - link "View Breitling Navitimer B01" [ref=e268] [cursor=pointer]:
+                  - /url: /watches/breitling-navitimer-b01
+                  - img "Breitling Navitimer B01" [ref=e269]
+                - button "Add Navitimer B01 to wishlist" [ref=e270]:
+                  - img [ref=e271]
+              - generic [ref=e273]:
+                - generic [ref=e275]:
+                  - paragraph [ref=e276]: Breitling
+                  - heading "Navitimer B01" [level=3] [ref=e277]:
+                    - link "Navitimer B01" [ref=e278] [cursor=pointer]:
+                      - /url: /watches/breitling-navitimer-b01
+                  - paragraph [ref=e279]: Ref. AB0137211B1A1
+                - generic [ref=e280]:
+                  - generic [ref=e281]: Men
+                  - generic [ref=e282]: Steel
+                  - generic [ref=e283]: 43mm
+                  - generic [ref=e284]: New
+                - generic [ref=e285]:
+                  - paragraph [ref=e286]: $8,950
+                  - button "Reserve" [ref=e287]:
+                    - text: Reserve
+                    - img [ref=e288]
+            - article [ref=e290]:
+              - generic [ref=e291]:
+                - link "View Tudor Black Bay Fifty-Eight" [ref=e292] [cursor=pointer]:
+                  - /url: /watches/tudor-black-bay-fifty-eight
+                  - img "Tudor Black Bay Fifty-Eight" [ref=e293]
+                - button "Add Black Bay Fifty-Eight to wishlist" [ref=e294]:
+                  - img [ref=e295]
+              - generic [ref=e297]:
+                - generic [ref=e299]:
+                  - paragraph [ref=e300]: Tudor
+                  - heading "Black Bay Fifty-Eight" [level=3] [ref=e301]:
+                    - link "Black Bay Fifty-Eight" [ref=e302] [cursor=pointer]:
+                      - /url: /watches/tudor-black-bay-fifty-eight
+                  - paragraph [ref=e303]: Ref. M79030N
+                - generic [ref=e304]:
+                  - generic [ref=e305]: Unisex
+                  - generic [ref=e306]: Steel
+                  - generic [ref=e307]: 39mm
+                  - generic [ref=e308]: Pre-owned
+                - generic [ref=e309]:
+                  - paragraph [ref=e310]: $3,850
+                  - button "Reserve" [ref=e311]:
+                    - text: Reserve
+                    - img [ref=e312]
+            - article [ref=e314]:
+              - generic [ref=e315]:
+                - link "View Jaeger-LeCoultre Reverso Classic" [ref=e316] [cursor=pointer]:
+                  - /url: /watches/jaeger-lecoultre-reverso-classic
+                  - img "Jaeger-LeCoultre Reverso Classic" [ref=e317]
+                - button "Add Reverso Classic to wishlist" [ref=e318]:
+                  - img [ref=e319]
+              - generic [ref=e321]:
+                - generic [ref=e323]:
+                  - paragraph [ref=e324]: Jaeger-LeCoultre
+                  - heading "Reverso Classic" [level=3] [ref=e325]:
+                    - link "Reverso Classic" [ref=e326] [cursor=pointer]:
+                      - /url: /watches/jaeger-lecoultre-reverso-classic
+                  - paragraph [ref=e327]: Ref. Q2608440
+                - generic [ref=e328]:
+                  - generic [ref=e329]: Ladies
+                  - generic [ref=e330]: Steel
+                  - generic [ref=e331]: 35mm
+                  - generic [ref=e332]: New
+                - generic [ref=e333]:
+                  - paragraph [ref=e334]: $6,200
+                  - button "Reserve" [ref=e335]:
+                    - text: Reserve
+                    - img [ref=e336]
+            - article [ref=e338]:
+              - generic [ref=e339]:
+                - link "View Zenith Chronomaster Open" [ref=e340] [cursor=pointer]:
+                  - /url: /watches/zenith-chronomaster-open
+                  - img "Zenith Chronomaster Open" [ref=e341]
+                - button "Add Chronomaster Open to wishlist" [ref=e342]:
+                  - img [ref=e343]
+              - generic [ref=e345]:
+                - generic [ref=e347]:
+                  - paragraph [ref=e348]: Zenith
+                  - heading "Chronomaster Open" [level=3] [ref=e349]:
+                    - link "Chronomaster Open" [ref=e350] [cursor=pointer]:
+                      - /url: /watches/zenith-chronomaster-open
+                  - paragraph [ref=e351]: Ref. 03.3300.3604
+                - generic [ref=e352]:
+                  - generic [ref=e353]: Men
+                  - generic [ref=e354]: Steel
+                  - generic [ref=e355]: 39mm
+                  - generic [ref=e356]: Pre-owned
+                - generic [ref=e357]:
+                  - paragraph [ref=e358]: $8,900
+                  - button "Reserve" [ref=e359]:
+                    - text: Reserve
+                    - img [ref=e360]
+            - article [ref=e362]:
+              - generic [ref=e363]:
+                - link "View Panerai Luminor Marina" [ref=e364] [cursor=pointer]:
+                  - /url: /watches/panerai-luminor-marina
+                  - img "Panerai Luminor Marina" [ref=e365]
+                - button "Add Luminor Marina to wishlist" [ref=e366]:
+                  - img [ref=e367]
+              - generic [ref=e369]:
+                - generic [ref=e371]:
+                  - paragraph [ref=e372]: Panerai
+                  - heading "Luminor Marina" [level=3] [ref=e373]:
+                    - link "Luminor Marina" [ref=e374] [cursor=pointer]:
+                      - /url: /watches/panerai-luminor-marina
+                  - paragraph [ref=e375]: Ref. PAM01312
+                - generic [ref=e376]:
+                  - generic [ref=e377]: Men
+                  - generic [ref=e378]: Steel
+                  - generic [ref=e379]: 44mm
+                  - generic [ref=e380]: Pre-owned
+                - generic [ref=e381]:
+                  - paragraph [ref=e382]: $6,950
+                  - button "Reserve" [ref=e383]:
+                    - text: Reserve
+                    - img [ref=e384]
+            - article [ref=e386]:
+              - generic [ref=e387]:
+                - link "View Grand Seiko Elegance SBGW231" [ref=e388] [cursor=pointer]:
+                  - /url: /watches/grand-seiko-sbgw231
+                  - img "Grand Seiko Elegance SBGW231" [ref=e389]
+                - button "Add Elegance SBGW231 to wishlist" [ref=e390]:
+                  - img [ref=e391]
+              - generic [ref=e393]:
+                - generic [ref=e395]:
+                  - paragraph [ref=e396]: Grand Seiko
+                  - heading "Elegance SBGW231" [level=3] [ref=e397]:
+                    - link "Elegance SBGW231" [ref=e398] [cursor=pointer]:
+                      - /url: /watches/grand-seiko-sbgw231
+                  - paragraph [ref=e399]: Ref. SBGW231
+                - generic [ref=e400]:
+                  - generic [ref=e401]: Unisex
+                  - generic [ref=e402]: Steel
+                  - generic [ref=e403]: 37mm
+                  - generic [ref=e404]: New
+                - generic [ref=e405]:
+                  - paragraph [ref=e406]: $4,950
+                  - button "Reserve" [ref=e407]:
+                    - text: Reserve
+                    - img [ref=e408]
+          - generic [ref=e410]:
+            - generic [ref=e411]:
+              - img [ref=e412]
+              - text: Authenticity guaranteed
+            - generic [ref=e415]:
+              - img [ref=e416]
+              - text: 5-year warranty
+            - generic [ref=e418]:
+              - img [ref=e419]
+              - text: Worldwide shipping
+            - generic [ref=e424]:
+              - img [ref=e425]
+              - text: Secure checkout
+          - generic [ref=e428]:
+            - generic [ref=e429]:
+              - heading "Looking for something particular?" [level=2] [ref=e430]
+              - paragraph [ref=e431]: Our concierge can source a specific reference, arrange a private viewing, or help compare men's, ladies', and unisex pieces.
+            - generic [ref=e432]:
+              - link "Contact concierge" [ref=e433] [cursor=pointer]:
+                - /url: mailto:concierge@ovalen.com
+              - link "Call boutique" [ref=e434] [cursor=pointer]:
+                - /url: tel:+18336222536
+    - generic [ref=e436]:
+      - generic [ref=e437]:
+        - generic [ref=e438]:
+          - link "Ovalen home" [ref=e439] [cursor=pointer]:
+            - /url: "#top"
+            - generic [ref=e440]: OVALEN
+          - paragraph [ref=e441]: Independent and iconic watches, authenticated for a lifetime of collecting.
+          - link "concierge@ovalen.com" [ref=e442] [cursor=pointer]:
+            - /url: mailto:concierge@ovalen.com
+        - generic [ref=e443]:
+          - navigation "Shop" [ref=e444]:
+            - heading "Shop" [level=2] [ref=e445]
+            - list [ref=e446]:
+              - listitem [ref=e447]:
+                - link "All watches" [ref=e448] [cursor=pointer]:
+                  - /url: "#shop"
+              - listitem [ref=e449]:
+                - link "New arrivals" [ref=e450] [cursor=pointer]:
+                  - /url: "#shop"
+              - listitem [ref=e451]:
+                - link "Pre-owned" [ref=e452] [cursor=pointer]:
+                  - /url: "#shop"
+              - listitem [ref=e453]:
+                - link "The journal" [ref=e454] [cursor=pointer]:
+                  - /url: "#journal"
+          - navigation "Customer care" [ref=e455]:
+            - heading "Customer care" [level=2] [ref=e456]
+            - list [ref=e457]:
+              - listitem [ref=e458]:
+                - link "Contact us" [ref=e459] [cursor=pointer]:
+                  - /url: mailto:concierge@ovalen.com
+              - listitem [ref=e460]:
+                - link "Shipping & delivery" [ref=e461] [cursor=pointer]:
+                  - /url: "#trust"
+              - listitem [ref=e462]:
+                - link "Returns" [ref=e463] [cursor=pointer]:
+                  - /url: "#trust"
+              - listitem [ref=e464]:
+                - link "FAQs" [ref=e465] [cursor=pointer]:
+                  - /url: "#footer"
+          - navigation "About Ovalen" [ref=e466]:
+            - heading "About Ovalen" [level=2] [ref=e467]
+            - list [ref=e468]:
+              - listitem [ref=e469]:
+                - link "Our story" [ref=e470] [cursor=pointer]:
+                  - /url: "#story"
+              - listitem [ref=e471]:
+                - link "Authentication" [ref=e472] [cursor=pointer]:
+                  - /url: "#authentication"
+              - listitem [ref=e473]:
+                - link "Warranty" [ref=e474] [cursor=pointer]:
+                  - /url: "#authentication"
+              - listitem [ref=e475]:
+                - link "Journal" [ref=e476] [cursor=pointer]:
+                  - /url: "#journal"
+      - generic [ref=e477]:
+        - generic [ref=e478]:
+          - paragraph [ref=e479]: We accept Visa, Mastercard, American Express, PayPal, Apple Pay and Google Pay.
+          - generic [ref=e480]:
+            - link "Terms & conditions" [ref=e481] [cursor=pointer]:
+              - /url: "#footer"
+            - link "Privacy policy" [ref=e482] [cursor=pointer]:
+              - /url: "#footer"
+            - link "Cookies" [ref=e483] [cursor=pointer]:
+              - /url: "#footer"
+        - generic [ref=e484]:
+          - generic [ref=e485]:
+            - link "Instagram" [ref=e486] [cursor=pointer]:
+              - /url: https://www.instagram.com
+            - link "Facebook" [ref=e487] [cursor=pointer]:
+              - /url: https://www.facebook.com
+            - link "YouTube" [ref=e488] [cursor=pointer]:
+              - /url: https://www.youtube.com
+          - paragraph [ref=e489]: © 2026 Ovalen. All rights reserved.
+  - button "Open Next.js Dev Tools" [ref=e495] [cursor=pointer]:
+    - img [ref=e496]

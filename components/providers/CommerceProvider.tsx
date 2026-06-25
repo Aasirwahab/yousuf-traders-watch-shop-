@@ -1,10 +1,23 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, useTransition, type ReactNode } from "react";
+import {
+  addToCartAction,
+  getCartAction,
+  removeFromCartAction,
+  setQuantityAction,
+} from "@/app/actions/cart";
+import type { CartLine, CartView } from "@/lib/cart";
 
 type CommerceContextValue = {
+  items: CartLine[];
   cartCount: number;
-  addToCart: () => void;
+  subtotal: number;
+  cartLoaded: boolean;
+  isUpdating: boolean;
+  addItem: (slug: string) => void;
+  updateQty: (productId: string, quantity: number) => void;
+  removeItem: (productId: string) => void;
   cartOpen: boolean;
   setCartOpen: (open: boolean) => void;
   searchOpen: boolean;
@@ -15,19 +28,64 @@ type CommerceContextValue = {
 
 const CommerceContext = createContext<CommerceContextValue | null>(null);
 
+const EMPTY: CartView = { items: [], count: 0, subtotal: 0 };
+
 export function CommerceProvider({ children }: { children: ReactNode }) {
-  const [cartCount, setCartCount] = useState(0);
+  const [cart, setCart] = useState<CartView>(EMPTY);
+  const [cartLoaded, setCartLoaded] = useState(false);
+  const [isUpdating, startTransition] = useTransition();
+
   const [cartOpen, setCartOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => {
+    let active = true;
+    getCartAction()
+      .then((view) => {
+        if (active) setCart(view);
+      })
+      .catch(() => {})
+      .finally(() => {
+        if (active) setCartLoaded(true);
+      });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const addItem = useCallback((slug: string) => {
+    setCartOpen(true);
+    startTransition(async () => {
+      const view = await addToCartAction(slug);
+      setCart(view);
+    });
+  }, []);
+
+  const updateQty = useCallback((productId: string, quantity: number) => {
+    startTransition(async () => {
+      const view = await setQuantityAction(productId, quantity);
+      setCart(view);
+    });
+  }, []);
+
+  const removeItem = useCallback((productId: string) => {
+    startTransition(async () => {
+      const view = await removeFromCartAction(productId);
+      setCart(view);
+    });
+  }, []);
+
   const value = useMemo(
     () => ({
-      cartCount,
-      addToCart: () => {
-        setCartCount((count) => count + 1);
-        setCartOpen(true);
-      },
+      items: cart.items,
+      cartCount: cart.count,
+      subtotal: cart.subtotal,
+      cartLoaded,
+      isUpdating,
+      addItem,
+      updateQty,
+      removeItem,
       cartOpen,
       setCartOpen,
       searchOpen,
@@ -35,7 +93,7 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
       menuOpen,
       setMenuOpen,
     }),
-    [cartCount, cartOpen, menuOpen, searchOpen],
+    [cart, cartLoaded, isUpdating, addItem, updateQty, removeItem, cartOpen, menuOpen, searchOpen],
   );
 
   return <CommerceContext.Provider value={value}>{children}</CommerceContext.Provider>;

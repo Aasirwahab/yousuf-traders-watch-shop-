@@ -1,0 +1,189 @@
+// Ovalen — Prisma schema (Phase 1: product catalog)
+// Docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// A single watch in the catalog. Mirrors the ShopProduct shape from
+/// data/shop.ts so the storefront can read from the database unchanged.
+model Product {
+  id        String @id @default(cuid())
+  slug      String @unique
+  reference String @unique
+
+  brand String
+  name  String
+
+  // Stored as whole currency units (USD), matching the current catalog data.
+  // TODO(hardening): migrate to integer minor units (cents) before real checkout.
+  price Int
+
+  gender     String // "Men" | "Ladies" | "Unisex"
+  collection String // "Classic" | "Chronograph" | "Dress" | "Limited" | "Sport"
+  condition  String // "New" | "Pre-owned"
+  material   String // "Rose gold" | "Steel"
+  dial       String // "Black" | "Ivory" | "Silver" | "White"
+  diameter   Int
+
+  year            Int?
+  waterResistance String?
+  movement        String?
+  description     String?
+
+  // Shop-facing category labels (e.g. "All watches", "Men", "New arrivals").
+  categoryTags String[]
+
+  // Catalog availability. Luxury pieces are frequently single-unit.
+  stock     Int     @default(1)
+  published Boolean @default(true)
+
+  images     ProductImage[]
+  cartItems  CartItem[]
+  orderItems OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([collection])
+  @@index([brand])
+}
+
+/// Mirror of a Clerk user. Populated on first authenticated visit via
+/// getOrCreateUser() so carts and orders can reference a local row.
+model User {
+  id      String  @id @default(cuid())
+  clerkId String  @unique
+  email   String?
+  name    String?
+
+  cart   Cart?
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+/// A shopping cart. Tied to a User when signed in, otherwise referenced by an
+/// httpOnly `ovalen_cart_id` cookie for guests. Guest carts merge into the
+/// user cart on the first authenticated mutation.
+model Cart {
+  id     String  @id @default(cuid())
+  userId String? @unique
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  cartId    String
+  cart      Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity  Int     @default(1)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([cartId, productId])
+  @@index([cartId])
+}
+
+enum OrderStatus {
+  PENDING // created, awaiting payment
+  PAID
+  FULFILLED
+  CANCELLED
+  REFUNDED
+}
+
+/// A placed order. Created as PENDING at checkout; marked PAID once payment is
+/// captured (PayPal). Money is stored in whole USD units to match Product.price.
+model Order {
+  id          String      @id @default(cuid())
+  orderNumber String      @unique
+  status      OrderStatus @default(PENDING)
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+  email  String
+
+  // Shipping address
+  shipName    String
+  shipPhone   String?
+  shipLine1   String
+  shipLine2   String?
+  shipCity    String
+  shipState   String?
+  shipPostal  String
+  shipCountry String
+
+  shippingMethod String
+  subtotal       Int
+  shippingCost   Int
+  total          Int
+
+  // Payment linkage — filled when payment is captured.
+  paymentProvider String?
+  paymentRef      String?
+  paidAt          DateTime?
+
+  items OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+/// Line item snapshot. Product details are copied at order time so historical
+/// orders stay accurate even if the catalog later changes or a product is removed.
+model OrderItem {
+  id      String @id @default(cuid())
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  productId String?
+  product   Product? @relation(fields: [productId], references: [id])
+
+  slug      String
+  brand     String
+  name      String
+  reference String
+  image     String
+  unitPrice Int
+  quantity  Int
+  lineTotal Int
+
+  @@index([orderId])
+}
+
+enum ImageRole {
+  PRIMARY // hero/card image
+  GALLERY // ordered detail-page gallery
+  DETAIL // macro / editorial close-up
+}
+
+model ProductImage {
+  id        String  @id @default(cuid())
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  url      String
+  alt      String
+  role     ImageRole @default(GALLERY)
+  position Int       @default(0)
+
+  createdAt DateTime @default(now())
+
+  @@index([productId])
+}

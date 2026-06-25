@@ -13,7 +13,7 @@ const FILTERS = ["New arrivals", "Best sellers", "Pre-owned"] as const;
 export default function ShopSection() {
   const [activeFilter, setActiveFilter] = useState<(typeof FILTERS)[number]>("New arrivals");
   const [favorites, setFavorites] = useState<Set<string>>(() => new Set());
-  const { addToCart } = useCommerce();
+  const { addItem } = useCommerce();
   const products = useMemo(() => PRODUCTS.filter((product) => product.groups.includes(activeFilter)), [activeFilter]);
 
   function toggleFavorite(slug: string) {
@@ -53,7 +53,7 @@ export default function ShopSection() {
                 </div>
                 <div className="mt-4 flex items-start justify-between gap-3">
                   <div className="min-w-0"><p className="text-[11px] font-semibold uppercase tracking-[0.1em]">{product.brand}</p><h3 className="mt-1 truncate text-[14px]">{product.name}</h3><p className="mt-1 text-[10px] text-[#8a8a86]">Ref. {product.reference}</p><p className="mt-3 text-sm font-medium">{product.price}</p></div>
-                  <button type="button" onClick={addToCart} aria-label={`Add ${product.name} to bag`} className="mt-1 grid h-11 w-11 shrink-0 place-items-center rounded-full border border-black transition-colors hover:bg-black hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2"><Plus className="h-4 w-4" /></button>
+                  <button type="button" onClick={() => addItem(product.slug)} aria-label={`Add ${product.name} to bag`} className="mt-1 grid h-11 w-11 shrink-0 place-items-center rounded-full border border-black transition-colors hover:bg-black hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2"><Plus className="h-4 w-4" /></button>
                 </div>
               </article>
             );

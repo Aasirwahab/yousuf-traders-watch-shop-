@@ -6,8 +6,9 @@ import { ArrowRight, CalendarClock, Check, Expand, Heart, RotateCcw, ShieldCheck
 import { useMemo, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { CommerceProvider, useCommerce } from "@/components/providers/CommerceProvider";
-import { SHOP_PRODUCTS, type ShopProduct } from "@/data/shop";
+import { useCommerce } from "@/components/providers/CommerceProvider";
+import { formatPrice } from "@/lib/format";
+import { type ShopProduct } from "@/data/shop";
 
 const trustItems = [
   { title: "Authenticated", text: "Each watch is verified by our specialists", icon: ShieldCheck },
@@ -16,28 +17,24 @@ const trustItems = [
   { title: "Returns", text: "14-day return policy", icon: RotateCcw },
 ];
 
-const galleryFallback = SHOP_PRODUCTS.slice(0, 5).map((product) => product.image);
-
-export default function ProductDetailPage({ product }: { product: ShopProduct }) {
+export default function ProductDetailPage({ product, related }: { product: ShopProduct; related: ShopProduct[] }) {
   return (
-    <CommerceProvider>
-      <main className="min-h-screen overflow-x-clip bg-white text-black">
-        <Navbar />
-        <ProductDetailContent product={product} />
-        <Footer />
-      </main>
-    </CommerceProvider>
+    <main className="min-h-screen overflow-x-clip bg-white text-black">
+      <Navbar />
+      <ProductDetailContent product={product} related={related} />
+      <Footer />
+    </main>
   );
 }
 
-function ProductDetailContent({ product }: { product: ShopProduct }) {
+function ProductDetailContent({ product, related }: { product: ShopProduct; related: ShopProduct[] }) {
   const commerce = useCommerce();
-  const gallery = useMemo(
-    () => product.gallery ?? [product.image, ...galleryFallback.filter((image) => image !== product.image)].slice(0, 5),
-    [product.gallery, product.image],
-  );
+  const gallery = useMemo(() => {
+    if (product.gallery) return product.gallery;
+    const fallback = related.map((item) => item.image).filter((image) => image !== product.image);
+    return [product.image, ...fallback].slice(0, 5);
+  }, [product.gallery, product.image, related]);
   const [selectedImage, setSelectedImage] = useState(gallery[0] ?? product.image);
-  const related = SHOP_PRODUCTS.filter((item) => item.slug !== product.slug).slice(0, 4);
 
   return (
     <>
@@ -102,7 +99,7 @@ function ProductDetailContent({ product }: { product: ShopProduct }) {
               </dl>
 
               <div className="mt-6 grid gap-3">
-                <button type="button" onClick={commerce.addToCart} className="grid h-13 place-items-center bg-[#6b1824] text-[12px] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-black">
+                <button type="button" onClick={() => commerce.addItem(product.slug)} className="grid h-13 place-items-center bg-[#6b1824] text-[12px] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-black">
                   Add to bag
                 </button>
                 <a href="mailto:concierge@ovalen.com" className="grid h-13 place-items-center border border-black text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white">
@@ -180,7 +177,7 @@ function ProductDetailContent({ product }: { product: ShopProduct }) {
             <p className="truncate text-[11px] font-semibold uppercase tracking-[0.1em]">{product.brand}</p>
             <p className="text-sm font-medium">{formatPrice(product.price)}</p>
           </div>
-          <button type="button" onClick={commerce.addToCart} className="h-11 shrink-0 bg-[#6b1824] px-6 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
+          <button type="button" onClick={() => commerce.addItem(product.slug)} className="h-11 shrink-0 bg-[#6b1824] px-6 text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
             Add to bag
           </button>
         </div>
@@ -198,6 +195,3 @@ function SpecRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-function formatPrice(price: number) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(price);
-}

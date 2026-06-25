@@ -6,9 +6,9 @@ import { ArrowRight, Check, ChevronDown, Filter, Grid2X2, Heart, List, ShieldChe
 import { useMemo, useState } from "react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { CommerceProvider } from "@/components/providers/CommerceProvider";
-import { SHOP_CATEGORIES, SHOP_FILTERS, SHOP_PRODUCTS } from "@/data/shop";
 import { useCommerce } from "@/components/providers/CommerceProvider";
+import { formatPrice } from "@/lib/format";
+import { SHOP_CATEGORIES, SHOP_FILTERS, type ShopProduct } from "@/data/shop";
 
 type Category = (typeof SHOP_CATEGORIES)[number];
 type ViewMode = "grid" | "list";
@@ -31,19 +31,17 @@ const trustItems = [
   { label: "Secure checkout", icon: ShieldCheck },
 ];
 
-export default function WatchesPage() {
+export default function WatchesPage({ products }: { products: ShopProduct[] }) {
   return (
-    <CommerceProvider>
-      <main className="min-h-screen overflow-x-clip bg-white text-black">
-        <Navbar />
-        <WatchesContent />
-        <Footer />
-      </main>
-    </CommerceProvider>
+    <main className="min-h-screen overflow-x-clip bg-white text-black">
+      <Navbar />
+      <WatchesContent allProducts={products} />
+      <Footer />
+    </main>
   );
 }
 
-function WatchesContent() {
+function WatchesContent({ allProducts }: { allProducts: ShopProduct[] }) {
   const [activeCategory, setActiveCategory] = useState<Category>("All watches");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [sort, setSort] = useState("Newest");
@@ -60,7 +58,7 @@ function WatchesContent() {
   }));
 
   const products = useMemo(() => {
-    const filtered = SHOP_PRODUCTS.filter((product) => {
+    const filtered = allProducts.filter((product) => {
       const categoryMatch = activeCategory === "All watches" || product.categoryTags.includes(activeCategory);
       if (!categoryMatch) return false;
 
@@ -83,9 +81,9 @@ function WatchesContent() {
     return [...filtered].sort((a, b) => {
       if (sort === "Price high") return b.price - a.price;
       if (sort === "Price low") return a.price - b.price;
-      return SHOP_PRODUCTS.findIndex((product) => product.slug === a.slug) - SHOP_PRODUCTS.findIndex((product) => product.slug === b.slug);
+      return allProducts.findIndex((product) => product.slug === a.slug) - allProducts.findIndex((product) => product.slug === b.slug);
     });
-  }, [activeCategory, selectedFilters, sort]);
+  }, [activeCategory, selectedFilters, sort, allProducts]);
 
   const activeFilterCount = Object.values(selectedFilters).reduce((total, values) => total + values.size, 0);
 
@@ -303,7 +301,7 @@ function FilterDrawer({ open, onClose, children }: { open: boolean; onClose: () 
   );
 }
 
-function ProductCard({ product, favorite, onFavorite, viewMode }: { product: (typeof SHOP_PRODUCTS)[number]; favorite: boolean; onFavorite: () => void; viewMode: ViewMode }) {
+function ProductCard({ product, favorite, onFavorite, viewMode }: { product: ShopProduct; favorite: boolean; onFavorite: () => void; viewMode: ViewMode }) {
   const commerce = useCommerce();
   const list = viewMode === "list";
 
@@ -339,13 +337,13 @@ function ProductCard({ product, favorite, onFavorite, viewMode }: { product: (ty
         <div className="mt-3 flex items-center justify-between gap-3">
           <p className="text-sm font-medium">{formatPrice(product.price)}</p>
           {!list ? (
-            <button type="button" onClick={commerce.addToCart} className="group/button inline-flex h-9 items-center gap-2 rounded-full border border-black px-3 text-[11px] transition-colors hover:bg-black hover:text-white">
+            <button type="button" onClick={() => commerce.addItem(product.slug)} className="group/button inline-flex h-9 items-center gap-2 rounded-full border border-black px-3 text-[11px] transition-colors hover:bg-black hover:text-white">
               Reserve <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/button:translate-x-0.5" />
             </button>
           ) : null}
         </div>
       </div>
-      {list ? <button type="button" onClick={commerce.addToCart} className="self-center rounded-full bg-black px-5 py-3 text-[12px] text-white max-sm:col-span-2 max-sm:w-full">Reserve</button> : null}
+      {list ? <button type="button" onClick={() => commerce.addItem(product.slug)} className="self-center rounded-full bg-black px-5 py-3 text-[12px] text-white max-sm:col-span-2 max-sm:w-full">Reserve</button> : null}
     </article>
   );
 }
@@ -356,8 +354,4 @@ function IconToggle({ label, active, onClick, children }: { label: string; activ
       {children}
     </button>
   );
-}
-
-function formatPrice(price: number) {
-  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(price);
 }

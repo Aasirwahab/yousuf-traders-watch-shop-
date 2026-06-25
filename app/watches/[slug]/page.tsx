@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import ProductDetailPage from "@/components/sections/ProductDetailPage";
-import { SHOP_PRODUCTS } from "@/data/shop";
+import { getAllProductSlugs, getProductBySlug, getRelatedProducts } from "@/lib/products";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
-export function generateStaticParams() {
-  return SHOP_PRODUCTS.map((product) => ({ slug: product.slug }));
+export async function generateStaticParams() {
+  const slugs = await getAllProductSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = SHOP_PRODUCTS.find((item) => item.slug === slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     return {
@@ -29,9 +30,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  const product = SHOP_PRODUCTS.find((item) => item.slug === slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) notFound();
 
-  return <ProductDetailPage product={product} />;
+  const related = await getRelatedProducts(product.slug, 4);
+
+  return <ProductDetailPage product={product} related={related} />;
 }

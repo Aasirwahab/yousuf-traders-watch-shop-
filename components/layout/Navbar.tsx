@@ -1,9 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { Menu, Minus, Plus, Search, ShoppingBag, User, X } from "lucide-react";
+import { Show, UserButton } from "@clerk/nextjs";
 import { NAV_LINKS } from "@/data/constants";
 import { useCommerce } from "@/components/providers/CommerceProvider";
+import { formatPrice } from "@/lib/format";
 
 export default function Navbar({ overlay = false }: { overlay?: boolean }) {
   const commerce = useCommerce();
@@ -24,7 +27,20 @@ export default function Navbar({ overlay = false }: { overlay?: boolean }) {
 
           <div className="flex items-center gap-1 md:gap-2">
             <HeaderButton label="Search" onClick={() => commerce.setSearchOpen(true)}><Search /></HeaderButton>
-            <HeaderButton label="Account" className="hidden sm:grid"><User /></HeaderButton>
+            <Show when="signed-out">
+              <Link
+                href="/sign-in"
+                aria-label="Sign in"
+                className="relative hidden h-11 w-11 place-items-center rounded-full transition-colors hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 sm:grid [&_svg]:h-[19px] [&_svg]:w-[19px] [&_svg]:stroke-[1.4]"
+              >
+                <User />
+              </Link>
+            </Show>
+            <Show when="signed-in">
+              <span className="hidden h-11 w-11 place-items-center sm:grid">
+                <UserButton userProfileMode="navigation" userProfileUrl="/account" />
+              </span>
+            </Show>
             <HeaderButton label={`Shopping bag with ${commerce.cartCount} items`} onClick={() => commerce.setCartOpen(true)}>
               <ShoppingBag />
               {commerce.cartCount > 0 ? <span className="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#6b1824] px-1 text-[9px] text-white">{commerce.cartCount}</span> : null}
@@ -36,7 +52,7 @@ export default function Navbar({ overlay = false }: { overlay?: boolean }) {
 
       <SearchPanel open={commerce.searchOpen} onClose={() => commerce.setSearchOpen(false)} />
       <MobileMenu open={commerce.menuOpen} onClose={() => commerce.setMenuOpen(false)} />
-      <CartPanel count={commerce.cartCount} open={commerce.cartOpen} onClose={() => commerce.setCartOpen(false)} />
+      <CartPanel open={commerce.cartOpen} onClose={() => commerce.setCartOpen(false)} />
     </>
   );
 }
@@ -89,14 +105,57 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   );
 }
 
-function CartPanel({ count, open, onClose }: { count: number; open: boolean; onClose: () => void }) {
+function CartPanel({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { items, cartCount, subtotal, updateQty, removeItem } = useCommerce();
   if (!open) return null;
   return (
     <Overlay onClose={onClose}>
       <aside role="dialog" aria-modal="true" aria-label="Shopping bag" className="ml-auto flex min-h-screen w-[92%] max-w-md flex-col bg-white p-6 md:p-8">
-        <div className="flex items-center justify-between"><h2 className="text-2xl">Your bag <span className="text-[#6e6e6b]">({count})</span></h2><HeaderButton label="Close bag" onClick={onClose}><X /></HeaderButton></div>
-        <div className="grid flex-1 place-items-center text-center"><div><ShoppingBag className="mx-auto h-8 w-8 stroke-1" /><p className="mt-5 text-lg">{count ? `${count} watch ${count === 1 ? "is" : "are"} reserved in your bag.` : "Your bag is waiting."}</p><p className="mt-2 text-sm text-[#6e6e6b]">Secure checkout will be connected with the product catalogue.</p></div></div>
-        <a href="#shop" onClick={onClose} className="grid h-13 place-items-center bg-black text-sm text-white">Continue shopping</a>
+        <div className="flex items-center justify-between"><h2 className="text-2xl">Your bag <span className="text-[#6e6e6b]">({cartCount})</span></h2><HeaderButton label="Close bag" onClick={onClose}><X /></HeaderButton></div>
+
+        {items.length === 0 ? (
+          <>
+            <div className="grid flex-1 place-items-center text-center"><div><ShoppingBag className="mx-auto h-8 w-8 stroke-1" /><p className="mt-5 text-lg">Your bag is waiting.</p><p className="mt-2 text-sm text-[#6e6e6b]">Add a timepiece from the collection to begin.</p></div></div>
+            <a href="#shop" onClick={onClose} className="grid h-13 place-items-center bg-black text-sm text-white">Continue shopping</a>
+          </>
+        ) : (
+          <>
+            <div className="-mx-1 mt-6 min-h-0 flex-1 overflow-y-auto px-1">
+              {items.map((item) => (
+                <div key={item.productId} className="flex gap-4 border-b border-black/10 py-5">
+                  <Link href={`/watches/${item.slug}`} onClick={onClose} className="relative h-20 w-16 shrink-0 overflow-hidden rounded-[10px] bg-[#f4f4f4]">
+                    <Image src={item.image} alt={`${item.brand} ${item.name}`} fill sizes="64px" className="object-cover" />
+                  </Link>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0">
+                        <p className="text-[10px] font-semibold uppercase tracking-[0.1em]">{item.brand}</p>
+                        <h3 className="mt-1 truncate text-[13px]"><Link href={`/watches/${item.slug}`} onClick={onClose} className="hover:text-[#6b1824]">{item.name}</Link></h3>
+                        <p className="mt-1 text-[10px] text-[#8a8a86]">Ref. {item.reference}</p>
+                      </div>
+                      <button type="button" aria-label={`Remove ${item.name} from bag`} onClick={() => removeItem(item.productId)} className="shrink-0 text-[#8a8a86] transition-colors hover:text-black"><X className="h-4 w-4 stroke-[1.4]" /></button>
+                    </div>
+                    <div className="mt-3 flex items-center justify-between gap-3">
+                      <div className="inline-flex items-center rounded-full border border-black/15">
+                        <button type="button" aria-label="Decrease quantity" onClick={() => updateQty(item.productId, item.quantity - 1)} className="grid h-8 w-8 place-items-center text-black/70 transition-colors hover:text-black"><Minus className="h-3.5 w-3.5 stroke-[1.6]" /></button>
+                        <span className="min-w-6 text-center text-[12px] tabular-nums">{item.quantity}</span>
+                        <button type="button" aria-label="Increase quantity" disabled={item.quantity >= item.stock} onClick={() => updateQty(item.productId, item.quantity + 1)} className="grid h-8 w-8 place-items-center text-black/70 transition-colors hover:text-black disabled:opacity-25"><Plus className="h-3.5 w-3.5 stroke-[1.6]" /></button>
+                      </div>
+                      <p className="text-[13px] font-medium">{formatPrice(item.lineTotal)}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="border-t border-black/10 pt-5">
+              <div className="flex items-center justify-between text-sm"><span className="text-[#6e6e6b]">Subtotal</span><span className="font-medium">{formatPrice(subtotal)}</span></div>
+              <p className="mt-1 text-[11px] text-[#8a8a86]">Shipping &amp; taxes calculated at checkout.</p>
+              <Link href="/checkout" onClick={onClose} className="mt-4 grid h-13 w-full place-items-center bg-black text-sm text-white transition-colors hover:bg-[#6b1824]">Checkout</Link>
+              <button type="button" onClick={onClose} className="mt-2 grid h-11 w-full place-items-center text-sm text-[#6e6e6b] transition-colors hover:text-black">Continue shopping</button>
+            </div>
+          </>
+        )}
       </aside>
     </Overlay>
   );
