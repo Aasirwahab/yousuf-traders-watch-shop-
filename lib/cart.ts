@@ -141,7 +141,9 @@ export async function getCartView(): Promise<CartView> {
 
 export async function addToCartBySlug(slug: string): Promise<CartView> {
   const product = await prisma.product.findUnique({ where: { slug } });
-  if (!product || !product.published) {
+  // Out-of-stock items can't be added — otherwise the quantity below clamps to
+  // 0 and we'd build a $0 line/order.
+  if (!product || !product.published || product.stock < 1) {
     return getCartView();
   }
 
@@ -189,4 +191,10 @@ export async function removeFromCart(productId: string): Promise<CartView> {
 
   await prisma.cartItem.deleteMany({ where: { cartId, productId } });
   return buildView(cartId);
+}
+
+/** Empty the active cart. Called after an order is successfully placed. */
+export async function clearCart(): Promise<void> {
+  const cartId = await resolveCartId(false);
+  if (cartId) await prisma.cartItem.deleteMany({ where: { cartId } });
 }

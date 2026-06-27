@@ -21,7 +21,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="grid gap-8 py-8 text-[11px] text-white/45 md:grid-cols-[1fr_auto] md:items-end">
-          <div><p>We accept Visa, Mastercard, American Express, PayPal, Apple Pay and Google Pay.</p><div className="mt-4 flex flex-wrap gap-x-6 gap-y-2"><Link href="#footer" className="hover:text-white">Terms & conditions</Link><Link href="#footer" className="hover:text-white">Privacy policy</Link><Link href="#footer" className="hover:text-white">Cookies</Link></div></div>
+          <div><p>We accept Visa, Mastercard, American Express, PayPal, Apple Pay and Google Pay.</p><div className="mt-4 flex flex-wrap gap-x-6 gap-y-2"><Link href="/terms" className="hover:text-white">Terms & conditions</Link><Link href="/privacy" className="hover:text-white">Privacy policy</Link><Link href="/cookies" className="hover:text-white">Cookies</Link></div></div>
           <div className="md:text-right"><div className="flex gap-5 md:justify-end"><a href="https://www.instagram.com" rel="noreferrer" target="_blank" className="hover:text-white">Instagram</a><a href="https://www.facebook.com" rel="noreferrer" target="_blank" className="hover:text-white">Facebook</a><a href="https://www.youtube.com" rel="noreferrer" target="_blank" className="hover:text-white">YouTube</a></div><p className="mt-4">© {new Date().getFullYear()} Ovalen. All rights reserved.</p></div>
         </div>
       </div>

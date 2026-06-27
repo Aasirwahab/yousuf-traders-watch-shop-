@@ -1,6 +1,7 @@
 node_modules/
 .next/
 coverage/
+.playwright-mcp/
 .DS_Store
 *.log
 *.tsbuildinfo

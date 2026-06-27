@@ -1,10 +1,10 @@
 import type { Category, Feature, FooterLink, NavLink, Product } from "@/types";
 
 export const NAV_LINKS: NavLink[] = [
-  { label: "New arrivals", href: "/#shop" },
+  { label: "New arrivals", href: "/watches?category=New%20arrivals" },
   { label: "Watches", href: "/watches" },
-  { label: "Brands", href: "/#story" },
-  { label: "Journal", href: "/#journal" },
+  { label: "Pre-owned", href: "/watches?category=Pre-owned" },
+  { label: "Brands", href: "/brands" },
 ];
 
 export const CATEGORIES: Category[] = [
@@ -69,28 +69,28 @@ export const FOOTER_GROUPS: Array<{ title: string; links: FooterLink[] }> = [
   {
     title: "Shop",
     links: [
-      { label: "All watches", href: "#shop" },
-      { label: "New arrivals", href: "#shop" },
-      { label: "Pre-owned", href: "#shop" },
-      { label: "The journal", href: "#journal" },
+      { label: "All watches", href: "/watches" },
+      { label: "New arrivals", href: "/watches?category=New%20arrivals" },
+      { label: "Pre-owned", href: "/watches?category=Pre-owned" },
+      { label: "Brands", href: "/brands" },
     ],
   },
   {
     title: "Customer care",
     links: [
       { label: "Contact us", href: "mailto:concierge@ovalen.com" },
-      { label: "Shipping & delivery", href: "#trust" },
-      { label: "Returns", href: "#trust" },
-      { label: "FAQs", href: "#footer" },
+      { label: "Shipping & delivery", href: "/shipping" },
+      { label: "Returns", href: "/returns" },
+      { label: "FAQs", href: "/faq" },
     ],
   },
   {
     title: "About Ovalen",
     links: [
-      { label: "Our story", href: "#story" },
-      { label: "Authentication", href: "#authentication" },
-      { label: "Warranty", href: "#authentication" },
-      { label: "Journal", href: "#journal" },
+      { label: "Our story", href: "/about" },
+      { label: "Authentication", href: "/authentication" },
+      { label: "Warranty", href: "/warranty" },
+      { label: "Journal", href: "/#journal" },
     ],
   },
 ];

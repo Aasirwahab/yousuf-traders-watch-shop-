@@ -4,6 +4,8 @@ import { Inter, Teko } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import { CommerceProvider } from "@/components/providers/CommerceProvider";
+import CookieConsent from "@/components/layout/CookieConsent";
+import { SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,6 +21,7 @@ const teko = Teko({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: "Authenticated Luxury Watches | Ovalen",
   description:
     "Shop independent and iconic watches authenticated by specialists, protected by a 24-month warranty, and delivered worldwide.",
@@ -48,6 +51,7 @@ export default function RootLayout({
           <SmoothScroll>
             <CommerceProvider>{children}</CommerceProvider>
           </SmoothScroll>
+          <CookieConsent />
         </body>
       </html>
     </ClerkProvider>

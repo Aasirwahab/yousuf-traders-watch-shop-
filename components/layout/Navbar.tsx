@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, Minus, Plus, Search, ShoppingBag, User, X } from "lucide-react";
+import { Heart, Menu, Minus, Plus, Search, ShoppingBag, User, X } from "lucide-react";
 import { Show, UserButton } from "@clerk/nextjs";
 import { NAV_LINKS } from "@/data/constants";
 import { useCommerce } from "@/components/providers/CommerceProvider";
@@ -27,6 +27,14 @@ export default function Navbar({ overlay = false }: { overlay?: boolean }) {
 
           <div className="flex items-center gap-1 md:gap-2">
             <HeaderButton label="Search" onClick={() => commerce.setSearchOpen(true)}><Search /></HeaderButton>
+            <Link
+              href="/wishlist"
+              aria-label={`Wishlist with ${commerce.wishlistCount} items`}
+              className="relative hidden h-11 w-11 place-items-center rounded-full transition-colors hover:bg-black/5 focus-visible:outline-2 focus-visible:outline-offset-2 sm:grid [&_svg]:h-[19px] [&_svg]:w-[19px] [&_svg]:stroke-[1.4]"
+            >
+              <Heart />
+              {commerce.wishlistCount > 0 ? <span className="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-[#6b1824] px-1 text-[9px] text-white">{commerce.wishlistCount}</span> : null}
+            </Link>
             <Show when="signed-out">
               <Link
                 href="/sign-in"
@@ -80,8 +88,8 @@ function SearchPanel({ open, onClose }: { open: boolean; onClose: () => void }) 
       <div role="dialog" aria-modal="true" aria-label="Search watches" className="bg-white px-5 py-8 md:px-[8%] md:py-12">
         <div className="mx-auto max-w-5xl">
           <div className="flex items-center justify-between"><p className="text-sm text-[#6e6e6b]">Search the collection</p><HeaderButton label="Close search" onClick={onClose}><X /></HeaderButton></div>
-          <form action="#shop" onSubmit={onClose} className="mt-7 flex border-b border-black pb-4">
-            <input autoFocus aria-label="Search watches" placeholder="Brand, model, reference..." className="min-w-0 flex-1 bg-transparent text-2xl outline-none placeholder:text-black/25 md:text-4xl" />
+          <form action="/search" method="get" onSubmit={onClose} className="mt-7 flex border-b border-black pb-4">
+            <input name="q" autoFocus aria-label="Search watches" placeholder="Brand, model, reference..." className="min-w-0 flex-1 bg-transparent text-2xl outline-none placeholder:text-black/25 md:text-4xl" />
             <button className="px-3 text-sm font-medium">Search</button>
           </form>
         </div>
@@ -98,6 +106,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
         <div className="flex items-center justify-between"><Logo /><HeaderButton label="Close menu" onClick={onClose}><X /></HeaderButton></div>
         <nav className="mt-16 flex flex-col border-t border-black/10">
           {NAV_LINKS.map((link) => <Link key={link.label} href={link.href} onClick={onClose} className="border-b border-black/10 py-5 text-2xl">{link.label}</Link>)}
+          <Link href="/wishlist" onClick={onClose} className="border-b border-black/10 py-5 text-2xl">Wishlist</Link>
         </nav>
         <a href="mailto:concierge@ovalen.com" className="mt-12 block text-sm text-[#6e6e6b]">concierge@ovalen.com</a>
       </div>

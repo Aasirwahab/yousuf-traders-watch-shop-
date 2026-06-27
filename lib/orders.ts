@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { z } from "zod";
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
-import { getCartView } from "@/lib/cart";
+import { getCartView, clearCart } from "@/lib/cart";
 import { SHIPPING_METHODS, getShippingMethod, type ShippingMethodId } from "@/lib/shipping";
 
 // Order ids a guest session is allowed to view. Set when an order is placed so
@@ -53,14 +53,28 @@ export type CreateOrderResult =
   | { ok: true; orderId: string }
   | { ok: false; error: string };
 
+/** Thrown when a line can no longer be reserved, so the transaction rolls back. */
+class OutOfStockError extends Error {
+  constructor(public itemName: string) {
+    super(`Out of stock: ${itemName}`);
+    this.name = "OutOfStockError";
+  }
+}
+
 /**
  * Create a PENDING order from the user's current cart. Totals are recomputed
- * server-side from the cart (never trusted from the client). Cart is left
- * intact and stock is not decremented until payment is captured.
+ * server-side from the cart (never trusted from the client). Stock is reserved
+ * (decremented) atomically in the same transaction as the order: the
+ * conditional decrement only succeeds while enough stock remains, so two
+ * shoppers can never both claim the last unit of a single-piece listing. If any
+ * line can't be reserved the whole transaction rolls back and nothing is taken.
  */
 export async function createOrderFromCart(input: CheckoutInput): Promise<CreateOrderResult> {
   const cart = await getCartView();
-  if (cart.items.length === 0) {
+  // Ignore any zero-quantity lines (e.g. left behind when stock ran out) so we
+  // never build a $0 order — payment providers reject those.
+  const purchasable = cart.items.filter((line) => line.quantity > 0);
+  if (purchasable.length === 0) {
     return { ok: false, error: "Your bag is empty." };
   }
 
@@ -69,7 +83,7 @@ export async function createOrderFromCart(input: CheckoutInput): Promise<CreateO
     return { ok: false, error: "Please choose a delivery method." };
   }
 
-  const subtotal = cart.subtotal;
+  const subtotal = purchasable.reduce((sum, line) => sum + line.lineTotal, 0);
   const shippingCost = method.cost;
   const total = subtotal + shippingCost;
 
@@ -84,40 +98,65 @@ export async function createOrderFromCart(input: CheckoutInput): Promise<CreateO
     userId = user.id;
   }
 
-  const order = await prisma.order.create({
-    data: {
-      orderNumber: generateOrderNumber(),
-      status: "PENDING",
-      userId,
-      email: input.email,
-      shipName: input.shipName,
-      shipPhone: input.shipPhone || null,
-      shipLine1: input.shipLine1,
-      shipLine2: input.shipLine2 || null,
-      shipCity: input.shipCity,
-      shipState: input.shipState || null,
-      shipPostal: input.shipPostal,
-      shipCountry: input.shipCountry,
-      shippingMethod: method.label,
-      subtotal,
-      shippingCost,
-      total,
-      items: {
-        create: cart.items.map((line) => ({
-          productId: line.productId,
-          slug: line.slug,
-          brand: line.brand,
-          name: line.name,
-          reference: line.reference,
-          image: line.image,
-          unitPrice: line.price,
-          quantity: line.quantity,
-          lineTotal: line.lineTotal,
-        })),
-      },
-    },
-  });
+  let order;
+  try {
+    order = await prisma.$transaction(async (tx) => {
+      for (const line of purchasable) {
+        const reserved = await tx.product.updateMany({
+          where: { id: line.productId, stock: { gte: line.quantity } },
+          data: { stock: { decrement: line.quantity } },
+        });
+        if (reserved.count !== 1) {
+          throw new OutOfStockError(line.name);
+        }
+      }
 
+      return tx.order.create({
+        data: {
+          orderNumber: generateOrderNumber(),
+          status: "PENDING",
+          userId,
+          email: input.email,
+          shipName: input.shipName,
+          shipPhone: input.shipPhone || null,
+          shipLine1: input.shipLine1,
+          shipLine2: input.shipLine2 || null,
+          shipCity: input.shipCity,
+          shipState: input.shipState || null,
+          shipPostal: input.shipPostal,
+          shipCountry: input.shipCountry,
+          shippingMethod: method.label,
+          subtotal,
+          shippingCost,
+          total,
+          items: {
+            create: purchasable.map((line) => ({
+              productId: line.productId,
+              slug: line.slug,
+              brand: line.brand,
+              name: line.name,
+              reference: line.reference,
+              image: line.image,
+              unitPrice: line.price,
+              quantity: line.quantity,
+              lineTotal: line.lineTotal,
+            })),
+          },
+        },
+      });
+    });
+  } catch (err) {
+    if (err instanceof OutOfStockError) {
+      return { ok: false, error: `${err.itemName} just sold out. Please review your bag.` };
+    }
+    // Log internally; never surface DB internals to the shopper.
+    console.error("createOrderFromCart failed", err);
+    return { ok: false, error: "We couldn't place your order. Please try again." };
+  }
+
+  // Order is placed and stock reserved — empty the cart so it can't be
+  // re-submitted, then record the id for guest confirmation access.
+  await clearCart();
   await rememberOrder(order.id);
   return { ok: true, orderId: order.id };
 }
@@ -146,6 +185,24 @@ export async function getViewableOrder(id: string) {
   if (allowed.includes(order.id)) return order;
 
   return null;
+}
+
+/**
+ * Mark a PENDING order PAID after a captured payment. The `status: "PENDING"`
+ * guard makes this idempotent — a replayed capture leaves an already-paid order
+ * untouched. Returns true when this call is the one that flipped it to PAID.
+ */
+export async function markOrderPaid(orderId: string, paymentRef: string): Promise<boolean> {
+  const { count } = await prisma.order.updateMany({
+    where: { id: orderId, status: "PENDING" },
+    data: {
+      status: "PAID",
+      paymentProvider: "paypal",
+      paymentRef,
+      paidAt: new Date(),
+    },
+  });
+  return count === 1;
 }
 
 /** Orders belonging to the signed-in user, newest first. */

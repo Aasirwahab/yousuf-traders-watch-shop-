@@ -31,25 +31,46 @@ const trustItems = [
   { label: "Secure checkout", icon: ShieldCheck },
 ];
 
-export default function WatchesPage({ products }: { products: ShopProduct[] }) {
+export default function WatchesPage({
+  products,
+  initialCategory,
+  initialBrand,
+}: {
+  products: ShopProduct[];
+  initialCategory?: string;
+  initialBrand?: string;
+}) {
   return (
     <main className="min-h-screen overflow-x-clip bg-white text-black">
       <Navbar />
-      <WatchesContent allProducts={products} />
+      <WatchesContent allProducts={products} initialCategory={initialCategory} initialBrand={initialBrand} />
       <Footer />
     </main>
   );
 }
 
-function WatchesContent({ allProducts }: { allProducts: ShopProduct[] }) {
-  const [activeCategory, setActiveCategory] = useState<Category>("All watches");
+function WatchesContent({
+  allProducts,
+  initialCategory,
+  initialBrand,
+}: {
+  allProducts: ShopProduct[];
+  initialCategory?: string;
+  initialBrand?: string;
+}) {
+  const startCategory: Category = (SHOP_CATEGORIES as readonly string[]).includes(initialCategory ?? "")
+    ? (initialCategory as Category)
+    : "All watches";
+
+  const [activeCategory, setActiveCategory] = useState<Category>(startCategory);
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
   const [sort, setSort] = useState("Newest");
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [favorites, setFavorites] = useState<Set<string>>(() => new Set());
   const [selectedFilters, setSelectedFilters] = useState<Record<FilterKey, Set<string>>>(() => ({
     collection: new Set(),
-    brand: new Set(),
+    brand: new Set(
+      initialBrand && (SHOP_FILTERS.brand as readonly string[]).includes(initialBrand) ? [initialBrand] : [],
+    ),
     material: new Set(),
     dial: new Set(),
     diameter: new Set(),
@@ -105,15 +126,6 @@ function WatchesContent({ allProducts }: { allProducts: ShopProduct[] }) {
       diameter: new Set(),
       condition: new Set(),
       gender: new Set(),
-    });
-  }
-
-  function toggleFavorite(slug: string) {
-    setFavorites((current) => {
-      const next = new Set(current);
-      if (next.has(slug)) next.delete(slug);
-      else next.add(slug);
-      return next;
     });
   }
 
@@ -211,11 +223,19 @@ function WatchesContent({ allProducts }: { allProducts: ShopProduct[] }) {
                 <span className="hidden sm:inline">Curated independently</span>
               </div>
 
-              <div className={viewMode === "grid" ? "grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 md:gap-x-5 lg:grid-cols-3 xl:grid-cols-4" : "grid gap-4"}>
-                {products.map((product) => (
-                  <ProductCard key={product.slug} product={product} favorite={favorites.has(product.slug)} onFavorite={() => toggleFavorite(product.slug)} viewMode={viewMode} />
-                ))}
-              </div>
+              {products.length === 0 ? (
+                <div className="grid place-items-center rounded-[16px] border border-black/10 px-5 py-20 text-center">
+                  <p className="text-lg">No watches match your filters.</p>
+                  <p className="mt-2 max-w-sm text-sm text-[#6e6e6b]">Try removing a filter or two, or reset to see the full collection.</p>
+                  <button type="button" onClick={resetFilters} className="mt-6 grid h-11 place-items-center rounded-full bg-black px-6 text-sm text-white">Reset filters</button>
+                </div>
+              ) : (
+                <div className={viewMode === "grid" ? "grid grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 md:gap-x-5 lg:grid-cols-3 xl:grid-cols-4" : "grid gap-4"}>
+                  {products.map((product) => (
+                    <ProductCard key={product.slug} product={product} viewMode={viewMode} />
+                  ))}
+                </div>
+              )}
 
               <div className="mt-12 grid gap-4 rounded-[16px] border border-black/10 bg-[#f7f7f5] p-5 sm:grid-cols-2 lg:grid-cols-4">
                 {trustItems.map((item) => (
@@ -301,9 +321,11 @@ function FilterDrawer({ open, onClose, children }: { open: boolean; onClose: () 
   );
 }
 
-function ProductCard({ product, favorite, onFavorite, viewMode }: { product: ShopProduct; favorite: boolean; onFavorite: () => void; viewMode: ViewMode }) {
+function ProductCard({ product, viewMode }: { product: ShopProduct; viewMode: ViewMode }) {
   const commerce = useCommerce();
   const list = viewMode === "list";
+  const favorite = commerce.isWished(product.slug);
+  const onFavorite = () => commerce.toggleWishlist(product.slug);
 
   return (
     <article className={list ? "grid grid-cols-[112px_1fr_auto] gap-4 rounded-[16px] border border-black/10 p-3 max-sm:grid-cols-[104px_1fr]" : "group min-w-0"}>

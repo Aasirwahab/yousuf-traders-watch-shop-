@@ -10,6 +10,15 @@ import { useCommerce } from "@/components/providers/CommerceProvider";
 import { formatPrice } from "@/lib/format";
 import { type ShopProduct } from "@/data/shop";
 
+type TabId = "description" | "specifications" | "condition" | "shipping";
+
+const TABS: { id: TabId; label: string }[] = [
+  { id: "description", label: "Description" },
+  { id: "specifications", label: "Specifications" },
+  { id: "condition", label: "Condition" },
+  { id: "shipping", label: "Shipping & returns" },
+];
+
 const trustItems = [
   { title: "Authenticated", text: "Each watch is verified by our specialists", icon: ShieldCheck },
   { title: "Warranty", text: "12-month Ovalen warranty included", icon: ShieldCheck },
@@ -35,6 +44,36 @@ function ProductDetailContent({ product, related }: { product: ShopProduct; rela
     return [product.image, ...fallback].slice(0, 5);
   }, [product.gallery, product.image, related]);
   const [selectedImage, setSelectedImage] = useState(gallery[0] ?? product.image);
+  const [activeTab, setActiveTab] = useState<TabId>("description");
+
+  const tabContent: Record<TabId, React.ReactNode> = {
+    description: <p className="max-w-xl text-sm leading-7 text-[#555550]">{product.description}</p>,
+    specifications: (
+      <dl className="max-w-xl divide-y divide-black/10 border-y border-black/10 text-[12px]">
+        <SpecRow label="Reference" value={product.reference} />
+        <SpecRow label="Year" value={String(product.year ?? 2025)} />
+        <SpecRow label="Movement" value={product.movement ?? "Automatic"} />
+        <SpecRow label="Case material" value={product.material} />
+        <SpecRow label="Diameter" value={`${product.diameter} mm`} />
+        <SpecRow label="Dial" value={product.dial} />
+        <SpecRow label="Water resistance" value={product.waterResistance ?? "50 m"} />
+      </dl>
+    ),
+    condition: (
+      <p className="max-w-xl text-sm leading-7 text-[#555550]">
+        Condition: <span className="font-medium text-black">{product.condition}</span>.{" "}
+        {product.condition === "New"
+          ? "Supplied unworn with full manufacturer specification, inspected and authenticated by our specialists."
+          : "Pre-owned and fully authenticated by our specialists, with any signs of wear assessed and disclosed before dispatch."}
+      </p>
+    ),
+    shipping: (
+      <p className="max-w-xl text-sm leading-7 text-[#555550]">
+        Complimentary insured worldwide delivery, fully tracked and signature-required. Returns accepted within 14 days
+        of receipt in original, unworn condition. A 12-month Ovalen warranty is included with every timepiece.
+      </p>
+    ),
+  };
 
   return (
     <>
@@ -105,9 +144,9 @@ function ProductDetailContent({ product, related }: { product: ShopProduct; rela
                 <a href="mailto:concierge@ovalen.com" className="grid h-13 place-items-center border border-black text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white">
                   Book a private viewing
                 </a>
-                <button type="button" className="inline-flex h-11 items-center justify-center gap-2 text-[12px] text-[#4d4d49]">
-                  <Heart className="h-4 w-4 stroke-[1.35]" />
-                  Add to wishlist
+                <button type="button" onClick={() => commerce.toggleWishlist(product.slug)} aria-pressed={commerce.isWished(product.slug)} className="inline-flex h-11 items-center justify-center gap-2 text-[12px] text-[#4d4d49]">
+                  <Heart className={`h-4 w-4 stroke-[1.35] ${commerce.isWished(product.slug) ? "fill-[#6b1824] text-[#6b1824]" : ""}`} />
+                  {commerce.isWished(product.slug) ? "Saved to wishlist" : "Add to wishlist"}
                 </button>
               </div>
             </aside>
@@ -133,14 +172,21 @@ function ProductDetailContent({ product, related }: { product: ShopProduct; rela
         <div className="mx-auto grid max-w-[1440px] gap-10 lg:grid-cols-[1fr_1fr]">
           <div>
             <div className="flex gap-8 border-b border-black/10 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6e6e6b]">
-              <span className="border-b-2 border-[#6b1824] pb-4 text-black">Description</span>
-              <span className="pb-4">Specifications</span>
-              <span className="pb-4">Condition</span>
-              <span className="hidden pb-4 sm:inline">Shipping & returns</span>
+              {TABS.map((tab) => (
+                <button
+                  key={tab.id}
+                  type="button"
+                  aria-pressed={activeTab === tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`pb-4 transition-colors ${tab.id === "shipping" ? "hidden sm:inline" : ""} ${
+                    activeTab === tab.id ? "border-b-2 border-[#6b1824] text-black" : "hover:text-black"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
-            <p className="mt-8 max-w-xl text-sm leading-7 text-[#555550]">
-              {product.description}
-            </p>
+            <div className="mt-8">{tabContent[activeTab]}</div>
           </div>
           <div className="overflow-hidden rounded-[16px] bg-[#f4f4f4]">
             <div className="relative aspect-[1.85]">

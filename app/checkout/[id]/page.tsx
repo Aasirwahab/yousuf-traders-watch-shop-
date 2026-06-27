@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Check } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import PayPalButtons from "@/components/checkout/PayPalButtons";
 import { getViewableOrder } from "@/lib/orders";
 import { formatPrice } from "@/lib/format";
 
@@ -42,16 +43,16 @@ export default async function OrderPage({ params }: PageProps) {
         </h1>
         <p className="mt-4 max-w-lg text-sm leading-6 text-[#6e6e6b]">
           Order <span className="font-medium text-black">{order.orderNumber}</span> has been{" "}
-          {isPaid ? "confirmed" : "reserved"}. A copy has been sent to {order.email}.
+          {isPaid ? "confirmed" : "reserved"}. A confirmation will be sent to {order.email} once your order is complete.
         </p>
 
         {!isPaid ? (
           <div className="mt-8 rounded-[16px] border border-black/10 bg-[#f7f7f5] p-6">
             <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6e6e6b]">Payment</p>
-            <p className="mt-2 text-sm leading-6 text-[#555550]">
-              Your order is reserved and awaiting payment. Secure payment (PayPal) is being connected — this is the
-              next step in the build.
+            <p className="mt-2 mb-5 text-sm leading-6 text-[#555550]">
+              Your order is reserved and awaiting payment. Complete it securely with PayPal below.
             </p>
+            <PayPalButtons orderId={order.id} />
           </div>
         ) : null}
 
