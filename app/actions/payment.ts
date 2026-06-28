@@ -32,7 +32,7 @@ export async function createPayPalOrderAction(orderId: string): Promise<CreatePa
   }
 
   try {
-    const id = await createPayPalOrder(order.total, order.orderNumber);
+    const id = await createPayPalOrder(order.total, order.id);
     return { ok: true, id };
   } catch (err) {
     console.error("createPayPalOrderAction failed", err);

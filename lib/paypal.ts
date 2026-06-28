@@ -38,8 +38,12 @@ async function getAccessToken(): Promise<string> {
   return data.access_token;
 }
 
-/** Create a PayPal order for a whole-USD amount. Returns the PayPal order id. */
-export async function createPayPalOrder(amountUsd: number, referenceId: string): Promise<string> {
+/**
+ * Create a PayPal order for a whole-USD amount. `orderId` is our internal order
+ * id, stamped as both reference_id and custom_id so the capture webhook carries
+ * it back to us. Returns the PayPal order id.
+ */
+export async function createPayPalOrder(amountUsd: number, orderId: string): Promise<string> {
   const token = await getAccessToken();
   const res = await fetch(`${API_BASE}/v2/checkout/orders`, {
     method: "POST",
@@ -51,7 +55,8 @@ export async function createPayPalOrder(amountUsd: number, referenceId: string):
       intent: "CAPTURE",
       purchase_units: [
         {
-          reference_id: referenceId,
+          reference_id: orderId,
+          custom_id: orderId,
           amount: { currency_code: "USD", value: amountUsd.toFixed(2) },
         },
       ],
@@ -102,4 +107,40 @@ export async function capturePayPalOrder(paypalOrderId: string): Promise<Capture
     captureId: capture?.id ?? null,
     amountUsd: capture?.amount?.value ? Number(capture.amount.value) : null,
   };
+}
+
+/**
+ * Verify a webhook came from PayPal (postback method): send the raw event plus
+ * its transmission headers and our stored webhook id back to PayPal. The raw
+ * body must be passed through untouched — re-serializing JSON can fail the
+ * check. Returns false when PAYPAL_WEBHOOK_ID isn't configured (can't verify).
+ */
+export async function verifyWebhookSignature(rawBody: string, headers: Headers): Promise<boolean> {
+  const webhookId = process.env.PAYPAL_WEBHOOK_ID;
+  if (!webhookId) return false;
+
+  const body =
+    `{"auth_algo":${JSON.stringify(headers.get("paypal-auth-algo"))},` +
+    `"cert_url":${JSON.stringify(headers.get("paypal-cert-url"))},` +
+    `"transmission_id":${JSON.stringify(headers.get("paypal-transmission-id"))},` +
+    `"transmission_sig":${JSON.stringify(headers.get("paypal-transmission-sig"))},` +
+    `"transmission_time":${JSON.stringify(headers.get("paypal-transmission-time"))},` +
+    `"webhook_id":${JSON.stringify(webhookId)},` +
+    `"webhook_event":${rawBody}}`;
+
+  try {
+    const token = await getAccessToken();
+    const res = await fetch(`${API_BASE}/v1/notifications/verify-webhook-signature`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+      body,
+      cache: "no-store",
+    });
+    if (!res.ok) return false;
+    const data = (await res.json()) as { verification_status?: string };
+    return data.verification_status === "SUCCESS";
+  } catch (err) {
+    console.error("verifyWebhookSignature failed", err);
+    return false;
+  }
 }

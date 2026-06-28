@@ -206,6 +206,19 @@ export async function markOrderPaid(orderId: string, paymentRef: string): Promis
 }
 
 /**
+ * Mark a PAID order REFUNDED (from a PayPal refund webhook). Guarded on PAID so
+ * it's idempotent. Stock is intentionally NOT auto-restored — a refund doesn't
+ * mean the physical piece came back; that's a manual inventory decision.
+ */
+export async function markOrderRefunded(orderId: string): Promise<boolean> {
+  const { count } = await prisma.order.updateMany({
+    where: { id: orderId, status: "PAID" },
+    data: { status: "REFUNDED" },
+  });
+  return count === 1;
+}
+
+/**
  * Cancel PENDING orders older than `olderThanMinutes` and return their reserved
  * stock. Because stock is reserved at placement, an abandoned (never-paid) order
  * would otherwise lock inventory forever. Each order is handled in its own

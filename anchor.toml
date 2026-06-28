@@ -1,0 +1,10 @@
+[lcl-host]
+realm-apid = 'localhost'
+
+[org]
+apid = 'aasirwahab'
+
+[service]
+apid = 'ovalen'
+category = 'javascript'
+cert-style = 'acme'
