@@ -205,6 +205,42 @@ export async function markOrderPaid(orderId: string, paymentRef: string): Promis
   return count === 1;
 }
 
+/**
+ * Cancel PENDING orders older than `olderThanMinutes` and return their reserved
+ * stock. Because stock is reserved at placement, an abandoned (never-paid) order
+ * would otherwise lock inventory forever. Each order is handled in its own
+ * transaction that re-checks PENDING, so it can't race a payment capture.
+ */
+export async function releaseStaleOrders(olderThanMinutes = 60): Promise<{ released: number }> {
+  const cutoff = new Date(Date.now() - olderThanMinutes * 60_000);
+  const stale = await prisma.order.findMany({
+    where: { status: "PENDING", createdAt: { lt: cutoff } },
+    include: { items: true },
+  });
+
+  let released = 0;
+  for (const order of stale) {
+    await prisma.$transaction(async (tx) => {
+      const cancelled = await tx.order.updateMany({
+        where: { id: order.id, status: "PENDING" },
+        data: { status: "CANCELLED" },
+      });
+      if (cancelled.count !== 1) return; // paid or cancelled meanwhile — leave it
+
+      for (const item of order.items) {
+        if (item.productId && item.quantity > 0) {
+          await tx.product.update({
+            where: { id: item.productId },
+            data: { stock: { increment: item.quantity } },
+          });
+        }
+      }
+      released += 1;
+    });
+  }
+  return { released };
+}
+
 /** Orders belonging to the signed-in user, newest first. */
 export async function getUserOrders() {
   const { userId: clerkId } = await auth();
