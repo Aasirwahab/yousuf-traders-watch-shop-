@@ -1,93 +1,80 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SignOutButton } from "@clerk/nextjs";
+import { BadgeCheck, Box, ShieldCheck, Sparkles } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import { getOrCreateUser } from "@/lib/user";
 import { getUserOrders } from "@/lib/orders";
-import { formatPrice } from "@/lib/format";
+import { getOrCreateUser } from "@/lib/user";
+import AccountView, { type AccountOrder } from "./AccountView";
 
 export const metadata: Metadata = {
-  title: "Your account | Ovalen",
+  title: "My collection | Ovalen",
 };
 
-const ORDER_STATUS_LABELS: Record<string, string> = {
-  PENDING: "Reserved · awaiting payment",
-  PAID: "Paid",
-  FULFILLED: "Shipped",
-  CANCELLED: "Cancelled",
-  REFUNDED: "Refunded",
-};
+const trustItems = [
+  { icon: Sparkles, title: "Authenticity", body: "Guaranteed" },
+  { icon: Box, title: "Worldwide", body: "Insured shipping" },
+  { icon: ShieldCheck, title: "Secure", body: "Checkout" },
+  { icon: BadgeCheck, title: "Expert", body: "Concierge" },
+] as const;
 
 export default async function AccountPage() {
-  // Middleware guarantees a signed-in user here; this also syncs them to the DB.
   const user = await getOrCreateUser();
   const orders = await getUserOrders();
+  const userEmail = user?.email ?? "collector@ovalen.com";
+  const displayName = user?.name ?? "Collector";
+
+  const accountOrders: AccountOrder[] = orders.map((order) => ({
+    id: order.id,
+    orderNumber: order.orderNumber,
+    createdAt: order.createdAt.toISOString(),
+    status: order.status,
+    total: order.total,
+    itemName: order.items[0]?.name ?? null,
+    itemCount: order.items.length,
+  }));
 
   return (
     <main className="min-h-screen bg-white text-black">
       <Navbar />
-      <section className="mx-auto max-w-3xl px-5 py-16 md:px-8 md:py-24">
-        <div className="text-[11px] text-[#6e6e6b]">
-          <Link href="/" className="transition-colors hover:text-black">Home</Link>
-          <span className="px-2">/</span>
-          <span>Account</span>
-        </div>
 
-        <h1 className="mt-8 text-[clamp(2.4rem,5vw,4rem)] font-normal leading-[0.95] tracking-[-0.05em]">
-          Your account
-        </h1>
+      <AccountView displayName={displayName} userEmail={userEmail} orders={accountOrders} />
 
-        <div className="mt-10 rounded-[16px] border border-black/10 p-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6e6e6b]">Signed in as</p>
-          <p className="mt-2 text-lg">{user?.name ?? "Collector"}</p>
-          {user?.email ? <p className="mt-1 text-sm text-[#6e6e6b]">{user.email}</p> : null}
-        </div>
-
-        <div className="mt-6 rounded-[16px] border border-black/10 p-6">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6e6e6b]">Order history</p>
-
-          {orders.length === 0 ? (
-            <>
-              <p className="mt-3 text-sm leading-6 text-[#6e6e6b]">
-                You have no orders yet. Your reservations and purchases will appear here.
-              </p>
-              <Link href="/watches" className="mt-5 inline-grid h-11 place-items-center rounded-full bg-black px-6 text-sm text-white">
-                Browse the collection
-              </Link>
-            </>
-          ) : (
-            <ul className="mt-4 divide-y divide-black/10">
-              {orders.map((order) => (
-                <li key={order.id} className="py-4 first:pt-0">
-                  <Link href={`/checkout/${order.id}`} className="flex items-center justify-between gap-4 transition-colors hover:text-[#6b1824]">
-                    <span className="min-w-0">
-                      <span className="block text-[13px] font-medium">{order.orderNumber}</span>
-                      <span className="mt-0.5 block text-[11px] text-[#8a8a86]">
-                        {new Date(order.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
-                        {" · "}
-                        {order.items.reduce((count, item) => count + item.quantity, 0)} item(s)
-                        {" · "}
-                        {ORDER_STATUS_LABELS[order.status] ?? order.status}
-                      </span>
-                    </span>
-                    <span className="shrink-0 text-[13px] font-medium">{formatPrice(order.total)}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        <div className="mt-8">
-          <SignOutButton>
-            <button type="button" className="text-[12px] uppercase tracking-[0.12em] text-[#6e6e6b] underline-offset-4 hover:text-black hover:underline">
-              Sign out
-            </button>
-          </SignOutButton>
+      <section className="border-y border-black/10 bg-[#f7f7f7]">
+        <div className="mx-auto grid max-w-[1280px] border-x border-black/10 md:grid-cols-4">
+          {trustItems.map(({ icon: Icon, title, body }, index) => (
+            <div key={title} className={`flex min-h-[122px] items-center justify-center gap-4 px-6 py-6 ${index > 0 ? "border-t border-black/10 md:border-l md:border-t-0" : ""}`}>
+              <Icon className="h-7 w-7 shrink-0 stroke-[1.25]" />
+              <div>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.13em]">{title}</p>
+                <p className="mt-1 text-[11px] text-[#777]">{body}</p>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
-      <Footer />
+
+      <footer className="bg-white">
+        <div className="mx-auto flex max-w-[1280px] flex-col gap-8 border-x border-black/10 px-6 py-9 md:flex-row md:items-end md:justify-between">
+          <div>
+            <Link href="/" className="text-[24px] font-semibold tracking-[0.28em]">
+              OVALEN
+            </Link>
+            <p className="mt-3 max-w-[190px] text-[11px] leading-4 text-[#555]">Curated independently. Authenticated for life.</p>
+          </div>
+          <nav aria-label="Account footer" className="flex flex-wrap gap-x-10 gap-y-3 text-[11px]">
+            <Link href="/about" className="hover:text-[#7b1020]">About Us</Link>
+            <Link href="/faq" className="hover:text-[#7b1020]">FAQ</Link>
+            <Link href="/watches" className="hover:text-[#7b1020]">Journal</Link>
+            <Link href="mailto:concierge@ovalen.com" className="hover:text-[#7b1020]">Contact</Link>
+          </nav>
+          <div className="flex gap-5 text-[12px] text-[#555]">
+            <span>Instagram</span>
+            <span>X</span>
+            <span>Pinterest</span>
+            <span>YouTube</span>
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
