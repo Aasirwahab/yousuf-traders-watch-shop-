@@ -29,6 +29,7 @@ export const IMAGES = {
     sideTop: imageKitUrl("/ovalen/prototype-assets/article-side.webp"),
     sideBottom: imageKitUrl("/ovalen/prototype-assets/article-face.webp"),
   },
+  concierge: "/prototype-assets/concierge-service.webp",
   categories: [
     imageKitUrl("/ovalen/prototype-assets/category-modern.webp"),
     imageKitUrl("/ovalen/prototype-assets/category-limited.webp"),

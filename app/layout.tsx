@@ -47,7 +47,7 @@ export default function RootLayout({
   return (
     <ClerkProvider afterSignOutUrl="/">
       <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${teko.variable}`}>
-        <body className={`${inter.className} antialiased`}>
+        <body className={`${inter.className} antialiased`} suppressHydrationWarning>
           <SmoothScroll>
             <CommerceProvider>{children}</CommerceProvider>
           </SmoothScroll>

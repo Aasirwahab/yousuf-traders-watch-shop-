@@ -90,7 +90,7 @@ export const FOOTER_GROUPS: Array<{ title: string; links: FooterLink[] }> = [
       { label: "Our story", href: "/about" },
       { label: "Authentication", href: "/authentication" },
       { label: "Warranty", href: "/warranty" },
-      { label: "Journal", href: "/#journal" },
+      { label: "Concierge", href: "/#concierge" },
     ],
   },
 ];

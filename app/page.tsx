@@ -6,7 +6,7 @@ import AboutSection from "@/components/sections/AboutSection";
 import CentralFeature from "@/components/sections/CentralFeature";
 import ShopSection from "@/components/sections/ShopSection";
 import TechSection from "@/components/sections/TechSection";
-import ArticleSection from "@/components/sections/ArticleSection";
+import ConciergeSection from "@/components/sections/ConciergeSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import NewsletterSection from "@/components/sections/NewsletterSection";
 
@@ -21,7 +21,7 @@ export default function Home() {
       <CentralFeature />
       <TechSection />
       <TestimonialsSection />
-      <ArticleSection />
+      <ConciergeSection />
       <NewsletterSection />
       <Footer />
     </main>

@@ -18,8 +18,7 @@ const trustItems = [
 ] as const;
 
 export default async function AccountPage() {
-  const user = await getOrCreateUser();
-  const orders = await getUserOrders();
+  const [user, orders] = await Promise.all([getOrCreateUser(), getUserOrders()]);
   const userEmail = user?.email ?? "collector@ovalen.com";
   const displayName = user?.name ?? "Collector";
 

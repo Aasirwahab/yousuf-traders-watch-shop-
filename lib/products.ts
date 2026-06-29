@@ -1,8 +1,16 @@
 import "server-only";
 
+import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import type { ShopProduct, ShopCategory } from "@/data/shop";
 import type { Product, ProductImage } from "@/generated/prisma/client";
+
+// The published catalog changes rarely (seeded/curated, no live admin edits),
+// so its read queries are cached at the data layer to avoid a Neon round-trip
+// on every page render. Tagged "products" so a future edit/seed can bust it
+// with revalidateTag("products"); also revalidates on its own after an hour.
+const PRODUCTS_TAG = "products";
+const PRODUCTS_REVALIDATE = 3600;
 
 type ProductWithImages = Product & { images: ProductImage[] };
 
@@ -41,37 +49,53 @@ function toShopProduct(p: ProductWithImages): ShopProduct {
   };
 }
 
-export async function getAllProducts(): Promise<ShopProduct[]> {
-  const rows = await prisma.product.findMany({
-    where: { published: true },
-    orderBy: { createdAt: "asc" },
-    include: { images: true },
-  });
-  return rows.map(toShopProduct);
-}
+export const getAllProducts = unstable_cache(
+  async (): Promise<ShopProduct[]> => {
+    const rows = await prisma.product.findMany({
+      where: { published: true },
+      orderBy: { createdAt: "asc" },
+      include: { images: true },
+    });
+    return rows.map(toShopProduct);
+  },
+  ["all-products"],
+  { tags: [PRODUCTS_TAG], revalidate: PRODUCTS_REVALIDATE },
+);
 
-export async function getProductBySlug(slug: string): Promise<ShopProduct | null> {
-  const row = await prisma.product.findUnique({
-    where: { slug },
-    include: { images: true },
-  });
-  return row ? toShopProduct(row) : null;
-}
+export const getProductBySlug = unstable_cache(
+  async (slug: string): Promise<ShopProduct | null> => {
+    const row = await prisma.product.findUnique({
+      where: { slug },
+      include: { images: true },
+    });
+    return row ? toShopProduct(row) : null;
+  },
+  ["product-by-slug"],
+  { tags: [PRODUCTS_TAG], revalidate: PRODUCTS_REVALIDATE },
+);
 
-export async function getRelatedProducts(excludeSlug: string, take = 4): Promise<ShopProduct[]> {
-  const rows = await prisma.product.findMany({
-    where: { published: true, slug: { not: excludeSlug } },
-    orderBy: { createdAt: "asc" },
-    take,
-    include: { images: true },
-  });
-  return rows.map(toShopProduct);
-}
+export const getRelatedProducts = unstable_cache(
+  async (excludeSlug: string, take = 4): Promise<ShopProduct[]> => {
+    const rows = await prisma.product.findMany({
+      where: { published: true, slug: { not: excludeSlug } },
+      orderBy: { createdAt: "asc" },
+      take,
+      include: { images: true },
+    });
+    return rows.map(toShopProduct);
+  },
+  ["related-products"],
+  { tags: [PRODUCTS_TAG], revalidate: PRODUCTS_REVALIDATE },
+);
 
-export async function getAllProductSlugs(): Promise<string[]> {
-  const rows = await prisma.product.findMany({
-    where: { published: true },
-    select: { slug: true },
-  });
-  return rows.map((row) => row.slug);
-}
+export const getAllProductSlugs = unstable_cache(
+  async (): Promise<string[]> => {
+    const rows = await prisma.product.findMany({
+      where: { published: true },
+      select: { slug: true },
+    });
+    return rows.map((row) => row.slug);
+  },
+  ["all-product-slugs"],
+  { tags: [PRODUCTS_TAG], revalidate: PRODUCTS_REVALIDATE },
+);
