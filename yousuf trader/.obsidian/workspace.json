@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Projects/Ovalen/ECOMMERCE-CHECKLIST.md",
+                "file": "Prompts/Master Startup Engineering Prompt.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ECOMMERCE-CHECKLIST"
+              "title": "Master Startup Engineering Prompt"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Projects/Ovalen/ECOMMERCE-CHECKLIST.md",
+                "file": "Prompts/Master Startup Engineering Prompt.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for ECOMMERCE-CHECKLIST"
+              "title": "Backlinks for Master Startup Engineering Prompt"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Projects/Ovalen/ECOMMERCE-CHECKLIST.md",
+                "file": "Prompts/Master Startup Engineering Prompt.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from ECOMMERCE-CHECKLIST"
+              "title": "Outgoing links from Master Startup Engineering Prompt"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Projects/Ovalen/ECOMMERCE-CHECKLIST.md",
+                "file": "Prompts/Master Startup Engineering Prompt.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of ECOMMERCE-CHECKLIST"
+              "title": "Outline of Master Startup Engineering Prompt"
             }
           }
         ]
@@ -185,20 +185,20 @@
   },
   "active": "a02802623ccd56ea",
   "lastOpenFiles": [
-    "Brain Index.md.tmp.21628.5f51d9336c33",
     "Prompts/Master Prompt — Guide.md",
+    "Brain Index.md",
+    "Projects/Ovalen/ECOMMERCE-CHECKLIST.md",
+    "Brain Index.md.tmp.21628.5f51d9336c33",
     "Prompts/Master Startup Engineering Prompt.md",
     "Prompts",
     "Projects/Ovalen/Ovalen.md",
     "Projects/Ovalen/ovalen-production-roadmap.md",
-    "Brain Index.md",
     "Welcome.md",
     "components/sections/CheckoutForm.tsx.md",
     "components/sections",
     "components",
     "Projects/Ovalen/Ovalen — Architecture & Flow.md",
     "Projects/Ovalen/Ovalen README.md",
-    "Projects/Ovalen/ECOMMERCE-CHECKLIST.md",
     "Welcome.md.tmp.15488.5efe67fd0dc5",
     "Projects/ShopLedger/ShopLedger.md",
     "Projects/GSAP Landing Page/GSAP Landing Page.md",
@@ -219,7 +219,6 @@
     "Projects/Ovalen/animations-play-regardless-of-reduced-motion.md",
     "Projects/Ovalen",
     "Projects/GSAP Landing Page",
-    "Projects/CRM Full System",
-    "Projects/Ticket Marketplace"
+    "Projects/CRM Full System"
   ]
 }
