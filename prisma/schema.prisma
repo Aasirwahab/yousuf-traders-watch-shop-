@@ -62,11 +62,37 @@ model User {
   email   String?
   name    String?
 
-  cart   Cart?
-  orders Order[]
+  cart      Cart?
+  orders    Order[]
+  addresses Address[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+/// A reusable delivery address saved to a user's account. Mirrors the shipping
+/// fields captured on an Order so a saved address can prefill checkout. At most
+/// one address per user is marked isDefault.
+model Address {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  name    String
+  phone   String?
+  line1   String
+  line2   String?
+  city    String
+  state   String?
+  postal  String
+  country String
+
+  isDefault Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 /// A shopping cart. Tied to a User when signed in, otherwise referenced by an

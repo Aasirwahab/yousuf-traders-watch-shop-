@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -10,11 +10,20 @@ import {
   Heart,
   MapPin,
   PackageCheck,
+  Plus,
   Settings,
   UserRound,
+  X,
 } from "lucide-react";
 import { SHOP_PRODUCTS } from "@/data/shop";
 import { formatPrice } from "@/lib/format";
+import { useCommerce } from "@/components/providers/CommerceProvider";
+import {
+  deleteAddressAction,
+  saveAddressAction,
+  setDefaultAddressAction,
+} from "@/app/actions/address";
+import type { AddressView } from "@/lib/address";
 
 export type AccountOrder = {
   id: string;
@@ -54,7 +63,6 @@ const ORDER_STATUS_LABELS: Record<string, string> = {
 };
 
 const collectionPieces = SHOP_PRODUCTS.slice(0, 4);
-const wishlistPieces = SHOP_PRODUCTS.slice(0, 8);
 
 function formatOrderDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -64,12 +72,16 @@ export default function AccountView({
   displayName,
   userEmail,
   orders,
+  addresses: initialAddresses,
 }: {
   displayName: string;
   userEmail: string;
   orders: AccountOrder[];
+  addresses: AddressView[];
 }) {
   const [active, setActive] = useState<TabId>("overview");
+  const [addresses, setAddresses] = useState<AddressView[]>(initialAddresses);
+  const defaultAddress = addresses.find((address) => address.isDefault) ?? addresses[0] ?? null;
 
   return (
     <section className="mx-auto grid max-w-[1280px] border-x border-black/10 lg:grid-cols-[292px_1fr]">
@@ -124,10 +136,10 @@ export default function AccountView({
       </aside>
 
       <div className="px-6 py-10 md:px-10 md:py-14 lg:px-12">
-        {active === "overview" && <OverviewPanel orders={orders} displayName={displayName} userEmail={userEmail} onNavigate={setActive} />}
+        {active === "overview" && <OverviewPanel orders={orders} displayName={displayName} userEmail={userEmail} onNavigate={setActive} defaultAddress={defaultAddress} />}
         {active === "wishlist" && <WishlistPanel />}
         {active === "orders" && <OrdersPanel orders={orders} />}
-        {active === "addresses" && <AddressesPanel displayName={displayName} userEmail={userEmail} />}
+        {active === "addresses" && <AddressesPanel addresses={addresses} onChange={setAddresses} />}
         {active === "payment-methods" && <PaymentMethodsPanel />}
         {active === "authentication-docs" && <AuthenticationDocsPanel orders={orders} />}
         {active === "settings" && <SettingsPanel displayName={displayName} userEmail={userEmail} />}
@@ -165,11 +177,13 @@ function OverviewPanel({
   displayName,
   userEmail,
   onNavigate,
+  defaultAddress,
 }: {
   orders: AccountOrder[];
   displayName: string;
   userEmail: string;
   onNavigate: (tab: TabId) => void;
+  defaultAddress: AddressView | null;
 }) {
   return (
     <>
@@ -195,9 +209,20 @@ function OverviewPanel({
 
       <section className="mt-10 grid gap-4 md:grid-cols-3">
         <InfoPanel title="Saved addresses" onAction={() => onNavigate("addresses")}>
-          <p className="font-semibold">{displayName}</p>
-          <p className="mt-2 text-[#555]">No saved delivery address yet.</p>
-          <p className="mt-2 text-[#555]">{userEmail}</p>
+          {defaultAddress ? (
+            <>
+              <p className="font-semibold">{defaultAddress.name}</p>
+              <p className="mt-2 text-[#555]">{defaultAddress.line1}</p>
+              <p className="text-[#555]">{[defaultAddress.city, defaultAddress.postal].filter(Boolean).join(", ")}</p>
+              <p className="text-[#555]">{defaultAddress.country}</p>
+            </>
+          ) : (
+            <>
+              <p className="font-semibold">{displayName}</p>
+              <p className="mt-2 text-[#555]">No saved delivery address yet.</p>
+              <p className="mt-2 text-[#555]">{userEmail}</p>
+            </>
+          )}
         </InfoPanel>
         <InfoPanel title="Payment methods" onAction={() => onNavigate("payment-methods")}>
           <p className="font-semibold">No saved cards</p>
@@ -218,14 +243,28 @@ function OverviewPanel({
 }
 
 function WishlistPanel() {
+  const { wishlist, toggleWishlist } = useCommerce();
+  const items = SHOP_PRODUCTS.filter((piece) => wishlist.includes(piece.slug));
+
   return (
     <>
       <PanelHeader title="Wishlist" subtitle="Pieces you're tracking." />
-      <div className="mt-9 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
-        {wishlistPieces.map((piece, index) => (
-          <ProductCard key={piece.slug} piece={piece} active={index === 0} />
-        ))}
-      </div>
+      {items.length === 0 ? (
+        <div className="mt-9 border border-dashed border-black/20 px-6 py-16 text-center">
+          <Heart className="mx-auto h-7 w-7 stroke-[1.3]" />
+          <p className="mt-4 text-[13px] font-medium">Your wishlist is empty.</p>
+          <p className="mt-2 text-[12px] text-[#777]">Tap the heart on any watch to save it here for later.</p>
+          <Link href="/watches" className="mt-5 inline-grid h-10 place-items-center border border-black px-5 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white">
+            Browse watches
+          </Link>
+        </div>
+      ) : (
+        <div className="mt-9 grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5">
+          {items.map((piece) => (
+            <ProductCard key={piece.slug} piece={piece} active onToggle={() => toggleWishlist(piece.slug)} />
+          ))}
+        </div>
+      )}
     </>
   );
 }
@@ -281,29 +320,248 @@ function OrdersTable({ orders }: { orders: AccountOrder[] }) {
   );
 }
 
-function AddressesPanel({ displayName, userEmail }: { displayName: string; userEmail: string }) {
+function AddressesPanel({
+  addresses,
+  onChange,
+}: {
+  addresses: AddressView[];
+  onChange: (addresses: AddressView[]) => void;
+}) {
+  // `null` = not editing; "new" = adding; an AddressView = editing that address.
+  const [editing, setEditing] = useState<AddressView | "new" | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  const [formError, setFormError] = useState<string | null>(null);
+
+  function resetForm() {
+    setFieldErrors({});
+    setFormError(null);
+  }
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    resetForm();
+    startTransition(async () => {
+      const result = await saveAddressAction(formData);
+      if (result.ok) {
+        onChange(result.addresses);
+        setEditing(null);
+      } else {
+        setFieldErrors(result.fieldErrors ?? {});
+        setFormError(result.error ?? "Something went wrong. Please try again.");
+      }
+    });
+  }
+
+  function handleDelete(id: string) {
+    startTransition(async () => {
+      const result = await deleteAddressAction(id);
+      if (result.ok) onChange(result.addresses);
+    });
+  }
+
+  function handleSetDefault(id: string) {
+    startTransition(async () => {
+      const result = await setDefaultAddressAction(id);
+      if (result.ok) onChange(result.addresses);
+    });
+  }
+
   return (
     <>
-      <PanelHeader title="Addresses" subtitle="Where your timepieces are delivered." />
-      <div className="mt-9 grid gap-4 md:grid-cols-2">
-        <article className="min-h-[180px] border border-black/10 p-6 text-[12px] leading-5">
-          <SectionLabel>Default delivery</SectionLabel>
-          <div className="mt-5">
-            <p className="font-semibold">{displayName}</p>
-            <p className="mt-2 text-[#555]">No saved delivery address yet.</p>
-            <p className="mt-1 text-[#555]">{userEmail}</p>
+      <PanelHeader
+        title="Addresses"
+        subtitle="Where your timepieces are delivered."
+        action={
+          editing === null ? (
+            <button
+              type="button"
+              onClick={() => {
+                resetForm();
+                setEditing("new");
+              }}
+              className="inline-flex h-10 items-center gap-2 border border-black px-5 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white"
+            >
+              <Plus className="h-4 w-4 stroke-[1.6]" />
+              Add address
+            </button>
+          ) : undefined
+        }
+      />
+
+      {editing !== null && (
+        <AddressForm
+          key={editing === "new" ? "new" : editing.id}
+          address={editing === "new" ? null : editing}
+          fieldErrors={fieldErrors}
+          formError={formError}
+          isPending={isPending}
+          onSubmit={handleSubmit}
+          onCancel={() => {
+            resetForm();
+            setEditing(null);
+          }}
+        />
+      )}
+
+      {editing === null &&
+        (addresses.length === 0 ? (
+          <div className="mt-9 flex flex-col items-start border border-dashed border-black/20 p-6 text-[12px] leading-5">
+            <MapPin className="h-6 w-6 stroke-[1.35]" />
+            <p className="mt-3 font-semibold">No saved addresses yet</p>
+            <p className="mt-1 text-[#777]">Add a delivery address to speed up checkout.</p>
+            <button
+              type="button"
+              onClick={() => {
+                resetForm();
+                setEditing("new");
+              }}
+              className="mt-5 inline-flex h-10 items-center gap-2 border border-black px-5 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white"
+            >
+              <Plus className="h-4 w-4 stroke-[1.6]" />
+              Add address
+            </button>
           </div>
-        </article>
-        <article className="flex min-h-[180px] flex-col items-start justify-center border border-dashed border-black/20 p-6 text-[12px] leading-5">
-          <MapPin className="h-6 w-6 stroke-[1.35]" />
-          <p className="mt-3 font-semibold">Add a delivery address</p>
-          <p className="mt-1 text-[#777]">You can save an address securely while checking out.</p>
-          <Link href="/checkout" className="mt-5 inline-flex h-10 items-center gap-2 border border-black px-5 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white">
-            Add address
-          </Link>
-        </article>
-      </div>
+        ) : (
+          <div className="mt-9 grid gap-4 md:grid-cols-2">
+            {addresses.map((address) => (
+              <article key={address.id} className="flex min-h-[200px] flex-col border border-black/10 p-6 text-[12px] leading-5">
+                <div className="flex items-center justify-between">
+                  <SectionLabel>{address.isDefault ? "Default delivery" : "Delivery address"}</SectionLabel>
+                  {address.isDefault && (
+                    <span className="border border-[#7b1020]/30 px-2 py-1 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#7b1020]">
+                      Default
+                    </span>
+                  )}
+                </div>
+                <div className="mt-5 flex-1">
+                  <p className="font-semibold">{address.name}</p>
+                  <p className="mt-2 text-[#555]">{address.line1}</p>
+                  {address.line2 && <p className="text-[#555]">{address.line2}</p>}
+                  <p className="text-[#555]">{[address.city, address.state, address.postal].filter(Boolean).join(", ")}</p>
+                  <p className="text-[#555]">{address.country}</p>
+                  {address.phone && <p className="mt-2 text-[#555]">{address.phone}</p>}
+                </div>
+                <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[10px] font-semibold uppercase tracking-[0.14em]">
+                  <button type="button" disabled={isPending} onClick={() => { resetForm(); setEditing(address); }} className="transition-colors hover:text-[#7b1020] disabled:opacity-40">
+                    Edit
+                  </button>
+                  {!address.isDefault && (
+                    <button type="button" disabled={isPending} onClick={() => handleSetDefault(address.id)} className="transition-colors hover:text-[#7b1020] disabled:opacity-40">
+                      Set as default
+                    </button>
+                  )}
+                  <button type="button" disabled={isPending} onClick={() => handleDelete(address.id)} className="text-[#7b1020] transition-colors hover:text-black disabled:opacity-40">
+                    Delete
+                  </button>
+                </div>
+              </article>
+            ))}
+          </div>
+        ))}
     </>
+  );
+}
+
+function AddressForm({
+  address,
+  fieldErrors,
+  formError,
+  isPending,
+  onSubmit,
+  onCancel,
+}: {
+  address: AddressView | null;
+  fieldErrors: Record<string, string>;
+  formError: string | null;
+  isPending: boolean;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onCancel: () => void;
+}) {
+  return (
+    <form onSubmit={onSubmit} className="mt-9 border border-black/10 p-6 md:p-8">
+      <div className="flex items-center justify-between">
+        <SectionLabel>{address ? "Edit address" : "New address"}</SectionLabel>
+        <button type="button" onClick={onCancel} aria-label="Cancel" className="text-[#777] transition-colors hover:text-black">
+          <X className="h-5 w-5 stroke-[1.5]" />
+        </button>
+      </div>
+
+      {address && <input type="hidden" name="id" value={address.id} />}
+
+      {formError && (
+        <p className="mt-5 border border-[#7b1020]/30 bg-[#7b1020]/5 px-4 py-3 text-[12px] text-[#7b1020]">{formError}</p>
+      )}
+
+      <div className="mt-6 grid gap-5 sm:grid-cols-2">
+        <Field label="Full name" name="name" defaultValue={address?.name} error={fieldErrors.name} required />
+        <Field label="Phone (optional)" name="phone" defaultValue={address?.phone ?? ""} error={fieldErrors.phone} />
+        <Field label="Address" name="line1" defaultValue={address?.line1} error={fieldErrors.line1} required className="sm:col-span-2" />
+        <Field label="Apartment, suite (optional)" name="line2" defaultValue={address?.line2 ?? ""} error={fieldErrors.line2} className="sm:col-span-2" />
+        <Field label="City" name="city" defaultValue={address?.city} error={fieldErrors.city} required />
+        <Field label="State / Province (optional)" name="state" defaultValue={address?.state ?? ""} error={fieldErrors.state} />
+        <Field label="Postal code" name="postal" defaultValue={address?.postal} error={fieldErrors.postal} required />
+        <Field label="Country" name="country" defaultValue={address?.country} error={fieldErrors.country} required />
+      </div>
+
+      {!address?.isDefault && (
+        <label className="mt-6 flex items-center gap-3 text-[12px] text-[#555]">
+          <input type="checkbox" name="isDefault" className="h-4 w-4 accent-[#7b1020]" />
+          Set as default delivery address
+        </label>
+      )}
+
+      <div className="mt-7 flex gap-3">
+        <button
+          type="submit"
+          disabled={isPending}
+          className="inline-grid h-11 place-items-center bg-black px-7 text-[11px] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#7b1020] disabled:opacity-50"
+        >
+          {isPending ? "Saving…" : "Save address"}
+        </button>
+        <button
+          type="button"
+          onClick={onCancel}
+          disabled={isPending}
+          className="inline-grid h-11 place-items-center border border-black/20 px-7 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors hover:border-black disabled:opacity-50"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  );
+}
+
+function Field({
+  label,
+  name,
+  defaultValue,
+  error,
+  required,
+  className,
+}: {
+  label: string;
+  name: string;
+  defaultValue?: string;
+  error?: string;
+  required?: boolean;
+  className?: string;
+}) {
+  return (
+    <div className={className}>
+      <label htmlFor={`address-${name}`} className="text-[10px] font-semibold uppercase tracking-[0.13em] text-[#777]">
+        {label}
+      </label>
+      <input
+        id={`address-${name}`}
+        name={name}
+        defaultValue={defaultValue}
+        required={required}
+        className={`mt-2 h-11 w-full border bg-white px-3 text-[13px] outline-none transition-colors focus:border-black ${error ? "border-[#7b1020]" : "border-black/20"}`}
+      />
+      {error && <p className="mt-1 text-[11px] text-[#7b1020]">{error}</p>}
+    </div>
   );
 }
 
@@ -390,12 +648,27 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
-function ProductCard({ piece, active }: { piece: (typeof SHOP_PRODUCTS)[number]; active: boolean }) {
+function ProductCard({ piece, active, onToggle }: { piece: (typeof SHOP_PRODUCTS)[number]; active: boolean; onToggle?: () => void }) {
   return (
     <Link href={`/watches/${piece.slug}`} className="group relative overflow-hidden border border-black/10 bg-white transition-colors hover:border-[#7b1020]/40">
-      <span aria-hidden className="absolute right-4 top-4 z-10 text-[#7b1020]">
-        <Heart className={`h-5 w-5 stroke-[1.25] ${active ? "fill-[#7b1020]" : ""}`} />
-      </span>
+      {onToggle ? (
+        <button
+          type="button"
+          aria-label={`Remove ${piece.name} from wishlist`}
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            onToggle();
+          }}
+          className="absolute right-4 top-4 z-10 text-[#7b1020]"
+        >
+          <Heart className={`h-5 w-5 stroke-[1.25] ${active ? "fill-[#7b1020]" : ""}`} />
+        </button>
+      ) : (
+        <span aria-hidden className="absolute right-4 top-4 z-10 text-[#7b1020]">
+          <Heart className={`h-5 w-5 stroke-[1.25] ${active ? "fill-[#7b1020]" : ""}`} />
+        </span>
+      )}
       <div className="relative mx-auto mt-4 aspect-[0.76] w-[72%]">
         <Image src={piece.image} alt={`${piece.brand} ${piece.name}`} fill sizes="180px" className="object-contain transition-transform duration-500 group-hover:scale-105" />
       </div>

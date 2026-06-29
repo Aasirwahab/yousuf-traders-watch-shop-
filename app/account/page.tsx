@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BadgeCheck, Box, ShieldCheck, Sparkles } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import { getUserOrders } from "@/lib/orders";
+import { getUserAddresses } from "@/lib/address";
 import { getOrCreateUser } from "@/lib/user";
 import AccountView, { type AccountOrder } from "./AccountView";
 
@@ -18,7 +19,11 @@ const trustItems = [
 ] as const;
 
 export default async function AccountPage() {
-  const [user, orders] = await Promise.all([getOrCreateUser(), getUserOrders()]);
+  const [user, orders, addresses] = await Promise.all([
+    getOrCreateUser(),
+    getUserOrders(),
+    getUserAddresses(),
+  ]);
   const userEmail = user?.email ?? "collector@yusuftraders.com";
   const displayName = user?.name ?? "Collector";
 
@@ -36,7 +41,7 @@ export default async function AccountPage() {
     <main className="min-h-screen bg-white text-black">
       <Navbar />
 
-      <AccountView displayName={displayName} userEmail={userEmail} orders={accountOrders} />
+      <AccountView displayName={displayName} userEmail={userEmail} orders={accountOrders} addresses={addresses} />
 
       <section className="border-y border-black/10 bg-[#f7f7f7]">
         <div className="mx-auto grid max-w-[1280px] border-x border-black/10 md:grid-cols-4">

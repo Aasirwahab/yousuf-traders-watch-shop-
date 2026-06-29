@@ -73,7 +73,7 @@ function HeaderButton({ children, className = "", label, onClick }: { children: 
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <Link href="#top" aria-label="Yusuf Traders home" className="flex items-center focus-visible:outline-2 focus-visible:outline-offset-4">
+    <Link href="/" aria-label="Yusuf Traders home" className="flex items-center focus-visible:outline-2 focus-visible:outline-offset-4">
       <Image src="/logo.png" alt="Yusuf Traders" width={1133} height={586} priority className={`h-10 w-auto md:h-12 ${light ? "brightness-0 invert" : ""}`} />
     </Link>
   );
