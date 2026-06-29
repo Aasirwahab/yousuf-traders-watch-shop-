@@ -6,5 +6,6 @@ coverage/
 *.log
 *.tsbuildinfo
 .env*
+.mcp.json
 
 /generated/prisma

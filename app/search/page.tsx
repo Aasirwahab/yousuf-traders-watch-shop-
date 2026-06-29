@@ -8,8 +8,8 @@ import { getAllProducts } from "@/lib/products";
 import { formatPrice } from "@/lib/format";
 
 export const metadata: Metadata = {
-  title: "Search | Ovalen",
-  description: "Search the Ovalen collection by brand, model, or reference.",
+  title: "Search | Yusuf Traders",
+  description: "Search the Yusuf Traders collection by brand, model, or reference.",
 };
 
 type PageProps = {

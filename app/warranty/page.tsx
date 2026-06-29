@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import LegalLayout, { LegalSection } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Warranty | Ovalen",
-  description: "Every Ovalen timepiece includes a 12-month warranty. Here's what it covers.",
+  title: "Warranty | Yusuf Traders",
+  description: "Every Yusuf Traders timepiece includes a 12-month warranty. Here's what it covers.",
 };
 
 export default function WarrantyPage() {
@@ -11,7 +11,7 @@ export default function WarrantyPage() {
     <LegalLayout
       title="Warranty"
       updated="June 2026"
-      intro="Every authenticated Ovalen timepiece is protected by a 12-month warranty from the date of delivery."
+      intro="Every authenticated Yusuf Traders timepiece is protected by a 12-month warranty from the date of delivery."
     >
       <LegalSection heading="What's covered">
         <p>The warranty covers defects in the movement and manufacturing under normal use — for example, a watch that stops keeping accurate time through no fault of the wearer.</p>
@@ -22,7 +22,7 @@ export default function WarrantyPage() {
       </LegalSection>
 
       <LegalSection heading="Making a claim">
-        <p>Contact concierge@ovalen.com with your order number and a description of the issue. We will assess the watch and arrange a repair or replacement as appropriate.</p>
+        <p>Contact concierge@yusuftraders.com with your order number and a description of the issue. We will assess the watch and arrange a repair or replacement as appropriate.</p>
       </LegalSection>
 
       <LegalSection heading="Servicing">

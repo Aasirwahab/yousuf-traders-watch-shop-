@@ -7,7 +7,7 @@ import { getOrCreateUser } from "@/lib/user";
 import AccountView, { type AccountOrder } from "./AccountView";
 
 export const metadata: Metadata = {
-  title: "My collection | Ovalen",
+  title: "My collection | Yusuf Traders",
 };
 
 const trustItems = [
@@ -19,7 +19,7 @@ const trustItems = [
 
 export default async function AccountPage() {
   const [user, orders] = await Promise.all([getOrCreateUser(), getUserOrders()]);
-  const userEmail = user?.email ?? "collector@ovalen.com";
+  const userEmail = user?.email ?? "collector@yusuftraders.com";
   const displayName = user?.name ?? "Collector";
 
   const accountOrders: AccountOrder[] = orders.map((order) => ({
@@ -56,7 +56,7 @@ export default async function AccountPage() {
         <div className="mx-auto flex max-w-[1280px] flex-col gap-8 border-x border-black/10 px-6 py-9 md:flex-row md:items-end md:justify-between">
           <div>
             <Link href="/" className="text-[24px] font-semibold tracking-[0.28em]">
-              OVALEN
+              Yusuf Traders
             </Link>
             <p className="mt-3 max-w-[190px] text-[11px] leading-4 text-[#555]">Curated independently. Authenticated for life.</p>
           </div>
@@ -64,7 +64,7 @@ export default async function AccountPage() {
             <Link href="/about" className="hover:text-[#7b1020]">About Us</Link>
             <Link href="/faq" className="hover:text-[#7b1020]">FAQ</Link>
             <Link href="/watches" className="hover:text-[#7b1020]">Journal</Link>
-            <Link href="mailto:concierge@ovalen.com" className="hover:text-[#7b1020]">Contact</Link>
+            <Link href="/contact" className="hover:text-[#7b1020]">Contact</Link>
           </nav>
           <div className="flex gap-5 text-[12px] text-[#555]">
             <span>Instagram</span>

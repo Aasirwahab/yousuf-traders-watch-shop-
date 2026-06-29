@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import LegalLayout from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "FAQ | Ovalen",
-  description: "Answers to common questions about buying, shipping, returns, and authentication at Ovalen.",
+  title: "FAQ | Yusuf Traders",
+  description: "Answers to common questions about buying, shipping, returns, and authentication at Yusuf Traders.",
 };
 
 const FAQS: { q: string; a: string }[] = [
@@ -25,7 +25,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Is there a warranty?",
-    a: "Yes — every watch includes a 12-month Ovalen warranty covering movement and manufacturing defects under normal use.",
+    a: "Yes — every watch includes a 12-month Yusuf Traders warranty covering movement and manufacturing defects under normal use.",
   },
   {
     q: "How do I pay?",
@@ -33,7 +33,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Can you source a specific reference?",
-    a: "Often, yes. Contact our concierge at concierge@ovalen.com with the reference you're looking for and we'll do our best to source it.",
+    a: "Often, yes. Contact our concierge at concierge@yusuftraders.com with the reference you're looking for and we'll do our best to source it.",
   },
 ];
 
@@ -42,7 +42,7 @@ export default function FaqPage() {
     <LegalLayout
       title="FAQ"
       updated="June 2026"
-      intro="Answers to the questions we hear most. Can't find what you need? Email concierge@ovalen.com."
+      intro="Answers to the questions we hear most. Can't find what you need? Email concierge@yusuftraders.com."
     >
       <div className="divide-y divide-black/10 border-y border-black/10">
         {FAQS.map((item) => (

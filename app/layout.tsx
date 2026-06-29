@@ -22,18 +22,18 @@ const teko = Teko({
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Authenticated Luxury Watches | Ovalen",
+  title: "Authenticated Luxury Watches | Yusuf Traders",
   description:
     "Shop independent and iconic watches authenticated by specialists, protected by a 24-month warranty, and delivered worldwide.",
   keywords: [
     "luxury watches",
-    "Ovalen",
+    "Yusuf Traders",
     "timepieces",
     "chronographs",
     "limited edition watches",
   ],
   openGraph: {
-    title: "Time, exceptionally chosen. | Ovalen",
+    title: "Time, exceptionally chosen. | Yusuf Traders",
     description: "Independent and iconic watches, authenticated for a lifetime of collecting.",
     type: "website",
   },

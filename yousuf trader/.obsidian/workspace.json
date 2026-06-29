@@ -11,14 +11,10 @@
             "id": "a02802623ccd56ea",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Prompts/Master Startup Engineering Prompt.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Master Startup Engineering Prompt"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ]
@@ -185,11 +181,13 @@
   },
   "active": "a02802623ccd56ea",
   "lastOpenFiles": [
-    "Prompts/Master Prompt — Guide.md",
+    "Projects/Ovalen/Ovalen — Weak Points & Audit.md.tmp.16536.5d912ef9a9a4",
+    "Prompts/Master Startup Engineering Prompt.md",
     "Brain Index.md",
+    "Projects/Ovalen/Ovalen — Weak Points & Audit.md",
+    "Prompts/Master Prompt — Guide.md",
     "Projects/Ovalen/ECOMMERCE-CHECKLIST.md",
     "Brain Index.md.tmp.21628.5f51d9336c33",
-    "Prompts/Master Startup Engineering Prompt.md",
     "Prompts",
     "Projects/Ovalen/Ovalen.md",
     "Projects/Ovalen/ovalen-production-roadmap.md",
@@ -216,7 +214,6 @@
     "Projects/Ovalen/performance-audit.md",
     "Projects/Ovalen/paypal-sri-lanka-payee-limit.md",
     "Projects/Ovalen/low-stock-timed-hold-v2.md",
-    "Projects/Ovalen/animations-play-regardless-of-reduced-motion.md",
     "Projects/Ovalen",
     "Projects/GSAP Landing Page",
     "Projects/CRM Full System"

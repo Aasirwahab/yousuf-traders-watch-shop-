@@ -3,8 +3,8 @@ import WatchesPage from "@/components/sections/WatchesPage";
 import { getAllProducts } from "@/lib/products";
 
 export const metadata: Metadata = {
-  title: "Selected Watches | Ovalen",
-  description: "Browse men's, ladies', new, pre-owned, and limited edition watches curated by Ovalen.",
+  title: "Selected Watches | Yusuf Traders",
+  description: "Browse men's, ladies', new, pre-owned, and limited edition watches curated by Yusuf Traders.",
 };
 
 type PageProps = {

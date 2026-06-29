@@ -6,7 +6,7 @@ import { useActionState, useState } from "react";
 import { useCommerce } from "@/components/providers/CommerceProvider";
 import { placeOrderAction, type CheckoutState } from "@/app/actions/checkout";
 import { SHIPPING_METHODS } from "@/lib/shipping";
-import { formatPrice } from "@/lib/format";
+import { formatPrice, formatUsd } from "@/lib/format";
 
 const initialState: CheckoutState = {};
 
@@ -131,7 +131,7 @@ export default function CheckoutForm({ prefillEmail }: { prefillEmail?: string }
                 <button type="submit" disabled={pending} className="mt-6 grid h-13 w-full place-items-center bg-[#6b1824] text-[12px] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-black disabled:opacity-60">
                   {pending ? "Placing order…" : "Continue to payment"}
                 </button>
-                <p className="mt-3 text-center text-[11px] text-[#8a8a86]">Taxes calculated at the payment step.</p>
+                <p className="mt-3 text-center text-[11px] text-[#8a8a86]">Prices shown in LKR · payment processed in USD ({formatUsd(total)})</p>
               </div>
             </div>
           </aside>

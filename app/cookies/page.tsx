@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import LegalLayout, { LegalSection } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Cookie Policy | Ovalen",
-  description: "The cookies Ovalen uses and how to control them.",
+  title: "Cookie Policy | Yusuf Traders",
+  description: "The cookies Yusuf Traders uses and how to control them.",
 };
 
 export default function CookiesPage() {

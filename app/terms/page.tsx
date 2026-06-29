@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import LegalLayout, { LegalSection } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | Ovalen",
-  description: "The terms that govern your use of Ovalen and any purchase you make.",
+  title: "Terms & Conditions | Yusuf Traders",
+  description: "The terms that govern your use of Yusuf Traders and any purchase you make.",
 };
 
 export default function TermsPage() {
@@ -12,10 +12,10 @@ export default function TermsPage() {
       title="Terms & Conditions"
       updated="June 2026"
       legalNote
-      intro="These terms govern your use of ovalen.com and any order you place with us. By using the site or placing an order, you agree to them."
+      intro="These terms govern your use of yusuftraders.com and any order you place with us. By using the site or placing an order, you agree to them."
     >
       <LegalSection heading="About us">
-        <p>The site is operated by Ovalen ([legal entity name], [registered address]). You can reach us at concierge@ovalen.com.</p>
+        <p>The site is operated by Yusuf Traders ([legal entity name], [registered address]). You can reach us at concierge@yusuftraders.com.</p>
       </LegalSection>
 
       <LegalSection heading="Eligibility">
@@ -39,15 +39,15 @@ export default function TermsPage() {
       </LegalSection>
 
       <LegalSection heading="Returns and warranty">
-        <p>Returns are accepted within 14 days of receipt in original, unworn condition with all packaging. A 12-month Ovalen warranty is included with every timepiece. Full details are in our Returns and Warranty information.</p>
+        <p>Returns are accepted within 14 days of receipt in original, unworn condition with all packaging. A 12-month Yusuf Traders warranty is included with every timepiece. Full details are in our Returns and Warranty information.</p>
       </LegalSection>
 
       <LegalSection heading="Intellectual property">
-        <p>All content on this site — text, images, and branding — belongs to Ovalen or its licensors and may not be reused without permission.</p>
+        <p>All content on this site — text, images, and branding — belongs to Yusuf Traders or its licensors and may not be reused without permission.</p>
       </LegalSection>
 
       <LegalSection heading="Limitation of liability">
-        <p>To the extent permitted by law, Ovalen is not liable for indirect or consequential loss. Nothing in these terms limits liability that cannot be limited under [applicable law], including your statutory consumer rights.</p>
+        <p>To the extent permitted by law, Yusuf Traders is not liable for indirect or consequential loss. Nothing in these terms limits liability that cannot be limited under [applicable law], including your statutory consumer rights.</p>
       </LegalSection>
 
       <LegalSection heading="Governing law">

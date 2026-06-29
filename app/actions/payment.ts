@@ -2,6 +2,7 @@
 
 import { getViewableOrder, markOrderPaid } from "@/lib/orders";
 import { createPayPalOrder, capturePayPalOrder } from "@/lib/paypal";
+import { sendOrderConfirmationEmail } from "@/lib/email";
 import { checkRateLimit } from "@/lib/rate-limit";
 
 export type CreatePayPalResult =
@@ -70,7 +71,12 @@ export async function capturePayPalOrderAction(
       return { ok: false, error: "Payment amount mismatch. Please contact support." };
     }
 
-    await markOrderPaid(orderId, capture.captureId);
+    const flipped = await markOrderPaid(orderId, capture.captureId);
+    if (flipped) {
+      // Only the call that actually flips PENDING→PAID sends the email, so a
+      // duplicate capture (or the webhook) can't trigger a second send.
+      await sendOrderConfirmationEmail(orderId);
+    }
     return { ok: true };
   } catch (err) {
     console.error("capturePayPalOrderAction failed", err);

@@ -110,14 +110,14 @@ export default function AccountView({
               Our specialists are here to assist with any request.
             </p>
             <a
-              href="mailto:concierge@ovalen.com"
+              href="/contact"
               className="mt-6 flex h-12 items-center justify-between border border-black/20 px-4 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors hover:border-black hover:bg-black hover:text-white"
             >
               Contact concierge
               <ArrowRight className="h-4 w-4 stroke-[1.45]" />
             </a>
             <div className="relative mt-8 aspect-[0.84] overflow-hidden bg-[#111]">
-              <Image src="/prototype-assets/article-side.webp" alt="Ovalen private concierge" fill sizes="230px" className="object-cover grayscale" />
+              <Image src="/prototype-assets/article-side.webp" alt="Yusuf Traders private concierge" fill sizes="230px" className="object-cover grayscale" />
             </div>
           </div>
         </div>
@@ -255,7 +255,7 @@ function OrdersTable({ orders }: { orders: AccountOrder[] }) {
         orders.map((order) => (
           <Link
             key={order.id}
-            href={`/checkout/${order.id}`}
+            href={`/account/orders/${order.id}`}
             className="grid grid-cols-[1.2fr_0.9fr_1.2fr_0.9fr_0.8fr] border-t border-black/10 px-4 py-4 text-[11px] transition-colors hover:bg-[#fafafa]"
           >
             <span className="font-semibold">{order.orderNumber}</span>
@@ -347,7 +347,7 @@ function AuthenticationDocsPanel({ orders }: { orders: AccountOrder[] }) {
                 <p className="font-semibold">{order.itemName ?? order.orderNumber}</p>
                 <p className="mt-1 text-[#777]">Order {order.orderNumber} · {formatOrderDate(order.createdAt)}</p>
               </div>
-              <Link href={`/checkout/${order.id}`} className="text-[10px] font-semibold uppercase tracking-[0.14em] hover:text-[#7b1020]">
+              <Link href={`/account/orders/${order.id}`} className="text-[10px] font-semibold uppercase tracking-[0.14em] hover:text-[#7b1020]">
                 View
               </Link>
             </div>
@@ -374,7 +374,7 @@ function SettingsPanel({ displayName, userEmail }: { displayName: string; userEm
       </div>
       <p className="mt-5 max-w-[520px] text-[12px] leading-5 text-[#777]">
         Need to update your details? Reach our{" "}
-        <a href="mailto:concierge@ovalen.com" className="font-semibold text-black hover:text-[#7b1020]">private concierge</a>{" "}
+        <a href="/contact" className="font-semibold text-black hover:text-[#7b1020]">private concierge</a>{" "}
         and we&apos;ll take care of it.
       </p>
     </>

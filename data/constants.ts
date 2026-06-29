@@ -78,14 +78,14 @@ export const FOOTER_GROUPS: Array<{ title: string; links: FooterLink[] }> = [
   {
     title: "Customer care",
     links: [
-      { label: "Contact us", href: "mailto:concierge@ovalen.com" },
+      { label: "Contact us", href: "/contact" },
       { label: "Shipping & delivery", href: "/shipping" },
       { label: "Returns", href: "/returns" },
       { label: "FAQs", href: "/faq" },
     ],
   },
   {
-    title: "About Ovalen",
+    title: "About Yusuf Traders",
     links: [
       { label: "Our story", href: "/about" },
       { label: "Authentication", href: "/authentication" },

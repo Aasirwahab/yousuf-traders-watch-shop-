@@ -19,12 +19,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   if (!product) {
     return {
-      title: "Watch not found | Ovalen",
+      title: "Watch not found | Yusuf Traders",
     };
   }
 
   return {
-    title: `${product.brand} ${product.name} | Ovalen`,
+    title: `${product.brand} ${product.name} | Yusuf Traders`,
     description: product.description,
   };
 }

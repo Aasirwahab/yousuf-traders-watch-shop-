@@ -252,7 +252,7 @@ function WatchesContent({
                   <p className="mt-2 max-w-xl text-sm leading-6 text-[#6e6e6b]">Our concierge can source a specific reference, arrange a private viewing, or help compare men&apos;s, ladies&apos;, and unisex pieces.</p>
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row md:justify-end">
-                  <a href="mailto:concierge@ovalen.com" className="grid h-12 place-items-center rounded-full bg-black px-5 text-sm text-white">Contact concierge</a>
+                  <a href="/contact" className="grid h-12 place-items-center rounded-full bg-black px-5 text-sm text-white">Contact concierge</a>
                   <a href="tel:+18336222536" className="grid h-12 place-items-center rounded-full border border-black px-5 text-sm">Call boutique</a>
                 </div>
               </div>

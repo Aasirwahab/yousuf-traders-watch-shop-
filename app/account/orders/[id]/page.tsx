@@ -2,58 +2,58 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Check } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import PayPalButtons from "@/components/checkout/PayPalButtons";
 import { getViewableOrder } from "@/lib/orders";
-import { formatPrice, formatUsd } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 
 export const metadata: Metadata = {
-  title: "Order | Yusuf Traders",
+  title: "Order detail | Yusuf Traders",
 };
 
-type PageProps = {
-  params: Promise<{ id: string }>;
+const STATUS_LABELS: Record<string, string> = {
+  PENDING: "Reserved — awaiting payment",
+  PAID: "Confirmed",
+  FULFILLED: "Delivered",
+  CANCELLED: "Cancelled",
+  REFUNDED: "Refunded",
 };
 
-export default async function OrderPage({ params }: PageProps) {
+type PageProps = { params: Promise<{ id: string }> };
+
+export default async function OrderDetailPage({ params }: PageProps) {
   const { id } = await params;
   const order = await getViewableOrder(id);
-
   if (!order) notFound();
 
-  const isPaid = order.status === "PAID" || order.status === "FULFILLED";
+  const placed = order.createdAt.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
   return (
     <main className="min-h-screen bg-white text-black">
       <Navbar />
       <section className="mx-auto max-w-3xl px-5 py-14 md:px-8 md:py-20">
-        <div className="flex items-center gap-3">
-          <span className="grid h-9 w-9 place-items-center rounded-full bg-[#6b1824] text-white">
-            <Check className="h-4 w-4 stroke-[2]" />
-          </span>
-          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6e6e6b]">
-            {isPaid ? "Order confirmed" : "Order reserved"}
-          </p>
+        <div className="text-[11px] text-[#6e6e6b]">
+          <Link href="/account" className="transition-colors hover:text-black">My account</Link>
+          <span className="px-2">/</span>
+          <span>Order {order.orderNumber}</span>
         </div>
 
-        <h1 className="mt-6 text-[clamp(2.2rem,5vw,3.6rem)] font-normal leading-[0.98] tracking-[-0.05em]">
-          Thank you{order.shipName ? `, ${order.shipName.split(" ")[0]}` : ""}.
-        </h1>
-        <p className="mt-4 max-w-lg text-sm leading-6 text-[#6e6e6b]">
-          Order <span className="font-medium text-black">{order.orderNumber}</span> has been{" "}
-          {isPaid ? "confirmed" : "reserved"}. A confirmation will be sent to {order.email} once your order is complete.
-        </p>
+        <div className="mt-7 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h1 className="text-[clamp(2rem,4vw,3.2rem)] font-normal leading-none tracking-[-0.05em]">{order.orderNumber}</h1>
+            <p className="mt-3 text-sm text-[#6e6e6b]">Placed {placed}</p>
+          </div>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6b1824]">
+            {STATUS_LABELS[order.status] ?? order.status}
+          </span>
+        </div>
 
-        {!isPaid ? (
-          <div className="mt-8 rounded-[16px] border border-black/10 bg-[#f7f7f5] p-6">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6e6e6b]">Payment</p>
-            <p className="mt-2 mb-5 text-sm leading-6 text-[#555550]">
-              Your order is reserved and awaiting payment. Complete it securely with PayPal below.
-            </p>
-            <PayPalButtons orderId={order.id} />
-            <p className="mt-3 text-[11px] text-[#8a8a86]">Prices are shown in LKR; payment is processed in USD ({formatUsd(order.total)}).</p>
+        {order.status === "PENDING" ? (
+          <div className="mt-8 flex flex-col gap-3 rounded-[16px] border border-black/10 bg-[#f7f7f5] p-6 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-[#555550]">This order is reserved and awaiting payment.</p>
+            <Link href={`/checkout/${order.id}`} className="grid h-12 place-items-center rounded-full bg-[#6b1824] px-7 text-sm text-white">
+              Complete payment
+            </Link>
           </div>
         ) : null}
 
@@ -99,12 +99,9 @@ export default async function OrderPage({ params }: PageProps) {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-3 sm:flex-row">
-          <Link href="/watches" className="grid h-12 place-items-center rounded-full bg-black px-7 text-sm text-white">
-            Continue shopping
-          </Link>
-          <Link href="/account" className="grid h-12 place-items-center rounded-full border border-black px-7 text-sm">
-            View your account
+        <div className="mt-10">
+          <Link href="/account" className="inline-grid h-12 place-items-center rounded-full border border-black px-7 text-sm">
+            Back to account
           </Link>
         </div>
       </section>

@@ -18,7 +18,7 @@ export default function TechSection() {
           <div className="absolute inset-0 bg-black/15" />
         </div>
         <div className="flex flex-col justify-center px-6 py-16 md:px-[9%] md:py-24">
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#b36a74]">The Ovalen standard</p>
+          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#b36a74]">The Yusuf Traders standard</p>
           <h2 className="mt-4 max-w-2xl text-[clamp(2.7rem,5vw,5rem)] font-normal leading-[0.95] tracking-[-0.055em]">Every watch,<br />verified.</h2>
           <p className="mt-7 max-w-xl text-[15px] leading-6 text-white/60">Each timepiece is inspected by specialists, documented, and protected by our two-year warranty.</p>
           <ol className="mt-12 grid gap-8 border-t border-white/15 pt-8 lg:grid-cols-3">

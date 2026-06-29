@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { verifyWebhookSignature } from "@/lib/paypal";
 import { markOrderPaid, markOrderRefunded } from "@/lib/orders";
+import { sendOrderConfirmationEmail } from "@/lib/email";
 
 // PayPal posts events here (configure the URL + PAYPAL_WEBHOOK_ID in the PayPal
 // dashboard). Every event is signature-verified against PayPal before we act.
@@ -36,6 +37,9 @@ export async function POST(request: Request) {
   if (type === "PAYMENT.CAPTURE.COMPLETED") {
     const flipped = await markOrderPaid(orderId, event.resource?.id ?? "paypal-webhook");
     console.log(`[paypal-webhook] capture completed order=${orderId} markedPaid=${flipped}`);
+    // Send only when this call flipped it, so an in-app capture that already
+    // emailed doesn't cause a duplicate.
+    if (flipped) await sendOrderConfirmationEmail(orderId);
   } else if (type === "PAYMENT.CAPTURE.REFUNDED" || type === "PAYMENT.CAPTURE.REVERSED") {
     const flipped = await markOrderRefunded(orderId);
     console.log(`[paypal-webhook] refund order=${orderId} markedRefunded=${flipped}`);

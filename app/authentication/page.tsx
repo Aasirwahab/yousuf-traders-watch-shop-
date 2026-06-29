@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import LegalLayout, { LegalSection } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Authentication | Ovalen",
-  description: "How Ovalen authenticates every timepiece — the checks behind our guarantee.",
+  title: "Authentication | Yusuf Traders",
+  description: "How Yusuf Traders authenticates every timepiece — the checks behind our guarantee.",
 };
 
 export default function AuthenticationPage() {

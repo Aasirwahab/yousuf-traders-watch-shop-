@@ -27,6 +27,13 @@ const limiters = redis
         prefix: "rl:checkout",
         analytics: true,
       }),
+      // Public form posts (contact, newsletter): low frequency, abuse-prone.
+      contact: new Ratelimit({
+        redis,
+        limiter: Ratelimit.slidingWindow(5, "10 m"),
+        prefix: "rl:contact",
+        analytics: true,
+      }),
     }
   : null;
 

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import LegalLayout, { LegalSection } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Shipping & Delivery | Ovalen",
-  description: "How Ovalen ships and delivers your timepiece — insured, tracked, and signature-required.",
+  title: "Shipping & Delivery | Yusuf Traders",
+  description: "How Yusuf Traders ships and delivers your timepiece — insured, tracked, and signature-required.",
 };
 
 export default function ShippingPage() {
@@ -11,7 +11,7 @@ export default function ShippingPage() {
     <LegalLayout
       title="Shipping & Delivery"
       updated="June 2026"
-      intro="Every Ovalen timepiece ships fully insured and tracked, with a signature required on delivery."
+      intro="Every Yusuf Traders timepiece ships fully insured and tracked, with a signature required on delivery."
     >
       <LegalSection heading="Delivery methods">
         <p>At checkout you can choose between our standard insured delivery and an expedited option. Costs and estimated timeframes are shown before you place your order.</p>
@@ -30,7 +30,7 @@ export default function ShippingPage() {
       </LegalSection>
 
       <LegalSection heading="Questions">
-        <p>For a specific delivery request or to arrange a private collection, contact our concierge at concierge@ovalen.com.</p>
+        <p>For a specific delivery request or to arrange a private collection, contact our concierge at concierge@yusuftraders.com.</p>
       </LegalSection>
     </LegalLayout>
   );

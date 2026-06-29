@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import LegalLayout, { LegalSection } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Returns & Exchanges | Ovalen",
-  description: "Ovalen's 14-day return policy and how to start a return or exchange.",
+  title: "Returns & Exchanges | Yusuf Traders",
+  description: "Yusuf Traders's 14-day return policy and how to start a return or exchange.",
 };
 
 export default function ReturnsPage() {
@@ -22,7 +22,7 @@ export default function ReturnsPage() {
       </LegalSection>
 
       <LegalSection heading="How to start a return">
-        <p>Email concierge@ovalen.com with your order number. We will confirm the return and provide insured return shipping instructions — please do not ship a watch back without confirmation.</p>
+        <p>Email concierge@yusuftraders.com with your order number. We will confirm the return and provide insured return shipping instructions — please do not ship a watch back without confirmation.</p>
       </LegalSection>
 
       <LegalSection heading="Refunds">

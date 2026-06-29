@@ -6,8 +6,8 @@ import Footer from "@/components/layout/Footer";
 import { getAllProducts } from "@/lib/products";
 
 export const metadata: Metadata = {
-  title: "Brands | Ovalen",
-  description: "Shop watches by maison — independent and iconic houses authenticated by Ovalen.",
+  title: "Brands | Yusuf Traders",
+  description: "Shop watches by maison — independent and iconic houses authenticated by Yusuf Traders.",
 };
 
 export default async function BrandsPage() {

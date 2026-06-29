@@ -21,7 +21,7 @@ const TABS: { id: TabId; label: string }[] = [
 
 const trustItems = [
   { title: "Authenticated", text: "Each watch is verified by our specialists", icon: ShieldCheck },
-  { title: "Warranty", text: "12-month Ovalen warranty included", icon: ShieldCheck },
+  { title: "Warranty", text: "12-month Yusuf Traders warranty included", icon: ShieldCheck },
   { title: "Insured delivery", text: "Worldwide delivery with full insurance", icon: Truck },
   { title: "Returns", text: "14-day return policy", icon: RotateCcw },
 ];
@@ -70,7 +70,7 @@ function ProductDetailContent({ product, related }: { product: ShopProduct; rela
     shipping: (
       <p className="max-w-xl text-sm leading-7 text-[#555550]">
         Complimentary insured worldwide delivery, fully tracked and signature-required. Returns accepted within 14 days
-        of receipt in original, unworn condition. A 12-month Ovalen warranty is included with every timepiece.
+        of receipt in original, unworn condition. A 12-month Yusuf Traders warranty is included with every timepiece.
       </p>
     ),
   };
@@ -141,7 +141,7 @@ function ProductDetailContent({ product, related }: { product: ShopProduct; rela
                 <button type="button" onClick={() => commerce.addItem(product.slug)} className="grid h-13 place-items-center bg-[#6b1824] text-[12px] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-black">
                   Add to bag
                 </button>
-                <a href="mailto:concierge@ovalen.com" className="grid h-13 place-items-center border border-black text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white">
+                <a href="mailto:concierge@yusuftraders.com" className="grid h-13 place-items-center border border-black text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white">
                   Book a private viewing
                 </a>
                 <button type="button" onClick={() => commerce.toggleWishlist(product.slug)} aria-pressed={commerce.isWished(product.slug)} className="inline-flex h-11 items-center justify-center gap-2 text-[12px] text-[#4d4d49]">

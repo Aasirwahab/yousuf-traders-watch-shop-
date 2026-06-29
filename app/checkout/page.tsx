@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer";
 import CheckoutForm from "@/components/sections/CheckoutForm";
 
 export const metadata: Metadata = {
-  title: "Checkout | Ovalen",
+  title: "Checkout | Yusuf Traders",
 };
 
 export default async function CheckoutPage() {

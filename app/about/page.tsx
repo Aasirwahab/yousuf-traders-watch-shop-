@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import LegalLayout, { LegalSection } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Our Story | Ovalen",
-  description: "Ovalen curates independent and iconic watches, authenticated by specialists for a lifetime of collecting.",
+  title: "Our Story | Yusuf Traders",
+  description: "Yusuf Traders curates independent and iconic watches, authenticated by specialists for a lifetime of collecting.",
 };
 
 export default function AboutPage() {
@@ -11,10 +11,10 @@ export default function AboutPage() {
     <LegalLayout
       title="Our Story"
       updated="June 2026"
-      intro="Ovalen is a curated house for independent and iconic timepieces — chosen with a collector's eye and authenticated for a lifetime of wear."
+      intro="Yusuf Traders is a curated house for independent and iconic timepieces — chosen with a collector's eye and authenticated for a lifetime of wear."
     >
       <LegalSection heading="Why we exist">
-        <p>Great watches outlive trends. We started Ovalen to make buying one feel as considered as the watches themselves — no noise, no doubt about authenticity, just pieces worth keeping.</p>
+        <p>Great watches outlive trends. We started Yusuf Traders to make buying one feel as considered as the watches themselves — no noise, no doubt about authenticity, just pieces worth keeping.</p>
       </LegalSection>
 
       <LegalSection heading="How we choose">
@@ -26,7 +26,7 @@ export default function AboutPage() {
       </LegalSection>
 
       <LegalSection heading="A considered service">
-        <p>From sourcing a specific reference to arranging a private viewing, our concierge is here for the details. Reach us any time at concierge@ovalen.com.</p>
+        <p>From sourcing a specific reference to arranging a private viewing, our concierge is here for the details. Reach us any time at concierge@yusuftraders.com.</p>
       </LegalSection>
     </LegalLayout>
   );

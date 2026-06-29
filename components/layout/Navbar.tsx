@@ -14,10 +14,8 @@ export default function Navbar({ overlay = false }: { overlay?: boolean }) {
   return (
     <>
       <header className={overlay ? "absolute inset-x-0 top-0 z-50 text-white" : "sticky top-0 z-50 border-b border-black/10 bg-white/95 backdrop-blur-xl"}>
-        <div className="relative mx-auto flex h-[72px] items-center justify-between px-5 md:h-[84px] md:px-[3.5%]">
-          <Logo light={overlay} />
-
-          <nav aria-label="Primary navigation" className="absolute left-[19.5%] hidden items-center gap-[clamp(28px,3.8vw,56px)] text-[13px] md:flex">
+        <div className="relative mx-auto flex h-[72px] items-center px-[4.7%] md:h-[84px]">
+          <nav aria-label="Primary navigation" className="hidden items-center gap-[clamp(28px,3.8vw,56px)] text-[13px] md:flex">
             {NAV_LINKS.map((link) => (
               <Link key={link.label} href={link.href} className={`relative py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 ${overlay ? "hover:text-white/60" : "hover:text-[#6b1824]"}`}>
                 {link.label}
@@ -25,7 +23,11 @@ export default function Navbar({ overlay = false }: { overlay?: boolean }) {
             ))}
           </nav>
 
-          <div className="flex items-center gap-1 md:gap-2">
+          <div className="absolute left-1/2 top-0 flex h-full -translate-x-1/2 items-center">
+            <Logo light={overlay} />
+          </div>
+
+          <div className="ml-auto flex items-center gap-1 md:gap-2">
             <HeaderButton label="Search" onClick={() => commerce.setSearchOpen(true)}><Search /></HeaderButton>
             <Link
               href="/wishlist"
@@ -71,8 +73,8 @@ function HeaderButton({ children, className = "", label, onClick }: { children: 
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <Link href="#top" aria-label="Ovalen home" className={`flex items-center focus-visible:outline-2 focus-visible:outline-offset-4 ${light ? "text-white" : "text-black"}`}>
-      <span className="text-[18px] font-semibold tracking-[0.32em]">OVALEN</span>
+    <Link href="#top" aria-label="Yusuf Traders home" className="flex items-center focus-visible:outline-2 focus-visible:outline-offset-4">
+      <Image src="/logo.png" alt="Yusuf Traders" width={1133} height={586} priority className={`h-10 w-auto md:h-12 ${light ? "brightness-0 invert" : ""}`} />
     </Link>
   );
 }
@@ -108,7 +110,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
           {NAV_LINKS.map((link) => <Link key={link.label} href={link.href} onClick={onClose} className="border-b border-black/10 py-5 text-2xl">{link.label}</Link>)}
           <Link href="/wishlist" onClick={onClose} className="border-b border-black/10 py-5 text-2xl">Wishlist</Link>
         </nav>
-        <a href="mailto:concierge@ovalen.com" className="mt-12 block text-sm text-[#6e6e6b]">concierge@ovalen.com</a>
+        <a href="mailto:concierge@yusuftraders.com" className="mt-12 block text-sm text-[#6e6e6b]">concierge@yusuftraders.com</a>
       </div>
     </Overlay>
   );

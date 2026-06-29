@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import LegalLayout, { LegalSection } from "@/components/sections/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Ovalen",
-  description: "How Ovalen collects, uses, and protects your personal data.",
+  title: "Privacy Policy | Yusuf Traders",
+  description: "How Yusuf Traders collects, uses, and protects your personal data.",
 };
 
 export default function PrivacyPage() {
@@ -12,12 +12,12 @@ export default function PrivacyPage() {
       title="Privacy Policy"
       updated="June 2026"
       legalNote
-      intro="This policy explains what personal data Ovalen collects, why we collect it, and the choices you have. It applies to ovalen.com and our checkout."
+      intro="This policy explains what personal data Yusuf Traders collects, why we collect it, and the choices you have. It applies to yusuftraders.com and our checkout."
     >
       <LegalSection heading="Who we are">
         <p>
-          Ovalen ([legal entity name], [registered address]) is the data controller for personal data processed through
-          this site. For any privacy question, contact us at concierge@ovalen.com.
+          Yusuf Traders ([legal entity name], [registered address]) is the data controller for personal data processed through
+          this site. For any privacy question, contact us at concierge@yusuftraders.com.
         </p>
       </LegalSection>
 
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
       </LegalSection>
 
       <LegalSection heading="Your rights">
-        <p>Depending on where you live, you may have the right to access, correct, delete, or export your personal data, and to object to certain processing. To exercise any of these, email concierge@ovalen.com and we will respond within the time required by [applicable law].</p>
+        <p>Depending on where you live, you may have the right to access, correct, delete, or export your personal data, and to object to certain processing. To exercise any of these, email concierge@yusuftraders.com and we will respond within the time required by [applicable law].</p>
       </LegalSection>
 
       <LegalSection heading="Security">

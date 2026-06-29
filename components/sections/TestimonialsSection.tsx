@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const REVIEWS = [
   { quote: "The condition report was exact, delivery was discreet, and the watch arrived ready to wear.", name: "Marcus L.", location: "London" },
-  { quote: "Ovalen made a considered purchase feel effortless. Every question was answered with real expertise.", name: "Amelia R.", location: "Singapore" },
+  { quote: "Yusuf Traders made a considered purchase feel effortless. Every question was answered with real expertise.", name: "Amelia R.", location: "Singapore" },
   { quote: "The authentication notes gave me the confidence to acquire a reference I had searched for for years.", name: "Daniel K.", location: "Copenhagen" },
 ];
 

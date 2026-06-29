@@ -13,6 +13,7 @@ Luxury pre-owned **watch e-commerce** store. Next.js 16 + React 19 + Prisma 7/Ne
 
 ## Project docs
 - [[Ovalen — Architecture & Flow]] — stack, data model, the full browse→cart→checkout→PayPal→order flow, route map
+- [[Ovalen — Weak Points & Audit]] — what's missing/weak, by priority (currency bug, tests, monitoring, email status)
 - [[ECOMMERCE-CHECKLIST]] — live build audit; what's done vs P0/P1/P2 to do
 - [[Ovalen README]] — original landing-page README (partly stale)
 

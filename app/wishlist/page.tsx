@@ -3,7 +3,7 @@ import WishlistView from "@/components/sections/WishlistView";
 import { getAllProducts } from "@/lib/products";
 
 export const metadata: Metadata = {
-  title: "Wishlist | Ovalen",
+  title: "Wishlist | Yusuf Traders",
   description: "The watches you've saved to revisit.",
 };
 
