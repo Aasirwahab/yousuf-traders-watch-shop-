@@ -12,12 +12,12 @@ export default function PrivacyPage() {
       title="Privacy Policy"
       updated="June 2026"
       legalNote
-      intro="This policy explains what personal data Yusuf Traders collects, why we collect it, and the choices you have. It applies to yusuftraders.com and our checkout."
+      intro="This policy explains what personal data Yusuf Traders collects, why we collect it, and the choices you have. It applies to yousuftrade.store and our checkout."
     >
       <LegalSection heading="Who we are">
         <p>
           Yusuf Traders ([legal entity name], [registered address]) is the data controller for personal data processed through
-          this site. For any privacy question, contact us at concierge@yusuftraders.com.
+          this site. For any privacy question, contact us at concierge@yousuftrade.store.
         </p>
       </LegalSection>
 
@@ -51,7 +51,7 @@ export default function PrivacyPage() {
       </LegalSection>
 
       <LegalSection heading="Your rights">
-        <p>Depending on where you live, you may have the right to access, correct, delete, or export your personal data, and to object to certain processing. To exercise any of these, email concierge@yusuftraders.com and we will respond within the time required by [applicable law].</p>
+        <p>Depending on where you live, you may have the right to access, correct, delete, or export your personal data, and to object to certain processing. To exercise any of these, email concierge@yousuftrade.store and we will respond within the time required by [applicable law].</p>
       </LegalSection>
 
       <LegalSection heading="Security">

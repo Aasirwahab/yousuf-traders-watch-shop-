@@ -20,8 +20,8 @@ export default function ContactPage() {
         <p className="mt-4 max-w-lg text-sm leading-6 text-[#6e6e6b]">
           Questions about a piece, authentication, or a private viewing? Send a message and our concierge
           will reply by email. You can also reach us directly at{" "}
-          <a href="mailto:concierge@yusuftraders.com" className="font-medium text-black underline underline-offset-4">
-            concierge@yusuftraders.com
+          <a href="mailto:concierge@yousuftrade.store" className="font-medium text-black underline underline-offset-4">
+            concierge@yousuftrade.store
           </a>.
         </p>
 

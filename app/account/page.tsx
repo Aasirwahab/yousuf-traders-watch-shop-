@@ -24,7 +24,7 @@ export default async function AccountPage() {
     getUserOrders(),
     getUserAddresses(),
   ]);
-  const userEmail = user?.email ?? "collector@yusuftraders.com";
+  const userEmail = user?.email ?? "collector@yousuftrade.store";
   const displayName = user?.name ?? "Collector";
 
   const accountOrders: AccountOrder[] = orders.map((order) => ({

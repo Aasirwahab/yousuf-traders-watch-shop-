@@ -141,7 +141,7 @@ function ProductDetailContent({ product, related }: { product: ShopProduct; rela
                 <button type="button" onClick={() => commerce.addItem(product.slug)} className="grid h-13 place-items-center bg-[#6b1824] text-[12px] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-black">
                   Add to bag
                 </button>
-                <a href="mailto:concierge@yusuftraders.com" className="grid h-13 place-items-center border border-black text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white">
+                <a href="mailto:concierge@yousuftrade.store" className="grid h-13 place-items-center border border-black text-[12px] font-semibold uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white">
                   Book a private viewing
                 </a>
                 <button type="button" onClick={() => commerce.toggleWishlist(product.slug)} aria-pressed={commerce.isWished(product.slug)} className="inline-flex h-11 items-center justify-center gap-2 text-[12px] text-[#4d4d49]">

@@ -7,7 +7,7 @@ export default function Footer() {
     <footer id="footer" className="bg-[#0b0b0b] px-6 pb-8 pt-16 text-white md:px-[4.5%] md:pt-20">
       <div className="mx-auto max-w-[1440px]">
         <div className="grid gap-14 border-b border-white/15 pb-16 md:grid-cols-[1.2fr_2fr]">
-          <div><Logo light /><p className="mt-6 max-w-xs text-[12px] leading-5 text-white/50">Independent and iconic watches, authenticated for a lifetime of collecting.</p><a href="mailto:concierge@yusuftraders.com" className="mt-8 block text-sm underline decoration-white/30 underline-offset-4">concierge@yusuftraders.com</a></div>
+          <div><Logo light /><p className="mt-6 max-w-xs text-[12px] leading-5 text-white/50">Independent and iconic watches, authenticated for a lifetime of collecting.</p><a href="mailto:concierge@yousuftrade.store" className="mt-8 block text-sm underline decoration-white/30 underline-offset-4">concierge@yousuftrade.store</a></div>
           <div className="hidden gap-8 sm:grid sm:grid-cols-3">
             {FOOTER_GROUPS.map((group) => <FooterNav key={group.title} group={group} />)}
           </div>

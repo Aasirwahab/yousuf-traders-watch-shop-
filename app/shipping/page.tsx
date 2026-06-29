@@ -30,7 +30,7 @@ export default function ShippingPage() {
       </LegalSection>
 
       <LegalSection heading="Questions">
-        <p>For a specific delivery request or to arrange a private collection, contact our concierge at concierge@yusuftraders.com.</p>
+        <p>For a specific delivery request or to arrange a private collection, contact our concierge at concierge@yousuftrade.store.</p>
       </LegalSection>
     </LegalLayout>
   );

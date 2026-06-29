@@ -26,7 +26,7 @@ export default function AboutPage() {
       </LegalSection>
 
       <LegalSection heading="A considered service">
-        <p>From sourcing a specific reference to arranging a private viewing, our concierge is here for the details. Reach us any time at concierge@yusuftraders.com.</p>
+        <p>From sourcing a specific reference to arranging a private viewing, our concierge is here for the details. Reach us any time at concierge@yousuftrade.store.</p>
       </LegalSection>
     </LegalLayout>
   );

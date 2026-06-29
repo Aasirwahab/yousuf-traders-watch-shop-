@@ -22,7 +22,7 @@ export default function ReturnsPage() {
       </LegalSection>
 
       <LegalSection heading="How to start a return">
-        <p>Email concierge@yusuftraders.com with your order number. We will confirm the return and provide insured return shipping instructions — please do not ship a watch back without confirmation.</p>
+        <p>Email concierge@yousuftrade.store with your order number. We will confirm the return and provide insured return shipping instructions — please do not ship a watch back without confirmation.</p>
       </LegalSection>
 
       <LegalSection heading="Refunds">

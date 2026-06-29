@@ -94,7 +94,7 @@ const BREVO_CONTACTS_ENDPOINT = "https://api.brevo.com/v3/contacts";
 
 // Where contact-form enquiries are delivered. Defaults to the address shown
 // across the site; override with CONTACT_EMAIL if the business inbox differs.
-const CONTACT_RECIPIENT = process.env.CONTACT_EMAIL || "concierge@yusuftraders.com";
+const CONTACT_RECIPIENT = process.env.CONTACT_EMAIL || "concierge@yousuftrade.store";
 
 function escapeHtml(value: string) {
   return value.replace(

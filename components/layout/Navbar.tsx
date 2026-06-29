@@ -110,7 +110,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
           {NAV_LINKS.map((link) => <Link key={link.label} href={link.href} onClick={onClose} className="border-b border-black/10 py-5 text-2xl">{link.label}</Link>)}
           <Link href="/wishlist" onClick={onClose} className="border-b border-black/10 py-5 text-2xl">Wishlist</Link>
         </nav>
-        <a href="mailto:concierge@yusuftraders.com" className="mt-12 block text-sm text-[#6e6e6b]">concierge@yusuftraders.com</a>
+        <a href="mailto:concierge@yousuftrade.store" className="mt-12 block text-sm text-[#6e6e6b]">concierge@yousuftrade.store</a>
       </div>
     </Overlay>
   );

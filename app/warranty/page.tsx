@@ -22,7 +22,7 @@ export default function WarrantyPage() {
       </LegalSection>
 
       <LegalSection heading="Making a claim">
-        <p>Contact concierge@yusuftraders.com with your order number and a description of the issue. We will assess the watch and arrange a repair or replacement as appropriate.</p>
+        <p>Contact concierge@yousuftrade.store with your order number and a description of the issue. We will assess the watch and arrange a repair or replacement as appropriate.</p>
       </LegalSection>
 
       <LegalSection heading="Servicing">

@@ -12,10 +12,10 @@ export default function TermsPage() {
       title="Terms & Conditions"
       updated="June 2026"
       legalNote
-      intro="These terms govern your use of yusuftraders.com and any order you place with us. By using the site or placing an order, you agree to them."
+      intro="These terms govern your use of yousuftrade.store and any order you place with us. By using the site or placing an order, you agree to them."
     >
       <LegalSection heading="About us">
-        <p>The site is operated by Yusuf Traders ([legal entity name], [registered address]). You can reach us at concierge@yusuftraders.com.</p>
+        <p>The site is operated by Yusuf Traders ([legal entity name], [registered address]). You can reach us at concierge@yousuftrade.store.</p>
       </LegalSection>
 
       <LegalSection heading="Eligibility">

@@ -66,7 +66,7 @@ export default function ConciergeSection() {
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
             <a
-              href="mailto:concierge@yusuftraders.com?subject=Private%20watch%20consultation"
+              href="mailto:concierge@yousuftrade.store?subject=Private%20watch%20consultation"
               className="inline-flex min-h-13 items-center justify-center gap-3 bg-black px-6 text-sm text-white transition-colors hover:bg-[#6b1824] focus-visible:outline-2 focus-visible:outline-offset-4"
             >
               <MessageCircle className="h-4 w-4 stroke-[1.4]" />

@@ -33,7 +33,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Can you source a specific reference?",
-    a: "Often, yes. Contact our concierge at concierge@yusuftraders.com with the reference you're looking for and we'll do our best to source it.",
+    a: "Often, yes. Contact our concierge at concierge@yousuftrade.store with the reference you're looking for and we'll do our best to source it.",
   },
 ];
 
@@ -42,7 +42,7 @@ export default function FaqPage() {
     <LegalLayout
       title="FAQ"
       updated="June 2026"
-      intro="Answers to the questions we hear most. Can't find what you need? Email concierge@yusuftraders.com."
+      intro="Answers to the questions we hear most. Can't find what you need? Email concierge@yousuftrade.store."
     >
       <div className="divide-y divide-black/10 border-y border-black/10">
         {FAQS.map((item) => (
