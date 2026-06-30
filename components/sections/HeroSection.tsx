@@ -64,7 +64,7 @@ export default function HeroSection() {
           initial={rise.initial}
           animate={rise.animate}
           transition={{ duration: reduceMotion ? 0 : 0.8, delay: reduceMotion ? 0 : 0.22, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-[clamp(22px,3.4vh,38px)]"
+          className="mt-[clamp(14px,2.2vh,26px)]"
         >
           <Link
             href="/watches"
@@ -81,9 +81,9 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: reduceMotion ? 0 : 1.1, delay: reduceMotion ? 0 : 0.3, ease: "easeOut" }}
-        className="relative z-[5] mt-auto mb-[clamp(14px,2.4vh,32px)] h-[clamp(280px,39vh,480px)] w-full"
+        className="relative z-[5] mt-auto mb-[clamp(14px,2.4vh,32px)] h-[clamp(240px,33vh,420px)] w-full"
       >
-        <CurvedSlider images={CAROUSEL_IMAGES} reduceMotion={reduceMotion} />
+        <CurvedSlider images={CAROUSEL_IMAGES} />
         {/* edge fade: outer cards recede into black on the left/right */}
         <div
           aria-hidden

@@ -96,12 +96,7 @@
   left: 0;
   right: 0;
   bottom: 38px; /* reserve a strip below the cards for the pagination dots */
-  cursor: grab;
-  touch-action: pan-y;
-}
-
-.curved-slider__stage:active {
-  cursor: grabbing;
+  pointer-events: none; /* purely auto-scrolling — no drag/wheel interaction */
 }
 
 .curved-slider__stage canvas {

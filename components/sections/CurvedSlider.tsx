@@ -21,15 +21,14 @@ export type SliderImage = { src: string; alt: string };
 
 const FOV = 45; // narrow view → only a handful of large cards show
 const CAM_Z = 1.3; // camera pulled in so cards nearly fill the band
-const PLANE_W = 0.92; // card aspect (w); height is 1 — near-square like the reference
+const PLANE_W = 1.0; // card aspect (w); height is 1 — square like the reference
 const PLANE_H = 1;
-const GAP = 9; // world gap between cards, as the plugin's `gap`
+const GAP = 18; // wider spacing → fewer, larger cards (centre + 2 full + 1 half each side)
 const CURVE = 6; // gentle flare toward the edges (plugin default was 15)
 const RADIUS = 0.045; // card corner radius, in UV units
 const BRIGHT = 1.12; // mild lift — the source photos are dark/cinematic
-const SPEED = 0.26; // continuous infinite-scroll speed, world units / second
+const SPEED = 0.26; // continuous auto-scroll speed, world units / second
 const DIR = -1; // scroll direction
-const WHEEL_GAIN = 1.0; // how strongly the mouse wheel / trackpad drives the scroll
 
 const VERTEX = `
   uniform float curve;
@@ -87,21 +86,11 @@ function wrap(value: number, period: number) {
 
 const spacingWorld = PLANE_W * (1 + GAP / 100);
 
-export default function CurvedSlider({
-  images,
-  reduceMotion,
-}: {
-  images: SliderImage[];
-  reduceMotion: boolean;
-}) {
+export default function CurvedSlider({ images }: { images: SliderImage[] }) {
   const distinct = images.length;
   const containerRef = useRef<HTMLDivElement>(null);
   const offsetRef = useRef(0);
   const targetRef = useRef<number | null>(null);
-  const velRef = useRef(0);
-  const draggingRef = useRef(false);
-  const lastXRef = useRef(0);
-  const pxPerWorldRef = useRef(200);
   const planeMetaRef = useRef<{ mesh: THREE.Mesh; img: number }[]>([]);
   const [active, setActive] = useState(0);
   const activeRef = useRef(0);
@@ -134,8 +123,6 @@ export default function CurvedSlider({
       renderer.setSize(w, h);
       camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      const worldH = 2 * Math.tan((FOV * Math.PI) / 180 / 2) * CAM_Z;
-      pxPerWorldRef.current = w / (worldH * camera.aspect);
     };
 
     const build = (textures: THREE.Texture[]) => {
@@ -185,19 +172,18 @@ export default function CurvedSlider({
         const dt = Math.min((now - last) / 1000, 0.05);
         last = now;
 
-        if (!draggingRef.current) {
-          if (targetRef.current !== null) {
-            offsetRef.current += (targetRef.current - offsetRef.current) * Math.min(1, dt * 7);
-            if (Math.abs(targetRef.current - offsetRef.current) < 0.0005) {
-              offsetRef.current = targetRef.current;
-              targetRef.current = null;
-            }
-          } else if (Math.abs(velRef.current) > 0.0008) {
-            offsetRef.current += velRef.current;
-            velRef.current *= Math.pow(0.94, dt * 60);
-          } else if (!reduceMotion) {
-            offsetRef.current += DIR * SPEED * dt;
+        // A dot tap eases the chosen watch to centre; otherwise the carousel
+        // marquees forever on its own. No drag, no wheel — pure auto-scroll.
+        // Runs regardless of prefers-reduced-motion, matching this project's
+        // convention for ambient/brand motion.
+        if (targetRef.current !== null) {
+          offsetRef.current += (targetRef.current - offsetRef.current) * Math.min(1, dt * 7);
+          if (Math.abs(targetRef.current - offsetRef.current) < 0.0005) {
+            offsetRef.current = targetRef.current;
+            targetRef.current = null;
           }
+        } else {
+          offsetRef.current += DIR * SPEED * dt;
         }
 
         const meta = planeMetaRef.current;
@@ -237,23 +223,10 @@ export default function CurvedSlider({
     const ro = new ResizeObserver(sizeRenderer);
     ro.observe(container);
 
-    // Mouse-wheel / trackpad scrolls the carousel (on top of the auto-scroll).
-    const onWheel = (e: WheelEvent) => {
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      if (delta === 0) return;
-      e.preventDefault();
-      const dWorld = (delta / pxPerWorldRef.current) * WHEEL_GAIN;
-      offsetRef.current -= dWorld;
-      targetRef.current = null;
-      velRef.current = -dWorld * 0.35; // brief glide, then the auto-scroll takes over
-    };
-    container.addEventListener("wheel", onWheel, { passive: false });
-
     return () => {
       disposed = true;
       cancelAnimationFrame(raf);
       ro.disconnect();
-      container.removeEventListener("wheel", onWheel);
       planeMetaRef.current.forEach(({ mesh }) => {
         scene.remove(mesh);
         (mesh.material as THREE.ShaderMaterial).dispose();
@@ -265,27 +238,7 @@ export default function CurvedSlider({
         container.removeChild(renderer.domElement);
       }
     };
-  }, [images, distinct, reduceMotion]);
-
-  // Pointer drag.
-  const onPointerDown = (e: React.PointerEvent) => {
-    draggingRef.current = true;
-    targetRef.current = null;
-    velRef.current = 0;
-    lastXRef.current = e.clientX;
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-  };
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (!draggingRef.current) return;
-    const dx = e.clientX - lastXRef.current;
-    lastXRef.current = e.clientX;
-    const dWorld = dx / pxPerWorldRef.current;
-    offsetRef.current += dWorld;
-    velRef.current = dWorld;
-  };
-  const onPointerUp = () => {
-    draggingRef.current = false;
-  };
+  }, [images, distinct]);
 
   const goTo = (img: number) => {
     // ease the offset so the nearest plane carrying `img` lands at centre
@@ -303,7 +256,6 @@ export default function CurvedSlider({
       }
     }
     targetRef.current = offsetRef.current + bestDelta;
-    velRef.current = 0;
   };
 
   return (
@@ -311,10 +263,6 @@ export default function CurvedSlider({
       <div
         ref={containerRef}
         className="curved-slider__stage"
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={onPointerUp}
-        onPointerCancel={onPointerUp}
         role="group"
         aria-roledescription="carousel"
         aria-label="Featured watches"
