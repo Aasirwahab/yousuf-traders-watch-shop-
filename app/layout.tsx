@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Inter, Teko } from "next/font/google";
+import { Inter, Teko, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import { CommerceProvider } from "@/components/providers/CommerceProvider";
@@ -18,6 +18,14 @@ const teko = Teko({
   weight: "600",
   display: "swap",
   variable: "--font-teko",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-playfair",
 });
 
 export const metadata: Metadata = {
@@ -46,7 +54,7 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider afterSignOutUrl="/">
-      <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${teko.variable}`}>
+      <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${teko.variable} ${playfair.variable}`}>
         <body className={`${inter.className} antialiased`} suppressHydrationWarning>
           <SmoothScroll>
             <CommerceProvider>{children}</CommerceProvider>
