@@ -30,6 +30,8 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       }
     ],
+    // Allow higher-quality optimized output for product photography (default is 75).
+    qualities: [75, 90],
   },
   output: 'standalone',
   transpilePackages: ['motion'],

@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState, useTransition } from "react";
 import { Pencil, Trash2 } from "lucide-react";
-import { formatUsd } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 import { deleteProduct, togglePublished } from "../products/actions";
 
 type Row = {
@@ -86,7 +86,7 @@ export function ProductsTable({ products }: { products: Row[] }) {
                     </div>
                   </td>
                   <td className="px-5 py-3 text-[#485357]">{p.reference}</td>
-                  <td className="px-5 py-3 font-semibold">{formatUsd(p.price)}</td>
+                  <td className="px-5 py-3 font-semibold">{formatPrice(p.price)}</td>
                   <td className="px-5 py-3">
                     <span className={p.stock === 0 ? "text-[#9f2f3f]" : p.stock <= 3 ? "text-[#9a6419]" : "text-[#485357]"}>
                       {p.stock}

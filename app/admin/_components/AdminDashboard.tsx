@@ -18,7 +18,7 @@ import {
   Search,
 } from "lucide-react";
 import { useMemo, useState, useTransition } from "react";
-import { formatUsd } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 import type { OrderStatus } from "@/generated/prisma/client";
 import type { AdminDashboardData } from "@/lib/admin/metrics";
 import { RANGES } from "@/lib/admin/ranges";
@@ -86,9 +86,9 @@ export function AdminDashboard({
   ];
 
   const kpiCards = [
-    { label: "Net revenue", value: formatUsd(kpis.revenue.value), delta: kpis.revenue.deltaPct, note: "vs. previous period" },
+    { label: "Net revenue", value: formatPrice(kpis.revenue.value), delta: kpis.revenue.deltaPct, note: "vs. previous period" },
     { label: "Orders", value: String(kpis.orders.value), delta: kpis.orders.deltaPct, note: `${fulfillment.paid} awaiting fulfillment` },
-    { label: "Avg. order value", value: formatUsd(kpis.avgOrder.value), delta: kpis.avgOrder.deltaPct, note: "per realised order" },
+    { label: "Avg. order value", value: formatPrice(kpis.avgOrder.value), delta: kpis.avgOrder.deltaPct, note: "per realised order" },
     { label: "Low-stock risk", value: String(kpis.lowStock.value), delta: null, note: `${kpis.lowStock.outOfStock} out of stock` },
   ];
 
@@ -171,7 +171,7 @@ export function AdminDashboard({
             <div className="mt-7 flex h-[260px] items-end gap-1.5 border-b border-l border-[#dfe5e3] px-2 pb-3">
               {chart.map((bar, index) => (
                 <div key={index} className="flex flex-1 flex-col items-center gap-2">
-                  <div className="relative flex h-[220px] w-full items-end" title={formatUsd(bar.value)}>
+                  <div className="relative flex h-[220px] w-full items-end" title={formatPrice(bar.value)}>
                     <div
                       className="w-full rounded-t-md bg-gradient-to-t from-[#0f766e] to-[#8ebbb5]"
                       style={{ height: `${(bar.value / chartMax) * 100}%` }}
@@ -233,7 +233,7 @@ export function AdminDashboard({
                         </td>
                         <td className="px-5 py-4 text-[#485357]">{order.customer}</td>
                         <td className="px-5 py-4 text-[#485357]">{order.item}</td>
-                        <td className="px-5 py-4 font-semibold">{formatUsd(order.total)}</td>
+                        <td className="px-5 py-4 font-semibold">{formatPrice(order.total)}</td>
                         <td className="px-5 py-4">
                           <span className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold ${STATUS_STYLES[order.status].cls}`}>
                             {STATUS_STYLES[order.status].label}

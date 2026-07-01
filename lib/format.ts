@@ -1,19 +1,17 @@
-// Money is stored and charged in whole USD units (see Product.price in
-// prisma/schema.prisma); PayPal settles in USD. The storefront *displays* LKR,
-// converted at a fixed rate. Set NEXT_PUBLIC_LKR_PER_USD to the current rate —
-// it's inlined at build time, so changing it requires a rebuild.
-const LKR_PER_USD = Number(process.env.NEXT_PUBLIC_LKR_PER_USD) || 300;
-
-/** Display price in LKR, converted from the stored USD amount. */
-export function formatPrice(usd: number) {
+// Prices are stored and displayed in LKR (whole rupees). The store is
+// LKR-native — there is no USD conversion on the storefront. (PayPal settles in
+// USD; wiring a real LKR→USD conversion at checkout is a separate, deferred
+// concern — SL merchant accounts can't receive via PayPal today anyway.)
+export function formatPrice(lkr: number) {
   return new Intl.NumberFormat("en-LK", {
     style: "currency",
     currency: "LKR",
     maximumFractionDigits: 0,
-  }).format(usd * LKR_PER_USD);
+  }).format(lkr);
 }
 
-/** The actual amount charged at checkout — PayPal settles in USD. */
+/** Renders a raw USD figure. Not used on the LKR-native storefront; kept for a
+ *  future real conversion at the payment boundary. */
 export function formatUsd(usd: number) {
   return new Intl.NumberFormat("en-US", {
     style: "currency",

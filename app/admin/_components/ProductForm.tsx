@@ -107,7 +107,7 @@ export function ProductForm({
           </div>
         </div>
         <div>
-          <label className={labelCls}>Price (USD, whole units)</label>
+          <label className={labelCls}>Price (LKR, whole rupees)</label>
           <input name="price" type="number" min={0} defaultValue={initial?.price} required className={`mt-1.5 ${inputCls}`} />
         </div>
         <div>

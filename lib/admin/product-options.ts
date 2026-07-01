@@ -5,8 +5,8 @@
 export const GENDERS = ["Men", "Ladies", "Unisex"] as const;
 export const COLLECTIONS = ["Classic", "Chronograph", "Dress", "Limited", "Sport"] as const;
 export const CONDITIONS = ["New", "Pre-owned"] as const;
-export const MATERIALS = ["Rose gold", "Steel"] as const;
-export const DIALS = ["Black", "Ivory", "Silver", "White"] as const;
+export const MATERIALS = ["Steel", "Gold", "Two-tone", "Rose gold"] as const;
+export const DIALS = ["Silver", "Black", "Navy", "Green", "Brown", "Gold", "Ivory", "White"] as const;
 export const CATEGORY_TAGS = [
   "All watches",
   "Men",

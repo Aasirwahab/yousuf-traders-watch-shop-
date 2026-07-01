@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState, useTransition } from "react";
-import { formatUsd } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 import type { OrderStatus } from "@/generated/prisma/client";
 import { updateOrderStatus } from "../actions";
 
@@ -99,7 +99,7 @@ export function OrdersTable({ orders }: { orders: Row[] }) {
                     <p className="text-xs text-[#8b969a]">{o.email}</p>
                   </td>
                   <td className="px-5 py-4 text-[#485357]">{o.itemSummary}</td>
-                  <td className="px-5 py-4 font-semibold">{formatUsd(o.total)}</td>
+                  <td className="px-5 py-4 font-semibold">{formatPrice(o.total)}</td>
                   <td className="px-5 py-4 text-[#59646a]">{o.date}</td>
                   <td className="px-5 py-4">
                     <span className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-semibold ${STATUS_STYLES[o.status].cls}`}>

@@ -7,7 +7,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import PayPalButtons from "@/components/checkout/PayPalButtons";
 import { getViewableOrder } from "@/lib/orders";
-import { formatPrice, formatUsd } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Order | Yusuf Traders",
@@ -53,7 +53,7 @@ export default async function OrderPage({ params }: PageProps) {
               Your order is reserved and awaiting payment. Complete it securely with PayPal below.
             </p>
             <PayPalButtons orderId={order.id} />
-            <p className="mt-3 text-[11px] text-[#7e8c93]">Prices are shown in LKR; payment is processed in USD ({formatUsd(order.total)}).</p>
+            <p className="mt-3 text-[11px] text-[#7e8c93]">All prices are shown in LKR.</p>
           </div>
         ) : null}
 

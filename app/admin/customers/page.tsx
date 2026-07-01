@@ -1,5 +1,5 @@
 import { listCustomers } from "@/lib/admin/queries";
-import { formatUsd } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 import { PageHeader } from "../_components/PageHeader";
 
 export default async function AdminCustomersPage() {
@@ -38,7 +38,7 @@ export default async function AdminCustomersPage() {
                       <p className="text-xs text-[#8b969a]">{c.email ?? "—"}</p>
                     </td>
                     <td className="px-5 py-4 text-[#485357]">{c.orderCount}</td>
-                    <td className="px-5 py-4 font-semibold">{formatUsd(c.totalSpent)}</td>
+                    <td className="px-5 py-4 font-semibold">{formatPrice(c.totalSpent)}</td>
                     <td className="px-5 py-4 text-[#59646a]">
                       {new Date(c.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                     </td>

@@ -9,14 +9,16 @@ import TechSection from "@/components/sections/TechSection";
 import ConciergeSection from "@/components/sections/ConciergeSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import NewsletterSection from "@/components/sections/NewsletterSection";
+import { getAllProducts } from "@/lib/products";
 
-export default function Home() {
+export default async function Home() {
+  const products = await getAllProducts();
   return (
     <main className="min-h-screen overflow-x-clip bg-[#eef0ef] font-sans text-[#101416]">
       <Navbar overlay />
       <HeroSection />
       <TrustStrip />
-      <ShopSection />
+      <ShopSection products={products} />
       <AboutSection />
       <CentralFeature />
       <TechSection />

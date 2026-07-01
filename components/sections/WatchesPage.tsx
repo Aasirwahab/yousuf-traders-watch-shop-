@@ -331,7 +331,7 @@ function ProductCard({ product, viewMode }: { product: ShopProduct; viewMode: Vi
     <article className={list ? "grid grid-cols-[112px_1fr_auto] gap-4 rounded-[16px] border border-[#cbd2d2] p-3 max-sm:grid-cols-[104px_1fr]" : "group min-w-0"}>
       <div className={`relative overflow-hidden rounded-[16px] bg-[#fbfcfb] ${list ? "aspect-square" : "aspect-[0.86]"}`}>
         <Link href={`/watches/${product.slug}`} className="absolute inset-0" aria-label={`View ${product.brand} ${product.name}`}>
-          <Image src={product.image} alt={`${product.brand} ${product.name}`} fill sizes={list ? "112px" : "(min-width: 1280px) 20vw, (min-width: 1024px) 28vw, (min-width: 768px) 30vw, 50vw"} className="object-cover transition-transform duration-700 group-hover:scale-[1.035]" />
+          <Image src={product.image} alt={`${product.brand} ${product.name}`} fill quality={90} sizes={list ? "112px" : "(min-width: 1280px) 20vw, (min-width: 1024px) 28vw, (min-width: 768px) 30vw, 50vw"} className="object-cover transition-transform duration-700 group-hover:scale-[1.035]" />
         </Link>
         {!list ? (
           <button type="button" aria-label={`${favorite ? "Remove" : "Add"} ${product.name} ${favorite ? "from" : "to"} wishlist`} aria-pressed={favorite} onClick={onFavorite} className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-full bg-[#fbfcfb]/90 backdrop-blur-sm">

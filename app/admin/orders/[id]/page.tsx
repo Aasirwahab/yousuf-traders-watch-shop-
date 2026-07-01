@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getOrderDetail } from "@/lib/admin/queries";
-import { formatUsd } from "@/lib/format";
+import { formatPrice } from "@/lib/format";
 import { PageHeader } from "../../_components/PageHeader";
 import { OrderStatusControl } from "../../_components/OrderStatusControl";
 
@@ -47,16 +47,16 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
                     <p className="truncate font-semibold text-[#101719]">{item.brand} {item.name}</p>
                     <p className="text-xs text-[#7a8589]">{item.reference} · qty {item.quantity}</p>
                   </div>
-                  <p className="shrink-0 font-semibold">{formatUsd(item.lineTotal)}</p>
+                  <p className="shrink-0 font-semibold">{formatPrice(item.lineTotal)}</p>
                 </div>
               ))}
             </div>
             <div className="mt-4 space-y-1 border-t border-[#e1e6e4] pt-4 text-sm">
-              <Row label="Subtotal" value={formatUsd(order.subtotal)} />
-              <Row label={`Shipping (${order.shippingMethod})`} value={formatUsd(order.shippingCost)} />
+              <Row label="Subtotal" value={formatPrice(order.subtotal)} />
+              <Row label={`Shipping (${order.shippingMethod})`} value={formatPrice(order.shippingCost)} />
               <div className="flex justify-between pt-2 text-base font-semibold">
                 <span>Total</span>
-                <span>{formatUsd(order.total)}</span>
+                <span>{formatPrice(order.total)}</span>
               </div>
             </div>
           </section>

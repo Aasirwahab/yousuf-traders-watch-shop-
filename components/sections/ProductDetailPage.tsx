@@ -107,7 +107,7 @@ function ProductDetailContent({ product, related }: { product: ShopProduct; rela
               </div>
 
               <div className="relative order-1 aspect-[0.86] overflow-hidden rounded-[16px] bg-[#fbfcfb] md:order-2 md:aspect-[1.02] lg:h-[640px] lg:aspect-auto">
-                <Image src={selectedImage} alt={`${product.brand} ${product.name}`} fill priority sizes="(min-width: 1024px) 56vw, 100vw" className="object-contain p-5 md:p-8" />
+                <Image src={selectedImage} alt={`${product.brand} ${product.name}`} fill priority quality={90} sizes="(min-width: 1024px) 56vw, 100vw" className="object-contain p-5 md:p-8" />
                 <button type="button" aria-label="Expand image" className="absolute bottom-4 right-4 grid h-11 w-11 place-items-center rounded-full bg-[#fbfcfb]/90 shadow-sm backdrop-blur-sm">
                   <Expand className="h-4 w-4 stroke-[1.3]" />
                 </button>
@@ -190,7 +190,7 @@ function ProductDetailContent({ product, related }: { product: ShopProduct; rela
           </div>
           <div className="overflow-hidden rounded-[16px] bg-[#fbfcfb]">
             <div className="relative aspect-[1.85]">
-              <Image src={product.detailImage ?? gallery[1] ?? product.image} alt={`${product.brand} ${product.name} detail`} fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
+              <Image src={product.detailImage ?? gallery[1] ?? product.image} alt={`${product.brand} ${product.name} detail`} fill quality={90} sizes="(min-width: 1024px) 45vw, 100vw" className="object-cover" />
             </div>
           </div>
         </div>
@@ -206,7 +206,7 @@ function ProductDetailContent({ product, related }: { product: ShopProduct; rela
             {related.map((item) => (
               <Link key={item.slug} href={`/watches/${item.slug}`} className="group">
                 <div className="relative aspect-[0.9] overflow-hidden rounded-[12px] bg-[#fbfcfb]">
-                  <Image src={item.image} alt={`${item.brand} ${item.name}`} fill sizes="(min-width: 768px) 23vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.035]" />
+                  <Image src={item.image} alt={`${item.brand} ${item.name}`} fill quality={90} sizes="(min-width: 768px) 23vw, 50vw" className="object-cover transition-transform duration-700 group-hover:scale-[1.035]" />
                 </div>
                 <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.1em]">{item.brand}</p>
                 <h3 className="mt-1 truncate text-[13px]">{item.name}</h3>
