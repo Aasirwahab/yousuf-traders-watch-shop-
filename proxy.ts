@@ -3,7 +3,10 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 // The storefront is public; the account area and checkout require sign-in.
 // Guests can browse and build a cart, but must authenticate to check out —
 // their guest cart merges into their user cart on the first signed-in action.
-const isProtectedRoute = createRouteMatcher(["/account(.*)", "/checkout(.*)"]);
+// /admin also requires sign-in here, but the admin *role* is enforced
+// server-side in app/admin/layout.tsx (and every admin query/action) — this
+// matcher only ensures a visitor is authenticated, not that they're an admin.
+const isProtectedRoute = createRouteMatcher(["/account(.*)", "/checkout(.*)", "/admin(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {

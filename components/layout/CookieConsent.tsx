@@ -1,14 +1,19 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const STORAGE_KEY = "ovalen_cookie_consent";
 
 export default function CookieConsent() {
   const [visible, setVisible] = useState(false);
+  const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith("/admin");
 
   useEffect(() => {
+    if (isAdminRoute) return;
+
     const frame = requestAnimationFrame(() => {
       try {
         if (!localStorage.getItem(STORAGE_KEY)) setVisible(true);
@@ -17,7 +22,7 @@ export default function CookieConsent() {
       }
     });
     return () => cancelAnimationFrame(frame);
-  }, []);
+  }, [isAdminRoute]);
 
   function accept() {
     try {
@@ -28,7 +33,7 @@ export default function CookieConsent() {
     setVisible(false);
   }
 
-  if (!visible) return null;
+  if (!visible || isAdminRoute) return null;
 
   return (
     <div role="dialog" aria-label="Cookie notice" className="fixed inset-x-0 bottom-0 z-[60] border-t border-[#cbd2d2] bg-[#fbfcfb]/95 px-5 py-4 backdrop-blur-xl">
