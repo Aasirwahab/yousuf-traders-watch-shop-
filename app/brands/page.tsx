@@ -27,11 +27,11 @@ export default async function BrandsPage() {
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="min-h-screen bg-[#eef0ef] text-[#101416]">
       <Navbar />
       <section className="mx-auto max-w-[1440px] px-5 pb-20 pt-8 md:px-[4.5%] md:pt-12">
-        <div className="text-[11px] text-[#6e6e6b]">
-          <Link href="/" className="transition-colors hover:text-black">Home</Link>
+        <div className="text-[11px] text-[#687276]">
+          <Link href="/" className="transition-colors hover:text-[#101416]">Home</Link>
           <span className="px-2">/</span>
           <span>Brands</span>
         </div>
@@ -39,7 +39,7 @@ export default async function BrandsPage() {
         <h1 className="mt-7 text-[clamp(3rem,7.4vw,6.7rem)] font-normal leading-[0.92] tracking-[-0.065em]">
           Brands
         </h1>
-        <p className="mt-6 max-w-md text-[13px] leading-6 text-[#6e6e6b]">
+        <p className="mt-6 max-w-md text-[13px] leading-6 text-[#687276]">
           Shop by maison — independent and iconic houses, each authenticated by our specialists.
         </p>
 
@@ -50,7 +50,7 @@ export default async function BrandsPage() {
               href={`/watches?brand=${encodeURIComponent(brand.name)}`}
               className="group"
             >
-              <div className="relative aspect-[1.1] overflow-hidden rounded-[16px] bg-[#f4f4f4]">
+              <div className="relative aspect-[1.1] overflow-hidden rounded-[16px] bg-[#fbfcfb]">
                 <Image
                   src={brand.image}
                   alt={brand.name}
@@ -59,8 +59,8 @@ export default async function BrandsPage() {
                   className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 />
               </div>
-              <h2 className="mt-3 text-[14px] font-medium group-hover:text-[#6b1824]">{brand.name}</h2>
-              <p className="mt-1 text-[11px] text-[#8a8a86]">
+              <h2 className="mt-3 text-[14px] font-medium group-hover:text-[#16343d]">{brand.name}</h2>
+              <p className="mt-1 text-[11px] text-[#7e8c93]">
                 {brand.count} {brand.count === 1 ? "timepiece" : "timepieces"}
               </p>
             </Link>

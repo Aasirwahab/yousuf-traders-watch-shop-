@@ -2,20 +2,22 @@
 
 /* ─── Design Tokens ─────────────────────────────────────────── */
 :root {
-  --color-bg: #ffffff;
-  --color-page: #ededed;
-  --color-text: #000000;
-  --color-text-muted: #9ca3af;
-  --color-border: #f3f4f6;
-  --color-surface: #f4f4f4;
-  --color-accent: #000000;
+  --color-bg: #eef0ef;
+  --color-page: #eef0ef;
+  --color-text: #101416;
+  --color-text-muted: #687276;
+  --color-border: #cbd2d2;
+  --color-surface: #fbfcfb;
+  --color-accent: #16343d;
+  --color-accent-soft: #7e8c93;
+  --color-ink: #07090a;
 
   --radius-card: 32px;
   --radius-button: 30px;
   --radius-pill: 9999px;
 
-  --shadow-card: 0 8px 30px rgb(0 0 0 / 0.04);
-  --shadow-elevated: 0 20px 60px -15px rgb(0 0 0 / 0.5);
+  --shadow-card: 0 8px 30px rgb(16 20 22 / 0.05);
+  --shadow-elevated: 0 20px 60px -15px rgb(7 9 10 / 0.5);
 
   --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
   --font-serif: var(--font-playfair), Georgia, "Times New Roman", serif;
@@ -59,12 +61,12 @@
   }
 
   ::selection {
-    background-color: #6b1824;
-    color: #fff;
+    background-color: #16343d;
+    color: #fbfcfb;
   }
 
   :focus-visible {
-    outline-color: #6b1824;
+    outline-color: #16343d;
   }
 
   section[id] {

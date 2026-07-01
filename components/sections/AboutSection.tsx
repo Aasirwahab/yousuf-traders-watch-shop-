@@ -85,12 +85,12 @@ function CategoryDetails({ index }: { index: number }) {
     <div>
       <Link
         href="#shop"
-        className="group flex items-center justify-between gap-4 border-b border-black/35 pb-2 text-[15px] font-semibold tracking-[-0.02em] focus-visible:outline-2 focus-visible:outline-offset-4"
+        className="group flex items-center justify-between gap-4 border-b border-[#7e8c93] pb-2 text-[15px] font-semibold tracking-[-0.02em] focus-visible:outline-2 focus-visible:outline-offset-4"
       >
         {category.name}
-        <ArrowRight className="h-4 w-4 shrink-0 text-[#a7192d] transition-transform duration-300 group-hover:translate-x-1" />
+        <ArrowRight className="h-4 w-4 shrink-0 text-[#16343d] transition-transform duration-300 group-hover:translate-x-1" />
       </Link>
-      <p className="mt-4 max-w-[180px] text-[11px] leading-[1.55] text-[#777773]">
+      <p className="mt-4 max-w-[180px] text-[11px] leading-[1.55] text-[#687276]">
         {category.description}
       </p>
     </div>
@@ -114,7 +114,7 @@ function CategoryImage({
     <Link
       href="#shop"
       aria-label={`Explore ${category.name} watches`}
-      className={`group relative block overflow-hidden rounded-[12px] bg-[#efefed] focus-visible:outline-2 focus-visible:outline-offset-4 ${className}`}
+      className={`group relative block overflow-hidden rounded-[12px] bg-[#fbfcfb] focus-visible:outline-2 focus-visible:outline-offset-4 ${className}`}
     >
       <Image
         src={categoryImages[index]}

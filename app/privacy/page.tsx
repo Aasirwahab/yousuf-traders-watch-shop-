@@ -24,9 +24,9 @@ export default function PrivacyPage() {
       <LegalSection heading="Data we collect">
         <p>We collect only what we need to run the store:</p>
         <ul className="list-disc space-y-1 pl-5">
-          <li><span className="text-black">Account details</span> — name and email, managed through our authentication provider (Clerk) when you create an account or sign in.</li>
-          <li><span className="text-black">Order details</span> — shipping name, address, phone (optional), email, and the items you order.</li>
-          <li><span className="text-black">Technical data</span> — a small number of cookies needed to keep your cart and session working (see our Cookie Policy).</li>
+          <li><span className="text-[#101416]">Account details</span> — name and email, managed through our authentication provider (Clerk) when you create an account or sign in.</li>
+          <li><span className="text-[#101416]">Order details</span> — shipping name, address, phone (optional), email, and the items you order.</li>
+          <li><span className="text-[#101416]">Technical data</span> — a small number of cookies needed to keep your cart and session working (see our Cookie Policy).</li>
         </ul>
         <p>We do not knowingly collect data from anyone under 18.</p>
       </LegalSection>

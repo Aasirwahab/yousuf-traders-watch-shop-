@@ -47,12 +47,15 @@ export function CommerceProvider({ children }: { children: ReactNode }) {
   const [wishlist, setWishlist] = useState<string[]>([]);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(WISHLIST_KEY);
-      if (raw) setWishlist(JSON.parse(raw));
-    } catch {
-      // Ignore unreadable/blocked storage.
-    }
+    const frame = requestAnimationFrame(() => {
+      try {
+        const raw = localStorage.getItem(WISHLIST_KEY);
+        if (raw) setWishlist(JSON.parse(raw));
+      } catch {
+        // Ignore unreadable/blocked storage.
+      }
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   const toggleWishlist = useCallback((slug: string) => {

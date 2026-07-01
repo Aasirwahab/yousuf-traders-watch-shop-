@@ -44,14 +44,14 @@ export default function FaqPage() {
       updated="June 2026"
       intro="Answers to the questions we hear most. Can't find what you need? Email concierge@yousuftrade.store."
     >
-      <div className="divide-y divide-black/10 border-y border-black/10">
+      <div className="divide-y divide-[#cbd2d2] border-y border-[#cbd2d2]">
         {FAQS.map((item) => (
           <details key={item.q} className="group py-4">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-[15px] font-medium marker:hidden">
               {item.q}
               <span aria-hidden="true" className="text-lg font-light transition-transform group-open:rotate-45">+</span>
             </summary>
-            <p className="mt-3 max-w-xl text-sm leading-7 text-[#555550]">{item.a}</p>
+            <p className="mt-3 max-w-xl text-sm leading-7 text-[#46555a]">{item.a}</p>
           </details>
         ))}
       </div>

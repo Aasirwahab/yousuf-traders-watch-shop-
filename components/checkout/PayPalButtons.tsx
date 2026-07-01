@@ -81,7 +81,7 @@ export default function PayPalButtons({ orderId }: { orderId: string }) {
 
   if (!CLIENT_ID) {
     return (
-      <p className="text-sm leading-6 text-[#555550]">
+      <p className="text-sm leading-6 text-[#46555a]">
         Online payment is temporarily unavailable. Your order is reserved — please contact us to
         complete payment.
       </p>
@@ -91,7 +91,7 @@ export default function PayPalButtons({ orderId }: { orderId: string }) {
   return (
     <div>
       <div ref={containerRef} />
-      {error ? <p className="mt-3 text-sm text-[#6b1824]">{error}</p> : null}
+      {error ? <p className="mt-3 text-sm text-[#16343d]">{error}</p> : null}
     </div>
   );
 }

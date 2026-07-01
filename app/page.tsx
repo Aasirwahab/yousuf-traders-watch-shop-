@@ -12,7 +12,7 @@ import NewsletterSection from "@/components/sections/NewsletterSection";
 
 export default function Home() {
   return (
-    <main className="min-h-screen overflow-x-clip bg-white font-sans text-black">
+    <main className="min-h-screen overflow-x-clip bg-[#eef0ef] font-sans text-[#101416]">
       <Navbar overlay />
       <HeroSection />
       <TrustStrip />

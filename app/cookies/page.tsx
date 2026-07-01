@@ -20,8 +20,8 @@ export default function CookiesPage() {
 
       <LegalSection heading="Cookies we use">
         <ul className="list-disc space-y-1 pl-5">
-          <li><span className="text-black">Essential — cart &amp; orders.</span> A cookie keeps your shopping bag and lets you view orders you placed in this browser. The site cannot function without it.</li>
-          <li><span className="text-black">Essential — authentication.</span> Our provider (Clerk) sets cookies to keep you securely signed in to your account.</li>
+          <li><span className="text-[#101416]">Essential — cart &amp; orders.</span> A cookie keeps your shopping bag and lets you view orders you placed in this browser. The site cannot function without it.</li>
+          <li><span className="text-[#101416]">Essential — authentication.</span> Our provider (Clerk) sets cookies to keep you securely signed in to your account.</li>
         </ul>
         <p>We do not currently use advertising or third-party tracking cookies. If we add analytics in future, we will update this policy and ask for consent where required.</p>
       </LegalSection>

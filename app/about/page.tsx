@@ -22,7 +22,7 @@ export default function AboutPage() {
       </LegalSection>
 
       <LegalSection heading="Authenticated, always">
-        <p>Each timepiece is inspected and authenticated by our specialists before it reaches you, and protected by our warranty. Authenticity isn't a feature — it's the foundation.</p>
+        <p>Each timepiece is inspected and authenticated by our specialists before it reaches you, and protected by our warranty. Authenticity isn&apos;t a feature — it&apos;s the foundation.</p>
       </LegalSection>
 
       <LegalSection heading="A considered service">

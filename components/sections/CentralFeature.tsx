@@ -46,7 +46,7 @@ export default function CentralFeature() {
       : { duration, delay, ease: [0.22, 1, 0.36, 1] };
 
   return (
-    <section ref={ref} className="overflow-hidden border-y border-black/10 px-6 py-20 md:px-[4.5%] md:py-28">
+    <section ref={ref} className="overflow-hidden border-y border-[#cbd2d2] px-6 py-20 md:px-[4.5%] md:py-28">
       <div className="mx-auto max-w-[1440px]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -54,17 +54,17 @@ export default function CentralFeature() {
           transition={transition(0, 0.7)}
           className="flex flex-col justify-between gap-7 md:flex-row md:items-end"
         >
-          <div><p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#6b1824]">The anatomy of quality</p><h2 className="mt-3 text-[clamp(2.6rem,5vw,5rem)] font-normal tracking-[-0.055em]">Built to be kept.</h2></div>
-          <Link href="#shop" className="flex w-fit items-center gap-8 border-b border-black pb-2 text-sm">Explore the collection <ArrowRight className="h-4 w-4" /></Link>
+          <div><p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#16343d]">The anatomy of quality</p><h2 className="mt-3 text-[clamp(2.6rem,5vw,5rem)] font-normal tracking-[-0.055em]">Built to be kept.</h2></div>
+          <Link href="#shop" className="flex w-fit items-center gap-8 border-b border-[#16343d] pb-2 text-sm">Explore the collection <ArrowRight className="h-4 w-4" /></Link>
         </motion.div>
 
         <div className="relative mt-10 hidden h-[590px] md:block">
           <svg aria-hidden="true" viewBox="0 0 960 590" preserveAspectRatio="xMidYMid meet" className="absolute inset-0 h-full w-full">
             {CONNECTORS.map((connector, index) => (
               <g key={connector.points}>
-                <motion.polyline points={connector.points} fill="none" stroke="#7b7b77" strokeWidth="1" vectorEffect="non-scaling-stroke" initial={{ pathLength: 0, opacity: 0 }} animate={inView ? { pathLength: 1, opacity: 1 } : undefined} transition={transition(stepDelay(index), 0.55)} />
-                <motion.circle cx={connector.start[0]} cy={connector.start[1]} r="4" fill="#fff" stroke="#6b1824" strokeWidth="1" vectorEffect="non-scaling-stroke" initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : undefined} transition={transition(stepDelay(index), 0.2)} />
-                <motion.circle cx={connector.end[0]} cy={connector.end[1]} r="3" fill="#6b1824" initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : undefined} transition={transition(stepDelay(index) + 0.3, 0.2)} />
+                <motion.polyline points={connector.points} fill="none" stroke="#7e8c93" strokeWidth="1" vectorEffect="non-scaling-stroke" initial={{ pathLength: 0, opacity: 0 }} animate={inView ? { pathLength: 1, opacity: 1 } : undefined} transition={transition(stepDelay(index), 0.55)} />
+                <motion.circle cx={connector.start[0]} cy={connector.start[1]} r="4" fill="#fbfcfb" stroke="#16343d" strokeWidth="1" vectorEffect="non-scaling-stroke" initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : undefined} transition={transition(stepDelay(index), 0.2)} />
+                <motion.circle cx={connector.end[0]} cy={connector.end[1]} r="3" fill="#16343d" initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : undefined} transition={transition(stepDelay(index) + 0.3, 0.2)} />
               </g>
             ))}
           </svg>
@@ -85,7 +85,7 @@ export default function CentralFeature() {
                   <motion.polyline
                     points={connector.points}
                     fill="none"
-                    stroke="#7b7b77"
+                    stroke="#7e8c93"
                     strokeWidth="1"
                     vectorEffect="non-scaling-stroke"
                     initial={{ pathLength: 0, opacity: 0 }}
@@ -96,8 +96,8 @@ export default function CentralFeature() {
                     cx={connector.start[0]}
                     cy={connector.start[1]}
                     r="3.5"
-                    fill="#fff"
-                    stroke="#6b1824"
+                    fill="#fbfcfb"
+                    stroke="#16343d"
                     strokeWidth="1"
                     vectorEffect="non-scaling-stroke"
                     initial={{ opacity: 0 }}
@@ -108,7 +108,7 @@ export default function CentralFeature() {
                     cx={connector.end[0]}
                     cy={connector.end[1]}
                     r="2.5"
-                    fill="#6b1824"
+                    fill="#16343d"
                     initial={{ opacity: 0 }}
                     animate={inView ? { opacity: 1 } : undefined}
                     transition={transition(stepDelay(index) + 0.3, 0.2)}
@@ -182,7 +182,7 @@ function MobileCallout({
         initial={{ opacity: 0, y: 5 }}
         animate={inView ? { opacity: 1, y: 0 } : undefined}
         transition={transition(delay + 0.16, 0.4)}
-        className="mt-1 text-[8px] leading-[1.45] text-[#6e6e6b] min-[390px]:text-[9px]"
+        className="mt-1 text-[8px] leading-[1.45] text-[#687276] min-[390px]:text-[9px]"
       >
         {spec.description}
       </motion.p>
@@ -203,7 +203,7 @@ function SpecColumn({
 }) {
   return (
     <div className={`absolute inset-y-[22%] flex w-[30%] flex-col justify-between ${side === "left" ? "left-0 text-right" : "right-0"}`}>
-      {specs.map((spec) => <motion.div key={spec.title} initial={{ opacity: 0, x: side === "left" ? -22 : 22 }} animate={inView ? { opacity: 1, x: 0 } : undefined} transition={transition(stepDelay(spec.step) + 0.08, 0.5)} className={side === "left" ? "ml-auto max-w-[210px]" : "max-w-[210px]"}><h3 className="text-[13px] font-medium">{spec.title}</h3><p className="mt-2 text-[11px] leading-5 text-[#777773]">{spec.description}</p></motion.div>)}
+      {specs.map((spec) => <motion.div key={spec.title} initial={{ opacity: 0, x: side === "left" ? -22 : 22 }} animate={inView ? { opacity: 1, x: 0 } : undefined} transition={transition(stepDelay(spec.step) + 0.08, 0.5)} className={side === "left" ? "ml-auto max-w-[210px]" : "max-w-[210px]"}><h3 className="text-[13px] font-medium">{spec.title}</h3><p className="mt-2 text-[11px] leading-5 text-[#687276]">{spec.description}</p></motion.div>)}
     </div>
   );
 }

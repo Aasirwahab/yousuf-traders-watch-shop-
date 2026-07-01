@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ovalen Color Palette Samples</title>
+    <style>
+      :root {
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #111;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #10100f;
+        color: #f8f4ec;
+      }
+
+      .page {
+        width: min(1440px, 100%);
+        margin: 0 auto;
+        padding: 34px;
+      }
+
+      .intro {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 28px;
+        margin-bottom: 28px;
+      }
+
+      .intro h1 {
+        max-width: 780px;
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.1rem, 5vw, 4.8rem);
+        font-weight: 400;
+        line-height: 0.96;
+        letter-spacing: -0.02em;
+      }
+
+      .intro p {
+        max-width: 360px;
+        margin: 0;
+        color: rgba(248, 244, 236, 0.68);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(240px, 1fr));
+        gap: 18px;
+      }
+
+      .theme {
+        --bg: #f5f1ea;
+        --surface: #fffaf2;
+        --text: #171412;
+        --muted: #756f66;
+        --border: #d8cec0;
+        --accent: #6b1824;
+        --metal: #b9965b;
+        --dark: #08080a;
+        min-height: 780px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: var(--bg);
+        color: var(--text);
+      }
+
+      .theme:nth-child(2) {
+        --bg: #eef0ef;
+        --surface: #fbfcfb;
+        --text: #101416;
+        --muted: #687276;
+        --border: #cbd2d2;
+        --accent: #16343d;
+        --metal: #7e8c93;
+        --dark: #07090a;
+      }
+
+      .theme:nth-child(3) {
+        --bg: #f7f2e8;
+        --surface: #fffaf0;
+        --text: #18130d;
+        --muted: #7b7265;
+        --border: #d9c8ad;
+        --accent: #9a713b;
+        --metal: #c4a064;
+        --dark: #090806;
+      }
+
+      .theme:nth-child(4) {
+        --bg: #f3f1e8;
+        --surface: #fbf8ee;
+        --text: #171811;
+        --muted: #6f715f;
+        --border: #d7d0bc;
+        --accent: #4d5a35;
+        --metal: #a67843;
+        --dark: #11130d;
+      }
+
+      .theme:nth-child(5) {
+        --bg: #f2f4f2;
+        --surface: #fbfcfa;
+        --text: #111616;
+        --muted: #66706b;
+        --border: #cdd6d0;
+        --accent: #24524a;
+        --metal: #b27a47;
+        --dark: #061412;
+      }
+
+      .mini-hero {
+        position: relative;
+        min-height: 250px;
+        padding: 24px 22px;
+        background:
+          radial-gradient(circle at 50% 105%, color-mix(in srgb, var(--metal) 34%, transparent), transparent 52%),
+          linear-gradient(180deg, color-mix(in srgb, var(--dark) 88%, var(--accent)), var(--dark));
+        color: white;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 10px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .logo {
+        font-weight: 700;
+      }
+
+      .hero-copy {
+        position: relative;
+        z-index: 2;
+        margin-top: 44px;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: color-mix(in srgb, var(--metal) 82%, white);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .hero-copy h2 {
+        max-width: 230px;
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 35px;
+        font-weight: 400;
+        line-height: 0.96;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-copy p {
+        max-width: 225px;
+        margin: 13px 0 0;
+        color: rgba(255, 255, 255, 0.64);
+        font-size: 12px;
+        line-height: 1.6;
+      }
+
+      .watch {
+        position: absolute;
+        right: -34px;
+        bottom: -50px;
+        width: 176px;
+        height: 176px;
+        border-radius: 999px;
+        background:
+          radial-gradient(circle, transparent 34%, color-mix(in srgb, var(--metal) 70%, white) 35% 38%, transparent 39%),
+          radial-gradient(circle, color-mix(in srgb, var(--dark) 80%, white) 0 42%, color-mix(in srgb, var(--metal) 80%, black) 43% 47%, color-mix(in srgb, var(--dark) 88%, black) 48%);
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.42);
+        opacity: 0.9;
+      }
+
+      .watch::before,
+      .watch::after {
+        content: "";
+        position: absolute;
+        left: 82px;
+        width: 14px;
+        height: 70px;
+        border-radius: 20px;
+        background: linear-gradient(90deg, color-mix(in srgb, var(--metal) 40%, black), color-mix(in srgb, var(--metal) 88%, white), color-mix(in srgb, var(--metal) 52%, black));
+      }
+
+      .watch::before {
+        top: -58px;
+      }
+
+      .watch::after {
+        bottom: -58px;
+      }
+
+      .body {
+        padding: 22px;
+      }
+
+      .meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+
+      .meta span {
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .pill {
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 7px 10px;
+        color: var(--accent);
+        font-size: 10px;
+        font-weight: 700;
+      }
+
+      .product {
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--surface);
+      }
+
+      .photo {
+        position: relative;
+        display: grid;
+        min-height: 210px;
+        place-items: center;
+        background:
+          linear-gradient(135deg, color-mix(in srgb, var(--bg) 78%, white), color-mix(in srgb, var(--metal) 20%, var(--surface))),
+          var(--surface);
+      }
+
+      .photo img {
+        width: min(78%, 210px);
+        transform: rotate(-9deg);
+        filter: drop-shadow(0 28px 26px rgba(0, 0, 0, 0.22));
+      }
+
+      .badge {
+        position: absolute;
+        left: 13px;
+        bottom: 13px;
+        background: color-mix(in srgb, var(--surface) 84%, white);
+        color: var(--text);
+        padding: 7px 9px;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      .product-copy {
+        padding: 16px;
+      }
+
+      .product-copy strong {
+        display: block;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .product-copy h3 {
+        margin: 7px 0 0;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 1;
+      }
+
+      .product-copy p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .price-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .price {
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .button {
+        border: 0;
+        background: var(--accent);
+        color: white;
+        padding: 11px 14px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .swatches {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        margin-top: 16px;
+        border: 1px solid var(--border);
+      }
+
+      .swatch {
+        min-height: 36px;
+      }
+
+      .note {
+        margin: 15px 0 0;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      @media (max-width: 1320px) {
+        .grid {
+          grid-template-columns: repeat(2, minmax(280px, 1fr));
+        }
+      }
+
+      @media (max-width: 680px) {
+        .page {
+          padding: 18px;
+        }
+
+        .intro {
+          display: block;
+        }
+
+        .intro p {
+          margin-top: 16px;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="intro">
+        <h1>Five premium palette directions for Ovalen.</h1>
+        <p>Each sample uses the same watch-store layout so the color mood is easy to compare: hero, product card, CTA, badges, borders, and swatches.</p>
+      </section>
+
+      <section class="grid" aria-label="Color palette samples">
+        <article class="theme">
+          <div class="mini-hero">
+            <div class="nav"><span class="logo">Ovalen</span><span>Concierge</span></div>
+            <div class="hero-copy">
+              <p class="eyebrow">Burgundy boutique</p>
+              <h2>Private collector energy.</h2>
+              <p>Warm ivory, deep wine, champagne metal. The safest luxury direction for trust and taste.</p>
+            </div>
+            <div class="watch"></div>
+          </div>
+          <div class="body">
+            <div class="meta"><span>Best for trust</span><span class="pill">Luxury</span></div>
+            <div class="product">
+              <div class="photo">
+                <img src="/prototype-assets/feature-watch.png" alt="Watch sample" />
+                <span class="badge">Authenticated</span>
+              </div>
+              <div class="product-copy">
+                <strong>Citizen</strong>
+                <h3>Quartz dress reference</h3>
+                <p>Feels like leather straps, private appointments, and collector service.</p>
+                <div class="price-row"><span class="price">LKR 42,000</span><button class="button">Reserve</button></div>
+              </div>
+            </div>
+            <div class="swatches">
+              <span class="swatch" style="background: #f5f1ea"></span><span class="swatch" style="background: #fffaf2"></span><span class="swatch" style="background: #171412"></span><span class="swatch" style="background: #6b1824"></span><span class="swatch" style="background: #b9965b"></span><span class="swatch" style="background: #08080a"></span>
+            </div>
+            <p class="note">My top pick if Ovalen should feel established, warm, and premium without becoming flashy.</p>
+          </div>
+        </article>
+
+        <article class="theme">
+          <div class="mini-hero">
+            <div class="nav"><span class="logo">Ovalen</span><span>Steel edit</span></div>
+            <div class="hero-copy">
+              <p class="eyebrow">Midnight steel</p>
+              <h2>Modern sports-watch mood.</h2>
+              <p>Cool silver, deep teal-black, and brushed metal tones for sharper chronograph styling.</p>
+            </div>
+            <div class="watch"></div>
+          </div>
+          <div class="body">
+            <div class="meta"><span>Best for modern</span><span class="pill">Steel</span></div>
+            <div class="product">
+              <div class="photo">
+                <img src="/prototype-assets/product-detail/steel-blue-main.png" alt="Watch sample" />
+                <span class="badge">New arrival</span>
+              </div>
+              <div class="product-copy">
+                <strong>Seiko</strong>
+                <h3>Blue steel automatic</h3>
+                <p>Feels technical, clean, masculine, and very suitable for sport and everyday watches.</p>
+                <div class="price-row"><span class="price">LKR 58,000</span><button class="button">Reserve</button></div>
+              </div>
+            </div>
+            <div class="swatches">
+              <span class="swatch" style="background: #eef0ef"></span><span class="swatch" style="background: #fbfcfb"></span><span class="swatch" style="background: #101416"></span><span class="swatch" style="background: #16343d"></span><span class="swatch" style="background: #7e8c93"></span><span class="swatch" style="background: #07090a"></span>
+            </div>
+            <p class="note">Choose this if you want Ovalen to look current, sharp, and less traditional.</p>
+          </div>
+        </article>
+
+        <article class="theme">
+          <div class="mini-hero">
+            <div class="nav"><span class="logo">Ovalen</span><span>Gold edit</span></div>
+            <div class="hero-copy">
+              <p class="eyebrow">Champagne noir</p>
+              <h2>Dress-watch elegance.</h2>
+              <p>Warm cream, refined gold, and near-black. More formal, polished, and high-ticket.</p>
+            </div>
+            <div class="watch"></div>
+          </div>
+          <div class="body">
+            <div class="meta"><span>Best for elegance</span><span class="pill">Gold</span></div>
+            <div class="product">
+              <div class="photo">
+                <img src="/product-gallery/citizen-quartz-full-gold-50m/02-generated-angle.png" alt="Watch sample" />
+                <span class="badge">Limited</span>
+              </div>
+              <div class="product-copy">
+                <strong>Citizen</strong>
+                <h3>Full gold quartz</h3>
+                <p>Feels polished and formal. Best if your catalog leans gold, dress, and gift-worthy.</p>
+                <div class="price-row"><span class="price">LKR 46,000</span><button class="button">Reserve</button></div>
+              </div>
+            </div>
+            <div class="swatches">
+              <span class="swatch" style="background: #f7f2e8"></span><span class="swatch" style="background: #fffaf0"></span><span class="swatch" style="background: #18130d"></span><span class="swatch" style="background: #9a713b"></span><span class="swatch" style="background: #c4a064"></span><span class="swatch" style="background: #090806"></span>
+            </div>
+            <p class="note">Very premium, but use carefully so it does not feel like a jewelry shop only.</p>
+          </div>
+        </article>
+
+        <article class="theme">
+          <div class="mini-hero">
+            <div class="nav"><span class="logo">Ovalen</span><span>Archive</span></div>
+            <div class="hero-copy">
+              <p class="eyebrow">Olive heritage</p>
+              <h2>Vintage collector character.</h2>
+              <p>Olive, bronze, parchment, and old-world dark tones. Quiet, distinctive, less common.</p>
+            </div>
+            <div class="watch"></div>
+          </div>
+          <div class="body">
+            <div class="meta"><span>Best for vintage</span><span class="pill">Heritage</span></div>
+            <div class="product">
+              <div class="photo">
+                <img src="/product-gallery/citizen-quartz-green-50m/02-left-angle.png" alt="Watch sample" />
+                <span class="badge">Archive pick</span>
+              </div>
+              <div class="product-copy">
+                <strong>Citizen</strong>
+                <h3>Green dial reference</h3>
+                <p>Feels archival and mature. Great for rare finds, classic references, and storytelling.</p>
+                <div class="price-row"><span class="price">LKR 39,000</span><button class="button">Reserve</button></div>
+              </div>
+            </div>
+            <div class="swatches">
+              <span class="swatch" style="background: #f3f1e8"></span><span class="swatch" style="background: #fbf8ee"></span><span class="swatch" style="background: #171811"></span><span class="swatch" style="background: #4d5a35"></span><span class="swatch" style="background: #a67843"></span><span class="swatch" style="background: #11130d"></span>
+            </div>
+            <p class="note">Most unique option. I like it if you want Ovalen to feel like a collector's archive.</p>
+          </div>
+        </article>
+
+        <article class="theme">
+          <div class="mini-hero">
+            <div class="nav"><span class="logo">Ovalen</span><span>Salon</span></div>
+            <div class="hero-copy">
+              <p class="eyebrow">Emerald salon</p>
+              <h2>Premium but fresh.</h2>
+              <p>Deep green, soft white, bronze, and blackened teal. Elegant without being predictable.</p>
+            </div>
+            <div class="watch"></div>
+          </div>
+          <div class="body">
+            <div class="meta"><span>Best for signature</span><span class="pill">Fresh</span></div>
+            <div class="product">
+              <div class="photo">
+                <img src="/product-gallery/citizen-quartz-gold-navy-50m/02-generated-angle.png" alt="Watch sample" />
+                <span class="badge">Concierge</span>
+              </div>
+              <div class="product-copy">
+                <strong>Citizen</strong>
+                <h3>Two-tone salon piece</h3>
+                <p>Feels premium, calm, and memorable. A good middle point between modern and heritage.</p>
+                <div class="price-row"><span class="price">LKR 44,000</span><button class="button">Reserve</button></div>
+              </div>
+            </div>
+            <div class="swatches">
+              <span class="swatch" style="background: #f2f4f2"></span><span class="swatch" style="background: #fbfcfa"></span><span class="swatch" style="background: #111616"></span><span class="swatch" style="background: #24524a"></span><span class="swatch" style="background: #b27a47"></span><span class="swatch" style="background: #061412"></span>
+            </div>
+            <p class="note">This is the boldest practical choice: still luxury, but more brandable than standard burgundy.</p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

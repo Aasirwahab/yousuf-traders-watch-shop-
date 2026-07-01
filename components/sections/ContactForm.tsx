@@ -10,9 +10,9 @@ export default function ContactForm() {
 
   if (state.ok) {
     return (
-      <div className="mt-10 rounded-[16px] border border-[#6b1824]/30 bg-[#6b1824]/5 p-8">
-        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#6b1824]">Message sent</p>
-        <p className="mt-3 text-sm leading-6 text-[#555550]">
+      <div className="mt-10 rounded-[16px] border border-[#16343d]/30 bg-[#16343d]/5 p-8">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#16343d]">Message sent</p>
+        <p className="mt-3 text-sm leading-6 text-[#46555a]">
           Thank you — our concierge has your enquiry and will reply by email shortly.
         </p>
       </div>
@@ -22,7 +22,7 @@ export default function ContactForm() {
   return (
     <form action={formAction} className="mt-10 grid max-w-xl gap-4">
       {state.error ? (
-        <p className="rounded-[12px] border border-[#6b1824]/30 bg-[#6b1824]/5 px-4 py-3 text-[13px] text-[#6b1824]">
+        <p className="rounded-[12px] border border-[#16343d]/30 bg-[#16343d]/5 px-4 py-3 text-[13px] text-[#16343d]">
           {state.error}
         </p>
       ) : null}
@@ -32,24 +32,24 @@ export default function ContactForm() {
       <Field label="Subject (optional)" name="subject" error={state.fieldErrors?.subject} />
 
       <label className="block">
-        <span className="mb-1.5 block text-[12px] text-[#555550]">Message</span>
+        <span className="mb-1.5 block text-[12px] text-[#46555a]">Message</span>
         <textarea
           name="message"
           rows={6}
           aria-invalid={state.fieldErrors?.message ? true : undefined}
-          className={`w-full rounded-[10px] border bg-white px-4 py-3 text-sm outline-none transition-colors focus:border-[#6b1824] ${
-            state.fieldErrors?.message ? "border-[#6b1824]" : "border-black/15"
+          className={`w-full rounded-[10px] border bg-[#eef0ef] px-4 py-3 text-sm outline-none transition-colors focus:border-[#16343d] ${
+            state.fieldErrors?.message ? "border-[#16343d]" : "border-[#cbd2d2]"
           }`}
         />
         {state.fieldErrors?.message ? (
-          <span className="mt-1 block text-[11px] text-[#6b1824]">{state.fieldErrors.message}</span>
+          <span className="mt-1 block text-[11px] text-[#16343d]">{state.fieldErrors.message}</span>
         ) : null}
       </label>
 
       <button
         type="submit"
         disabled={pending}
-        className="mt-2 grid h-13 w-fit place-items-center bg-[#6b1824] px-10 text-[12px] font-semibold uppercase tracking-[0.12em] text-white transition-colors hover:bg-black disabled:opacity-60"
+        className="mt-2 grid h-13 w-fit place-items-center bg-[#16343d] px-10 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#eef0ef] transition-colors hover:bg-[#0f252b] disabled:opacity-60"
       >
         {pending ? "Sending…" : "Send message"}
       </button>
@@ -72,17 +72,17 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-[12px] text-[#555550]">{label}</span>
+      <span className="mb-1.5 block text-[12px] text-[#46555a]">{label}</span>
       <input
         name={name}
         type={type}
         autoComplete={autoComplete}
         aria-invalid={error ? true : undefined}
-        className={`h-12 w-full rounded-[10px] border bg-white px-4 text-sm outline-none transition-colors focus:border-[#6b1824] ${
-          error ? "border-[#6b1824]" : "border-black/15"
+        className={`h-12 w-full rounded-[10px] border bg-[#eef0ef] px-4 text-sm outline-none transition-colors focus:border-[#16343d] ${
+          error ? "border-[#16343d]" : "border-[#cbd2d2]"
         }`}
       />
-      {error ? <span className="mt-1 block text-[11px] text-[#6b1824]">{error}</span> : null}
+      {error ? <span className="mt-1 block text-[11px] text-[#16343d]">{error}</span> : null}
     </label>
   );
 }

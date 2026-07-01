@@ -13,7 +13,7 @@ export default async function CheckoutPage() {
   const prefillEmail = user?.primaryEmailAddress?.emailAddress ?? undefined;
 
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="min-h-screen bg-[#eef0ef] text-[#101416]">
       <Navbar />
       <CheckoutForm prefillEmail={prefillEmail} />
       <Footer />

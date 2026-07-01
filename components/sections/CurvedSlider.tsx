@@ -141,9 +141,10 @@ export default function CurvedSlider({ images }: { images: SliderImage[] }) {
       for (let i = 0; i < planeCount; i++) {
         const img = i % distinct;
         const texture = textures[img];
+        const textureImage = texture.image as { width?: number; height?: number } | undefined;
         const imageAspect =
-          texture.image && texture.image.width
-            ? texture.image.width / texture.image.height
+          textureImage?.width && textureImage.height
+            ? textureImage.width / textureImage.height
             : 1;
         const material = new THREE.ShaderMaterial({
           uniforms: {

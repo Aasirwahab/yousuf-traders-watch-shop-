@@ -14,7 +14,7 @@ export default function AuthenticationPage() {
       intro="Every watch we sell is inspected and authenticated by our specialists before it reaches you. Authenticity is guaranteed."
     >
       <LegalSection heading="Specialist inspection">
-        <p>Each timepiece is examined in person by a trained watchmaker, who verifies the case, dial, hands, crown, and bracelet against the manufacturer's reference.</p>
+        <p>Each timepiece is examined in person by a trained watchmaker, who verifies the case, dial, hands, crown, and bracelet against the manufacturer&apos;s reference.</p>
       </LegalSection>
 
       <LegalSection heading="Movement verification">

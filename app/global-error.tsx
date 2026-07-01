@@ -23,8 +23,8 @@ export default function GlobalError({
           minHeight: "100vh",
           display: "grid",
           placeItems: "center",
-          background: "#fff",
-          color: "#000",
+          background: "#eef0ef",
+          color: "#101416",
           fontFamily: "system-ui, sans-serif",
           padding: "0 20px",
           textAlign: "center",
@@ -34,7 +34,7 @@ export default function GlobalError({
           <h1 style={{ fontSize: "2rem", fontWeight: 400, letterSpacing: "-0.04em" }}>
             Something went wrong.
           </h1>
-          <p style={{ marginTop: 16, fontSize: 14, lineHeight: 1.6, color: "#6e6e6b" }}>
+          <p style={{ marginTop: 16, fontSize: 14, lineHeight: 1.6, color: "#687276" }}>
             The page failed to load. Please try again.
           </p>
           <button
@@ -45,8 +45,8 @@ export default function GlobalError({
               padding: "0 28px",
               borderRadius: 9999,
               border: "none",
-              background: "#000",
-              color: "#fff",
+              background: "#101416",
+              color: "#fbfcfb",
               fontSize: 14,
               cursor: "pointer",
             }}
